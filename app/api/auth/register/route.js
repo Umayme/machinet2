@@ -24,7 +24,7 @@ export async function POST(request) {
 
     // Validate role — only buyer/seller allowed at public registration.
     // Consultant and admin roles are granted by existing admins only.
-    const validRoles = ['buyer', 'seller']
+    const validRoles = ['buyer', 'seller', 'consultant']
     const userRole = validRoles.includes(role) ? role : 'buyer'
 
     // Minimum password strength

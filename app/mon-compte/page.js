@@ -80,7 +80,7 @@ export default function MonComptePage() {
               <p className="text-gray-400 text-sm truncate">{user.email}</p>
               <div className="flex items-center gap-2 mt-2 flex-wrap">
                 <span className={`text-xs px-2.5 py-1 rounded-full border ${roleColor}`}>{roleLabel}</span>
-                {user.role === 'seller' && (
+                {(user.role === 'seller' || user.role === 'consultant') && (
                   user.approved ? (
                     <span className="text-xs px-2.5 py-1 rounded-full bg-green-900/30 text-green-400 border border-green-800/40">
                       Approuvé

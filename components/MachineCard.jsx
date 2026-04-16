@@ -10,7 +10,17 @@ export default function MachineCard({ machine }) {
         type = 'Vente neuf',
         secteur = 'IAA',
         verifie = true,
+        photos,
     } = machine || {}
+
+    // Parse photos — stored as JSON string in DB or plain array from demo data
+    let photoUrl = null
+    if (photos) {
+        try {
+            const parsed = typeof photos === 'string' ? JSON.parse(photos) : photos
+            photoUrl = Array.isArray(parsed) ? parsed[0] : null
+        } catch {}
+    }
 
     const secteurColors = {
         'IAA': 'bg-green-900/30 text-green-400 border-green-800/40',
@@ -24,11 +34,18 @@ export default function MachineCard({ machine }) {
     return (
         <div className="card group cursor-pointer overflow-hidden">
             <div className="relative h-48 bg-gradient-to-br from-purple-900/20 to-black overflow-hidden">
-                <div className="w-full h-full flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full bg-purple-900/20 border border-purple-800/30 flex items-center justify-center opacity-40">
-                  <svg className="w-8 h-8 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                </div>
-                </div>
+                {photoUrl ? (
+                    <img src={photoUrl} alt={nom} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-full bg-purple-900/20 border border-purple-800/30 flex items-center justify-center opacity-40">
+                            <svg className="w-8 h-8 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                )}
                 <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
                     {verifie && <span className="badge-verified">Vérifié</span>}
                     <span className={`px-2 py-0.5 rounded-full text-xs font-medium border ${secteurColors[secteur] || 'bg-purple-900/30 text-purple-400 border-purple-800/40'}`}>
