@@ -7,44 +7,44 @@ const prixData = [
         secteur: 'BTP',
         icon: '🏗️',
         machines: [
-            { nom: 'Pelle hydraulique 13–20T', min: '8 500 000', max: '15 000 000', tendance: '↗️', pct: '+8%', update: 'Mars 2025' },
-            { nom: 'Pelle hydraulique 20–35T', min: '18 000 000', max: '35 000 000', tendance: '↗️', pct: '+5%', update: 'Mars 2025' },
-            { nom: 'Grue mobile 30–50T', min: '15 000 000', max: '28 000 000', tendance: '→', pct: 'stable', update: 'Fév 2025' },
-            { nom: 'Niveleuse 140M', min: '18 000 000', max: '25 000 000', tendance: '↘️', pct: '-3%', update: 'Mars 2025' },
+            { nom: 'Pelle hydraulique 13–20T', min: '8 500 000', max: '15 000 000', tendance: '↗️', pct: '+8%', update: 'Avr 2026' },
+            { nom: 'Pelle hydraulique 20–35T', min: '18 000 000', max: '35 000 000', tendance: '↗️', pct: '+5%', update: 'Avr 2026' },
+            { nom: 'Grue mobile 30–50T', min: '15 000 000', max: '28 000 000', tendance: '→', pct: 'stable', update: 'Avr 2026' },
+            { nom: 'Niveleuse 140M', min: '18 000 000', max: '25 000 000', tendance: '↘️', pct: '-3%', update: 'Avr 2026' },
             { nom: 'Bétonnière 500L', min: '150 000', max: '280 000', tendance: '→', pct: 'stable', update: 'Jan 2025' },
-            { nom: 'Compacteur vibrant', min: '2 500 000', max: '5 000 000', tendance: '↗️', pct: '+4%', update: 'Mars 2025' },
+            { nom: 'Compacteur vibrant', min: '2 500 000', max: '5 000 000', tendance: '↗️', pct: '+4%', update: 'Avr 2026' },
         ]
     },
     {
         secteur: 'IAA',
         icon: '🏭',
         machines: [
-            { nom: 'Pasteurisateur 500–1000L/h', min: '800 000', max: '1 500 000', tendance: '↗️', pct: '+3%', update: 'Mars 2025' },
-            { nom: 'Ligne conditionnement yaourt', min: '3 200 000', max: '6 800 000', tendance: '→', pct: 'stable', update: 'Fév 2025' },
-            { nom: 'Ligne emballage sachets', min: '2 800 000', max: '5 500 000', tendance: '↗️', pct: '+6%', update: 'Mars 2025' },
+            { nom: 'Pasteurisateur 500–1000L/h', min: '800 000', max: '1 500 000', tendance: '↗️', pct: '+3%', update: 'Avr 2026' },
+            { nom: 'Ligne conditionnement yaourt', min: '3 200 000', max: '6 800 000', tendance: '→', pct: 'stable', update: 'Avr 2026' },
+            { nom: 'Ligne emballage sachets', min: '2 800 000', max: '5 500 000', tendance: '↗️', pct: '+6%', update: 'Avr 2026' },
             { nom: 'Pétrin industriel 100kg', min: '250 000', max: '480 000', tendance: '→', pct: 'stable', update: 'Jan 2025' },
-            { nom: 'Four tunnel boulangerie', min: '1 200 000', max: '3 500 000', tendance: '↗️', pct: '+2%', update: 'Mars 2025' },
-            { nom: 'Compresseur industriel 500L', min: '380 000', max: '650 000', tendance: '↘️', pct: '-2%', update: 'Fév 2025' },
+            { nom: 'Four tunnel boulangerie', min: '1 200 000', max: '3 500 000', tendance: '↗️', pct: '+2%', update: 'Avr 2026' },
+            { nom: 'Compresseur industriel 500L', min: '380 000', max: '650 000', tendance: '↘️', pct: '-2%', update: 'Avr 2026' },
         ]
     },
     {
         secteur: 'Agricole',
         icon: '🌾',
         machines: [
-            { nom: 'Tracteur 75–100CV', min: '2 500 000', max: '4 500 000', tendance: '↗️', pct: '+5%', update: 'Mars 2025' },
-            { nom: 'Moissonneuse batteuse', min: '9 000 000', max: '18 000 000', tendance: '→', pct: 'stable', update: 'Fév 2025' },
+            { nom: 'Tracteur 75–100CV', min: '2 500 000', max: '4 500 000', tendance: '↗️', pct: '+5%', update: 'Avr 2026' },
+            { nom: 'Moissonneuse batteuse', min: '9 000 000', max: '18 000 000', tendance: '→', pct: 'stable', update: 'Avr 2026' },
             { nom: 'Charrue 3 socs', min: '250 000', max: '450 000', tendance: '→', pct: 'stable', update: 'Jan 2025' },
-            { nom: 'Semoir céréales', min: '350 000', max: '700 000', tendance: '↗️', pct: '+3%', update: 'Mars 2025' },
-            { nom: 'Système irrigation goutte', min: '1 500 000', max: '4 000 000', tendance: '↗️', pct: '+7%', update: 'Mars 2025' },
+            { nom: 'Semoir céréales', min: '350 000', max: '700 000', tendance: '↗️', pct: '+3%', update: 'Avr 2026' },
+            { nom: 'Système irrigation goutte', min: '1 500 000', max: '4 000 000', tendance: '↗️', pct: '+7%', update: 'Avr 2026' },
         ]
     },
     {
         secteur: 'Textile',
         icon: '👗',
         machines: [
-            { nom: 'Machine à coudre industrielle', min: '280 000', max: '550 000', tendance: '→', pct: 'stable', update: 'Fév 2025' },
+            { nom: 'Machine à coudre industrielle', min: '280 000', max: '550 000', tendance: '→', pct: 'stable', update: 'Avr 2026' },
             { nom: 'Surjeteuse industrielle', min: '180 000', max: '380 000', tendance: '→', pct: 'stable', update: 'Jan 2025' },
-            { nom: 'Machine broderie automatique', min: '1 200 000', max: '3 500 000', tendance: '↗️', pct: '+4%', update: 'Mars 2025' },
+            { nom: 'Machine broderie automatique', min: '1 200 000', max: '3 500 000', tendance: '↗️', pct: '+4%', update: 'Avr 2026' },
         ]
     },
 ]

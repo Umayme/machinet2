@@ -32,7 +32,7 @@ export default function FournisseursPage() {
                         Développez votre business<br />avec MachiNet
                     </h1>
                     <p className="section-subtitle max-w-2xl mx-auto mb-10">
-                        Rejoignez la 1ère plateforme B2B machines en Algérie. Publiez votre catalogue, recevez des leads qualifiés et boostez votre visibilité dans les 48 wilayas.
+                        Rejoignez la 1ère plateforme B2B machines en Algérie. Publiez votre catalogue, recevez des leads qualifiés et boostez votre visibilité dans les 58 wilayas.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link href="/register" className="btn-primary text-base px-10 py-4">
@@ -67,7 +67,7 @@ export default function FournisseursPage() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {[
-                            { icon: '👁️', titre: 'Visibilité maximale', desc: 'Votre catalogue visible par 10 000+ acheteurs industriels dans les 48 wilayas d\'Algérie.' },
+                            { icon: '👁️', titre: 'Visibilité maximale', desc: 'Votre catalogue visible par 10 000+ acheteurs industriels dans les 58 wilayas d\'Algérie.' },
                             { icon: '🎯', titre: 'Leads ultra-qualifiés', desc: 'Recevez uniquement des prospects avec budget défini, secteur précis et vraie intention d\'achat.' },
                             { icon: '✅', titre: 'Badge vérifié', desc: 'Le badge de vérification booste votre crédibilité et multiplie par 3 votre taux de conversion.' },
                             { icon: '📊', titre: 'Dashboard analytics', desc: 'Suivez vos vues, clics, leads et performances en temps réel. Optimisez votre catalogue.' },

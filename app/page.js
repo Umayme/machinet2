@@ -1,16 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import MachineCard from '../components/MachineCard'
-
-const machinesDemo = [
-  { id: '1', nom: 'Pelle Hydraulique Caterpillar 320 — 20 Tonnes', fournisseur: 'SARL EquipPro', wilaya: 'Alger', prix: '9500000', type: 'Vente neuf', secteur: 'BTP', verifie: true },
-  { id: '2', nom: 'Ligne Conditionnement Yaourt Automatique', fournisseur: 'Machines IAA DZ', wilaya: 'Blida', prix: '4200000', type: 'Vente neuf', secteur: 'IAA', verifie: true },
-  { id: '3', nom: 'Tracteur John Deere 5075E — 75CV', fournisseur: 'AgriMach Sétif', wilaya: 'Sétif', prix: '2800000', type: 'Occasion', secteur: 'Agricole', verifie: true },
-  { id: '4', nom: 'Pasteurisateur Industriel 1000L/h', fournisseur: 'SARL TechFood', wilaya: 'Constantine', prix: '1850000', type: 'Vente neuf', secteur: 'IAA', verifie: false },
-  { id: '5', nom: 'Grue Mobile Liebherr 50 Tonnes', fournisseur: 'BTP Solutions Oran', wilaya: 'Oran', prix: '28000000', type: 'Location', secteur: 'BTP', verifie: true },
-  { id: '6', nom: 'Machine à Coudre Industrielle Juki', fournisseur: 'TextileMach DZ', wilaya: 'Tlemcen', prix: '320000', type: 'Vente neuf', secteur: 'Textile', verifie: true },
-]
 
 const stats = [
   { value: '500+', label: 'Fournisseurs vérifiés' },
@@ -43,14 +34,42 @@ const prixMarche = [
   { machine: 'Pasteurisateur 500L', fourchette: '800K – 1,5M DZD', tendance: '↗', pct: '+3%' },
 ]
 
+function normalizeMachine(m) {
+  return {
+    id: m.id,
+    nom: m.name || m.nom,
+    fournisseur: m.seller?.name || m.seller?.company || m.fournisseur || 'Vendeur',
+    wilaya: m.wilaya,
+    prix: String(m.price || m.prix || 0),
+    type: m.condition || m.type || 'Vente neuf',
+    secteur: m.category || m.secteur || 'Industrie',
+    verifie: m.verified ?? m.verifie ?? false,
+    photos: m.photos,
+  }
+}
+
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [earlyEmail, setEarlyEmail] = useState('')
   const [earlySubmitted, setEarlySubmitted] = useState(false)
+  const [featuredMachines, setFeaturedMachines] = useState([])
 
-  const handleEarlyAccess = (e) => {
+  useEffect(() => {
+    fetch('/api/machines?limit=6')
+      .then(r => r.json())
+      .then(d => { if (d.machines?.length) setFeaturedMachines(d.machines.map(normalizeMachine)) })
+      .catch(() => {})
+  }, [])
+
+  const handleEarlyAccess = async (e) => {
     e.preventDefault()
-    if (earlyEmail) setEarlySubmitted(true)
+    if (!earlyEmail) return
+    await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: 'Accès anticipé', email: earlyEmail, message: "Demande d'accès anticipé via homepage" }),
+    }).catch(() => {})
+    setEarlySubmitted(true)
   }
 
   return (
@@ -149,7 +168,7 @@ export default function HomePage() {
             <Link href="/catalogue" className="btn-outline text-sm">Voir tout →</Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {machinesDemo.map((machine) => (
+            {featuredMachines.map((machine) => (
               <MachineCard key={machine.id} machine={machine} />
             ))}
           </div>

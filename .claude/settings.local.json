@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(npm install:*)",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "Bash(npm run:*)",
+      "Bash(sed -i 's/48 wilayas/58 wilayas/g' app/fournisseurs/page.js)",
+      "Bash(sed -i 's/Mars 2025/Avr 2026/g' app/prix/page.js app/guides/page.js)",
+      "Bash(sed -i 's/Fév 2025/Avr 2026/g' app/prix/page.js)"
     ]
   }
 }
