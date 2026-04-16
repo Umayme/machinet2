@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  password      String
+  name          String
+  phone         String?
+  company       String?
+  wilaya        String?
+  sector        String?
+  role          String         @default("buyer")
+  approved      Boolean        @default(false)
+  approvedAt    DateTime?
+  createdAt     DateTime       @default(now())
+  machines      Machine[]
+  contacts      Contact[]
+  consultations Consultation[]
+}
+
+model Machine {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  price       Int
+  condition   String
+  wilaya      String
+  description String?
+  specs       String?
+  photos      String?
+  sellerId    String
+  seller      User     @relation(fields: [sellerId], references: [id])
+  verified    Boolean  @default(false)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  contacts    Contact[]
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  machineId String?
+  machine   Machine? @relation(fields: [machineId], references: [id])
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+}
+
+model Consultation {
+  id            String    @id @default(cuid())
+  clientName    String
+  clientEmail   String
+  clientPhone   String?
+  subject       String
+  message       String?
+  consultantId  String?
+  consultant    User?     @relation(fields: [consultantId], references: [id])
+  status        String    @default("pending")
+  scheduledAt   DateTime?
+  notes         String?
+  createdAt     DateTime  @default(now())
+}
