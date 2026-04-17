@@ -1,38 +1,40 @@
 import { NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
 import { sendContactNotification } from '@/lib/email'
+import Database from 'better-sqlite3'
+import path from 'path'
+import { randomBytes } from 'crypto'
+
+function getDb() {
+  return new Database(path.join(process.cwd(), 'prisma', 'dev.db'))
+}
+function cuid() {
+  return 'c' + randomBytes(16).toString('hex')
+}
 
 export async function POST(request) {
   try {
     const { name, email, phone, message, machineId } = await request.json()
-
     if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: 'Nom, email et message sont requis' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Nom, email et message sont requis' }, { status: 400 })
     }
 
     const session = await getSession()
+    const id = cuid()
+    const now = new Date().toISOString()
 
-    const contact = await prisma.contact.create({
-      data: {
-        name,
-        email,
-        phone: phone || null,
-        message,
-        machineId: machineId || null,
-        userId: session?.id || null,
-      },
-    })
+    const db = getDb()
+    db.prepare(
+      `INSERT INTO Contact (id, name, email, phone, message, machineId, userId, status, createdAt)
+       VALUES (?, ?, ?, ?, ?, ?, ?, 'new', ?)`
+    ).run(id, name, email, phone || null, message, machineId || null, session?.id || null, now)
+    db.close()
 
-    // Send email notification (non-blocking)
     sendContactNotification({ name, email, phone, message, machineId }).catch(err =>
       console.error('Email notification failed:', err.message)
     )
 
-    return NextResponse.json({ success: true, contact }, { status: 201 })
+    return NextResponse.json({ success: true, contact: { id } }, { status: 201 })
   } catch (error) {
     console.error('Contact POST error:', error)
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
@@ -46,13 +48,23 @@ export async function GET() {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     }
 
-    const contacts = await prisma.contact.findMany({
-      include: { machine: { select: { name: true } } },
-      orderBy: { createdAt: 'desc' },
-    })
+    const db = getDb()
+    const contacts = db.prepare(`
+      SELECT c.*, m.name as machineName
+      FROM Contact c
+      LEFT JOIN Machine m ON m.id = c.machineId
+      ORDER BY c.createdAt DESC
+    `).all()
+    db.close()
 
-    return NextResponse.json({ contacts })
+    const formatted = contacts.map(c => ({
+      ...c,
+      machine: c.machineName ? { name: c.machineName } : null,
+    }))
+
+    return NextResponse.json({ contacts: formatted })
   } catch (error) {
+    console.error('Contact GET error:', error)
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
 }

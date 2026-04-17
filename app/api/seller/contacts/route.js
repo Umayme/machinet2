@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
+import Database from 'better-sqlite3'
+import path from 'path'
+
+function getDb() {
+  return new Database(path.join(process.cwd(), 'prisma', 'dev.db'))
+}
 
 export async function GET() {
   try {
@@ -9,23 +14,22 @@ export async function GET() {
       return NextResponse.json({ error: 'Accès interdit' }, { status: 403 })
     }
 
-    const users = await prisma.$queryRawUnsafe(
-      `SELECT approved FROM User WHERE id = ?`,
-      session.id
-    )
-    const user = users[0]
+    const db = getDb()
+    const user = db.prepare('SELECT approved FROM User WHERE id = ?').get(session.id)
     if (!user || !Boolean(user.approved)) {
+      db.close()
       return NextResponse.json({ error: 'Compte non approuvé' }, { status: 403 })
     }
 
-    const contacts = await prisma.$queryRawUnsafe(`
+    const contacts = db.prepare(`
       SELECT c.id, c.name, c.email, c.phone, c.message, c.status, c.createdAt,
              m.name as machineName, m.id as machineId
       FROM Contact c
       JOIN Machine m ON m.id = c.machineId
       WHERE m.sellerId = ?
       ORDER BY c.createdAt DESC
-    `, session.id)
+    `).all(session.id)
+    db.close()
 
     return NextResponse.json({ contacts: contacts || [] })
   } catch (error) {

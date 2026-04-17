@@ -1,30 +1,27 @@
 import { NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
+import Database from 'better-sqlite3'
+import path from 'path'
+
+function getDb() {
+  return new Database(path.join(process.cwd(), 'prisma', 'dev.db'))
+}
 
 export async function GET() {
   try {
     const session = await getSession()
-    if (!session) {
-      return NextResponse.json({ user: null }, { status: 200 })
-    }
+    if (!session) return NextResponse.json({ user: null }, { status: 200 })
 
-    // Use raw SQL to include the new approved/approvedAt fields
-    const users = await prisma.$queryRawUnsafe(
-      `SELECT id, email, name, role, approved, company, wilaya, phone FROM User WHERE id = ?`,
-      session.id
-    )
+    const db = getDb()
+    const user = db.prepare(
+      'SELECT id, email, name, role, approved, company, wilaya, phone FROM User WHERE id = ?'
+    ).get(session.id)
+    db.close()
 
-    const user = users[0]
-    if (!user) {
-      return NextResponse.json({ user: null }, { status: 200 })
-    }
+    if (!user) return NextResponse.json({ user: null }, { status: 200 })
 
     return NextResponse.json({
-      user: {
-        ...user,
-        approved: Boolean(user.approved), // SQLite stores booleans as 0/1
-      }
+      user: { ...user, approved: Boolean(user.approved) }
     })
   } catch (error) {
     console.error('Me error:', error)

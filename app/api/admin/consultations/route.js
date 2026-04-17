@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
+import Database from 'better-sqlite3'
+import path from 'path'
+
+function getDb() {
+  return new Database(path.join(process.cwd(), 'prisma', 'dev.db'))
+}
 
 export async function GET() {
   try {
@@ -9,14 +14,15 @@ export async function GET() {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     }
 
-    const consultations = await prisma.$queryRawUnsafe(`
+    const db = getDb()
+    const consultations = db.prepare(`
       SELECT c.*, u.name as consultantName, u.email as consultantEmail
       FROM Consultation c
       LEFT JOIN User u ON u.id = c.consultantId
       ORDER BY c.createdAt DESC
-    `)
+    `).all()
+    db.close()
 
-    // Normalize
     const formatted = (consultations || []).map(c => ({
       id: c.id,
       clientName: c.clientName,
@@ -28,6 +34,7 @@ export async function GET() {
       scheduledAt: c.scheduledAt,
       notes: c.notes,
       createdAt: c.createdAt,
+      consultantId: c.consultantId,
       consultant: c.consultantName ? { name: c.consultantName, email: c.consultantEmail } : null,
     }))
 
@@ -50,6 +57,7 @@ export async function PUT(request) {
       return NextResponse.json({ error: 'ID requis' }, { status: 400 })
     }
 
+    const db = getDb()
     const parts = []
     const values = []
 
@@ -60,11 +68,9 @@ export async function PUT(request) {
 
     if (parts.length > 0) {
       values.push(id)
-      await prisma.$executeRawUnsafe(
-        `UPDATE Consultation SET ${parts.join(', ')} WHERE id = ?`,
-        ...values
-      )
+      db.prepare(`UPDATE Consultation SET ${parts.join(', ')} WHERE id = ?`).run(...values)
     }
+    db.close()
 
     return NextResponse.json({ success: true })
   } catch (error) {

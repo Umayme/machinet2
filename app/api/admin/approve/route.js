@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
+import Database from 'better-sqlite3'
+import path from 'path'
+
+function getDb() {
+  return new Database(path.join(process.cwd(), 'prisma', 'dev.db'))
+}
 
 export async function POST(request) {
   try {
@@ -14,16 +19,15 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Paramètres invalides' }, { status: 400 })
     }
 
+    const db = getDb()
     if (action === 'approve') {
       const now = new Date().toISOString()
-      await prisma.$executeRawUnsafe(
-        `UPDATE User SET approved = 1, approvedAt = ? WHERE id = ?`,
-        now, userId
-      )
+      db.prepare(`UPDATE User SET approved = 1, approvedAt = ? WHERE id = ?`).run(now, userId)
+      db.close()
       return NextResponse.json({ success: true, message: 'Utilisateur approuvé' })
     } else {
-      // Reject: delete the user account
-      await prisma.user.delete({ where: { id: userId } })
+      db.prepare(`DELETE FROM User WHERE id = ?`).run(userId)
+      db.close()
       return NextResponse.json({ success: true, message: 'Demande rejetée' })
     }
   } catch (error) {

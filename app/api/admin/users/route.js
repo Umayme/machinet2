@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
+import Database from 'better-sqlite3'
+import path from 'path'
+
+function getDb() {
+  return new Database(path.join(process.cwd(), 'prisma', 'dev.db'))
+}
 
 export async function GET() {
   try {
@@ -9,8 +14,8 @@ export async function GET() {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     }
 
-    // Use raw SQL to get approved field + machine count
-    const users = await prisma.$queryRawUnsafe(`
+    const db = getDb()
+    const users = db.prepare(`
       SELECT u.id, u.email, u.name, u.company, u.wilaya, u.role,
              u.approved, u.approvedAt, u.phone, u.sector, u.createdAt,
              COUNT(m.id) as machineCount
@@ -18,9 +23,9 @@ export async function GET() {
       LEFT JOIN Machine m ON m.sellerId = u.id
       GROUP BY u.id
       ORDER BY u.createdAt DESC
-    `)
+    `).all()
+    db.close()
 
-    // Normalize data
     const normalized = (users || []).map(u => ({
       ...u,
       approved: Boolean(u.approved),

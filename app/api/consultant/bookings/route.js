@@ -1,34 +1,31 @@
 import { NextResponse } from 'next/server'
-import prisma from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
+import Database from 'better-sqlite3'
+import path from 'path'
+
+function getDb() {
+  return new Database(path.join(process.cwd(), 'prisma', 'dev.db'))
+}
 
 export async function GET() {
   try {
     const session = await getSession()
-    if (!session) {
-      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-    }
-
+    if (!session) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     if (session.role !== 'consultant') {
       return NextResponse.json({ error: 'Accès interdit' }, { status: 403 })
     }
 
-    // Check if consultant is approved
-    const users = await prisma.$queryRawUnsafe(
-      `SELECT approved FROM User WHERE id = ?`,
-      session.id
-    )
-    const user = users[0]
-
+    const db = getDb()
+    const user = db.prepare('SELECT approved FROM User WHERE id = ?').get(session.id)
     if (!user || !Boolean(user.approved)) {
+      db.close()
       return NextResponse.json({ error: 'Compte non approuvé' }, { status: 403 })
     }
 
-    // Get consultant's bookings
-    const bookings = await prisma.$queryRawUnsafe(
-      `SELECT * FROM Consultation WHERE consultantId = ? ORDER BY createdAt DESC`,
-      session.id
-    )
+    const bookings = db.prepare(
+      'SELECT * FROM Consultation WHERE consultantId = ? ORDER BY createdAt DESC'
+    ).all(session.id)
+    db.close()
 
     return NextResponse.json({ bookings: bookings || [] })
   } catch (error) {
@@ -45,32 +42,18 @@ export async function PUT(request) {
     }
 
     const { id, status } = await request.json()
-    if (!id || !status) {
-      return NextResponse.json({ error: 'ID et statut requis' }, { status: 400 })
-    }
+    if (!id || !status) return NextResponse.json({ error: 'ID et statut requis' }, { status: 400 })
 
     const allowed = ['confirmed', 'completed', 'cancelled']
-    if (!allowed.includes(status)) {
-      return NextResponse.json({ error: 'Statut invalide' }, { status: 400 })
-    }
+    if (!allowed.includes(status)) return NextResponse.json({ error: 'Statut invalide' }, { status: 400 })
 
-    // Verify the booking belongs to this consultant
-    const bookings = await prisma.$queryRawUnsafe(
-      `SELECT id, consultantId FROM Consultation WHERE id = ?`,
-      id
-    )
-    const booking = bookings[0]
-    if (!booking) {
-      return NextResponse.json({ error: 'Consultation introuvable' }, { status: 404 })
-    }
-    if (booking.consultantId !== session.id) {
-      return NextResponse.json({ error: 'Accès interdit' }, { status: 403 })
-    }
+    const db = getDb()
+    const booking = db.prepare('SELECT id, consultantId FROM Consultation WHERE id = ?').get(id)
+    if (!booking) { db.close(); return NextResponse.json({ error: 'Consultation introuvable' }, { status: 404 }) }
+    if (booking.consultantId !== session.id) { db.close(); return NextResponse.json({ error: 'Accès interdit' }, { status: 403 }) }
 
-    await prisma.$executeRawUnsafe(
-      `UPDATE Consultation SET status = ? WHERE id = ?`,
-      status, id
-    )
+    db.prepare('UPDATE Consultation SET status = ? WHERE id = ?').run(status, id)
+    db.close()
 
     return NextResponse.json({ success: true })
   } catch (error) {
