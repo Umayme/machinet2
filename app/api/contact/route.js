@@ -3,6 +3,7 @@ import { getSession } from '@/lib/auth'
 import Database from 'better-sqlite3'
 import path from 'path'
 import { randomBytes } from 'crypto'
+import { sendContactNotification } from '@/lib/email'
 
 function getDb() { return new Database(path.join(process.cwd(), 'prisma', 'dev.db')) }
 function cuid() { return 'c' + randomBytes(16).toString('hex') }
@@ -33,6 +34,7 @@ export async function POST(request) {
     db.prepare(`INSERT INTO Contact (id, name, email, phone, message, machineId, userId, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'new', ?)`
     ).run(id, name, email, phone||null, message, machineId||null, session?.id||null, now)
     db.close()
+    try { await sendContactNotification({ name, email, phone: phone||'', message, machineId }) } catch {}
     return NextResponse.json({ success: true, id }, { status: 201 })
   } catch (e) { console.error(e); return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 }) }
 }

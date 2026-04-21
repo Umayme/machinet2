@@ -6,7 +6,7 @@ import MachineCard from '../components/MachineCard'
 const stats = [
   { value: '500+', label: 'Fournisseurs vérifiés' },
   { value: '3 200+', label: 'Machines disponibles' },
-  { value: '58', label: 'Wilayas couvertes' },
+  { value: '69', label: 'Wilayas couvertes' },
   { value: '15+', label: 'Secteurs couverts' },
 ]
 
@@ -50,8 +50,6 @@ function normalizeMachine(m) {
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [earlyEmail, setEarlyEmail] = useState('')
-  const [earlySubmitted, setEarlySubmitted] = useState(false)
   const [featuredMachines, setFeaturedMachines] = useState([])
 
   useEffect(() => {
@@ -60,17 +58,6 @@ export default function HomePage() {
       .then(d => { if (d.machines?.length) setFeaturedMachines(d.machines.map(normalizeMachine)) })
       .catch(() => {})
   }, [])
-
-  const handleEarlyAccess = async (e) => {
-    e.preventDefault()
-    if (!earlyEmail) return
-    await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'Accès anticipé', email: earlyEmail, message: "Demande d'accès anticipé via homepage" }),
-    }).catch(() => {})
-    setEarlySubmitted(true)
-  }
 
   return (
     <div className="min-h-screen">
@@ -147,11 +134,8 @@ export default function HomePage() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {secteurs.map((s, i) => (
             <Link key={i} href={s.href} className="card p-6 text-center group">
-              <div className="w-10 h-10 rounded-lg bg-purple-900/30 border border-purple-800/40 mx-auto mb-3 flex items-center justify-center group-hover:border-purple-500/60 transition-colors">
-                <span className="text-purple-400 font-bold text-xs">{s.label.slice(0,3)}</span>
-              </div>
-              <div className="text-white font-semibold">{s.label}</div>
-              <div className="text-gray-500 text-sm mt-1">{s.desc}</div>
+              <div className="text-white font-bold text-lg mb-1 group-hover:text-purple-300 transition-colors">{s.label}</div>
+              <div className="text-gray-500 text-sm">{s.desc}</div>
             </Link>
           ))}
         </div>
@@ -188,7 +172,7 @@ export default function HomePage() {
               <h3 className="text-white font-bold text-lg">Pour les Acheteurs</h3>
             </div>
             {[
-              { n: '1', titre: 'Décrivez votre besoin', desc: 'Secteur, type de machine, budget, wilaya — notre IA fait le reste.' },
+              { n: '1', titre: 'Décrivez votre besoin', desc: 'Secteur, type de machine, budget, wilaya — notre plateforme fait le reste.' },
               { n: '2', titre: 'Recevez des recommandations IA', desc: 'Comparatif prix, fournisseurs vérifiés, spécifications côte à côte.' },
               { n: '3', titre: 'Contactez directement', desc: "Mise en relation directe, devis gratuit, sans intermédiaire inutile." },
             ].map((step) => (
@@ -310,46 +294,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ACCÈS ANTICIPÉ */}
+      {/* CTA FINAL */}
       <section className="py-24 max-w-4xl mx-auto px-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-purple-900/20 border border-purple-800/40 rounded-full px-4 py-2 mb-6">
-          <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-          <span className="text-green-300 text-sm font-medium">Accès anticipé — Places limitées</span>
-        </div>
         <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
           Rejoignez MachiNet
-          <br />
-          <span style={{ background: 'linear-gradient(135deg, #c084fc, #7e22ce)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-            en avant-première.
-          </span>
         </h2>
         <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-          Soyez parmi les premiers industriels algériens à accéder à la plateforme. Accès gratuit pendant 3 mois.
+          La première plateforme B2B de machines industrielles en Algérie. Acheteurs, vendeurs, consultants.
         </p>
-        {!earlySubmitted ? (
-          <form onSubmit={handleEarlyAccess} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Votre adresse email professionnelle"
-              className="input-dark h-14 flex-1"
-              value={earlyEmail}
-              onChange={(e) => setEarlyEmail(e.target.value)}
-              required
-            />
-            <button type="submit" className="btn-primary h-14 px-8 whitespace-nowrap">
-              Rejoindre →
-            </button>
-          </form>
-        ) : (
-          <div className="inline-flex items-center gap-3 bg-green-900/20 border border-green-700/40 rounded-xl px-8 py-4">
-            <span className="text-2xl">✓</span>
-            <div className="text-left">
-              <p className="text-green-400 font-semibold">Inscription confirmée !</p>
-              <p className="text-gray-500 text-sm">Nous vous contacterons très prochainement.</p>
-            </div>
-          </div>
-        )}
-        <p className="text-gray-600 text-sm mt-4">Aucune carte bancaire requise · Support en arabe et français</p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link href="/catalogue" className="btn-primary text-base px-10 py-4">Parcourir le catalogue</Link>
+          <Link href="/register" className="btn-outline text-base px-10 py-4">Créer un compte</Link>
+        </div>
       </section>
 
     </div>

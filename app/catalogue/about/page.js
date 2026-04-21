@@ -22,7 +22,7 @@ const milestones = [
   { date: 'Sep 2024', event: 'Levée de fonds initiale. Recrutement de l\'équipe technique' },
   { date: 'Jan 2025', event: 'Lancement de la beta fermée avec 30 vendeurs partenaires' },
   { date: 'Juin 2025', event: '500 vendeurs inscrits, 3 200 machines référencées' },
-  { date: 'Avr 2026', event: 'Lancement public — 58 wilayas couvertes' },
+  { date: 'Avr 2026', event: 'Lancement public — 69 wilayas couvertes' },
 ]
 
 export default function AboutPage() {
@@ -43,13 +43,13 @@ export default function AboutPage() {
               MachiNet est né d'un constat simple : trouver une machine industrielle en Algérie prend des mois. Des appels téléphoniques, des déplacements, des prix opaques. Il fallait une plateforme moderne.
             </p>
             <p className="text-gray-500 text-base leading-relaxed mb-8">
-              Nous connectons les acheteurs industriels avec des vendeurs vérifiés dans les 58 wilayas. Avec l'IA, la transparence des prix et un réseau de consultants experts, nous transformons le marché des machines en Algérie.
+              Nous connectons les acheteurs industriels avec des vendeurs vérifiés dans les 69 wilayas. Avec l'IA, la transparence des prix et un réseau de consultants experts, nous transformons le marché des machines en Algérie.
             </p>
             <Link href="/register" className="btn-primary">Rejoindre MachiNet →</Link>
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { v: '2024', l: 'Année de création' },
+              { v: '2026', l: 'Lancé en' },
               { v: '500+', l: 'Vendeurs actifs' },
               { v: '58', l: 'Wilayas couvertes' },
               { v: '10 000+', l: 'Acheteurs inscrits' },
@@ -133,23 +133,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* PRESSE / CONTACT */}
+      {/* PARTENARIATS */}
       <section className="py-20 max-w-4xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="card p-8">
-            <h3 className="text-white font-bold text-xl mb-4">Presse & médias</h3>
-            <p className="text-gray-400 text-sm mb-4">Pour toute demande de presse, interview ou partenariat média.</p>
-            <a href="mailto:presse@machinet.dz" className="text-purple-400 hover:text-purple-300 transition-colors text-sm">
-              presse@machinet.dz
-            </a>
-          </div>
-          <div className="card p-8">
-            <h3 className="text-white font-bold text-xl mb-4">Partenariats</h3>
-            <p className="text-gray-400 text-sm mb-4">Associations, fédérations industrielles, chambres de commerce — travaillons ensemble.</p>
-            <Link href="/contact" className="text-purple-400 hover:text-purple-300 transition-colors text-sm">
-              Nous contacter →
-            </Link>
-          </div>
+        <div className="card p-8">
+          <h3 className="text-white font-bold text-xl mb-4">Partenariats</h3>
+          <p className="text-gray-400 text-sm mb-4">Associations, fédérations industrielles, chambres de commerce — travaillons ensemble.</p>
+          <Link href="/contact" className="text-purple-400 hover:text-purple-300 transition-colors text-sm">
+            Nous contacter →
+          </Link>
         </div>
       </section>
 

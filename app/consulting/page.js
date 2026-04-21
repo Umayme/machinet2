@@ -43,7 +43,7 @@ const consultants = [
 ]
 
 export default function ConsultingPage() {
-  const [form, setForm] = useState({ nom: '', email: '', phone: '', secteur: '', message: '' })
+  const [form, setForm] = useState({ nom: '', email: '', phone: '', secteur: '', consultant: '', message: '' })
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -60,7 +60,7 @@ export default function ConsultingPage() {
           clientName: form.nom,
           clientEmail: form.email,
           clientPhone: form.phone,
-          subject: `Consultation ${form.secteur}`,
+          subject: `Consultation ${form.secteur}${form.consultant ? ` — ${form.consultant}` : ''}`,
           message: form.message,
         }),
       })
@@ -198,6 +198,15 @@ export default function ConsultingPage() {
                   <option>Industrie générale</option>
                   <option>Énergie & Utilities</option>
                   <option>Autre</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-gray-400 text-sm mb-2">Consultant préféré (optionnel)</label>
+                <select className="input-dark h-12" value={form.consultant} onChange={e => setForm({ ...form, consultant: e.target.value })}>
+                  <option value="">— Peu importe (premier disponible)</option>
+                  {consultants.map(c => (
+                    <option key={c.nom} value={c.nom}>{c.nom} — {c.specialite} ({c.wilaya})</option>
+                  ))}
                 </select>
               </div>
               <div>

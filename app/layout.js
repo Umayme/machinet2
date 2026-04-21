@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 export const metadata = {
-  title: 'MachiNet — 1ère Plateforme B2B Machines en Algérie',
+  title: 'MachiNet',
   description: 'Trouvez, comparez et sourcez vos machines industrielles en Algérie.',
 }
 

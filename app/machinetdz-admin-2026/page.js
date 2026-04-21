@@ -14,6 +14,8 @@ export default function SecretAdminPanel() {
   const [contacts, setContacts] = useState([])
   const [pending, setPending] = useState([])
   const [consultations, setConsultations] = useState([])
+  const [feedbacks, setFeedbacks] = useState([])
+  const [newsletter, setNewsletter] = useState([])
   const [loading, setLoading] = useState(false)
 
   // Check if already logged in as admin
@@ -32,18 +34,22 @@ export default function SecretAdminPanel() {
   const loadData = async () => {
     setLoading(true)
     try {
-      const [m, u, c, p, co] = await Promise.all([
+      const [m, u, c, p, co, fb, nl] = await Promise.all([
         fetch('/api/admin/machines').then(r => r.json()),
         fetch('/api/admin/users').then(r => r.json()),
         fetch('/api/contact').then(r => r.json()),
         fetch('/api/admin/pending').then(r => r.json()),
         fetch('/api/admin/consultations').then(r => r.json()),
+        fetch('/api/feedback?admin=1').then(r => r.json()),
+        fetch('/api/newsletter/admin').then(r => r.json()).catch(() => ({ subscribers: [] })),
       ])
       setMachines(m.machines || [])
       setUsers(u.users || [])
       setContacts(c.contacts || [])
       setPending(p.users || [])
       setConsultations(co.consultations || [])
+      setFeedbacks(fb.feedbacks || [])
+      setNewsletter(nl.subscribers || [])
     } catch (e) {
       console.error(e)
     }
@@ -114,7 +120,7 @@ export default function SecretAdminPanel() {
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
     setAuthed(false)
-    setMachines([]); setUsers([]); setContacts([]); setPending([]); setConsultations([])
+    setMachines([]); setUsers([]); setContacts([]); setPending([]); setConsultations([]); setFeedbacks([]); setNewsletter([])
   }
 
   const updateConsultation = async (id, fields) => {
@@ -176,13 +182,26 @@ export default function SecretAdminPanel() {
 
   // ---------- ADMIN PANEL ----------
   const tabs = [
-    { id: 'overview', label: '📊 Vue d\'ensemble' },
-    { id: 'pending', label: `⏳ Demandes${pending.length > 0 ? ` (${pending.length})` : ''}` },
-    { id: 'machines', label: '🔧 Annonces' },
-    { id: 'users', label: '👥 Utilisateurs' },
-    { id: 'consultations', label: '📅 Consultations' },
-    { id: 'contacts', label: '📩 Contacts' },
+    { id: 'overview', label: 'Vue d\'ensemble' },
+    { id: 'pending', label: `Demandes${pending.length > 0 ? ` (${pending.length})` : ''}` },
+    { id: 'machines', label: 'Annonces' },
+    { id: 'users', label: 'Utilisateurs' },
+    { id: 'consultations', label: 'Consultations' },
+    { id: 'contacts', label: 'Contacts' },
+    { id: 'feedbacks', label: `Avis${feedbacks.filter(f => !f.approved).length > 0 ? ` (${feedbacks.filter(f => !f.approved).length})` : ''}` },
+    { id: 'newsletter', label: 'Newsletter' },
   ]
+
+  const approveFeedback = async (id, approved) => {
+    await fetch('/api/feedback', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, approved }) })
+    setFeedbacks(prev => prev.map(f => f.id === id ? { ...f, approved: approved ? 1 : 0 } : f))
+  }
+
+  const deleteFeedback = async (id) => {
+    if (!confirm('Supprimer cet avis ?')) return
+    await fetch('/api/feedback', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+    setFeedbacks(prev => prev.filter(f => f.id !== id))
+  }
 
   const approvedSellers = users.filter(u => u.role === 'seller' && u.approved)
   const approvedConsultants = users.filter(u => u.role === 'consultant' && u.approved)
@@ -542,6 +561,81 @@ export default function SecretAdminPanel() {
                       })}
                     </div>
                   )}
+                </div>
+              )}
+
+              {/* FEEDBACKS TAB */}
+              {tab === 'feedbacks' && (
+                <div>
+                  <h1 className="text-2xl font-black text-white mb-2">Avis & Témoignages</h1>
+                  <p className="text-gray-500 text-sm mb-8">Modérer les avis soumis par les utilisateurs</p>
+                  {feedbacks.length === 0 ? (
+                    <div className="card p-16 text-center">
+                      <h3 className="text-white font-bold text-lg mb-2">Aucun avis</h3>
+                      <p className="text-gray-500 text-sm">Les témoignages soumis apparaîtront ici.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {feedbacks.map(f => (
+                        <div key={f.id} className={`card p-5 ${!f.approved ? 'border-yellow-900/30' : ''}`}>
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-3 mb-1">
+                                <p className="text-white font-bold">{f.nom}</p>
+                                {f.poste && <span className="text-gray-500 text-xs">{f.poste}</span>}
+                                {f.wilaya && <span className="text-gray-600 text-xs">{f.wilaya}</span>}
+                                <span className="text-purple-400">{'★'.repeat(f.note)}</span>
+                                <span className={`text-xs px-2 py-0.5 rounded-full ${f.approved ? 'bg-green-900/30 text-green-400' : 'bg-yellow-900/30 text-yellow-400'}`}>
+                                  {f.approved ? 'Publié' : 'En attente'}
+                                </span>
+                              </div>
+                              <p className="text-gray-400 text-sm italic">"{f.texte}"</p>
+                              <p className="text-gray-600 text-xs mt-1">{new Date(f.createdAt).toLocaleDateString('fr-DZ')}</p>
+                            </div>
+                            <div className="flex gap-2 flex-shrink-0">
+                              <button onClick={() => approveFeedback(f.id, !f.approved)}
+                                className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${f.approved ? 'border-gray-700 text-gray-500 hover:text-white' : 'border-green-800/40 bg-green-900/20 text-green-400 hover:bg-green-900/40'}`}>
+                                {f.approved ? 'Dépublier' : 'Approuver'}
+                              </button>
+                              <button onClick={() => deleteFeedback(f.id)} className="text-red-500 hover:text-red-400 text-xs px-3 py-1.5">Suppr.</button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* NEWSLETTER TAB */}
+              {tab === 'newsletter' && (
+                <div>
+                  <h1 className="text-2xl font-black text-white mb-2">Newsletter</h1>
+                  <p className="text-gray-500 text-sm mb-8">{newsletter.length} abonné{newsletter.length !== 1 ? 's' : ''}</p>
+                  <div className="card overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="border-b border-purple-900/30">
+                            <th className="text-left px-4 py-3 text-gray-500 text-xs uppercase">#</th>
+                            <th className="text-left px-4 py-3 text-gray-500 text-xs uppercase">Email</th>
+                            <th className="text-right px-4 py-3 text-gray-500 text-xs uppercase">Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {newsletter.length === 0 ? (
+                            <tr><td colSpan={3} className="text-center py-10 text-gray-600">Aucun abonné</td></tr>
+                          ) : newsletter.map((s, i) => (
+                            <tr key={i} className="border-b border-purple-900/10 hover:bg-purple-900/5">
+                              <td className="px-4 py-3 text-gray-600 text-xs">{s.id}</td>
+                              <td className="px-4 py-3 text-white text-sm">{s.email}</td>
+                              <td className="px-4 py-3 text-right text-gray-600 text-xs">{new Date(s.createdAt).toLocaleDateString('fr-DZ')}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               )}
 

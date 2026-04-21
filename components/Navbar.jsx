@@ -18,7 +18,7 @@ const navLinks = [
   {
     label: 'Plateforme',
     dropdown: [
-      { href: '/couverture', label: 'Couverture', desc: '58 wilayas couvertes' },
+      { href: '/couverture', label: 'Couverture', desc: '69 wilayas couvertes' },
       { href: '/tarifs', label: 'Tarifs', desc: 'Plans et abonnements' },
       { href: '/about', label: 'À propos', desc: 'Notre équipe' },
     ],
@@ -71,7 +71,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
         <Link href="/" className="flex items-center group">
-          <img src="/logo.svg" alt="MachiNet" className="h-9 w-auto group-hover:opacity-80 transition-opacity" />
+          <span className="logo-text text-3xl text-white group-hover:opacity-80 transition-opacity">MACHINET</span>
         </Link>
 
         {/* Desktop Nav */}
@@ -139,11 +139,11 @@ export default function Navbar() {
                   </div>
                   {(user.role === 'seller' || user.role === 'consultant') && (
                     <Link href={dashboardLink()} className="block px-3 py-2 rounded-lg hover:bg-purple-900/20 text-gray-300 text-sm hover:text-white transition-colors">
-                      📊 Mon dashboard
+                      Mon dashboard
                     </Link>
                   )}
                   <Link href="/catalogue" className="block px-3 py-2 rounded-lg hover:bg-purple-900/20 text-gray-300 text-sm hover:text-white transition-colors">
-                    🔍 Catalogue
+                    Catalogue
                   </Link>
                   <button onClick={handleLogout} className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-900/20 text-red-500 text-sm transition-colors mt-1">
                     Déconnexion
@@ -202,7 +202,7 @@ export default function Navbar() {
                   <p className="text-gray-500 text-xs">{user.role} · {user.email}</p>
                 </div>
                 {(user.role === 'seller' || user.role === 'consultant') && (
-                  <Link href={dashboardLink()} className="block px-4 py-2 text-purple-400 text-sm">📊 Mon dashboard</Link>
+                  <Link href={dashboardLink()} className="block px-4 py-2 text-purple-400 text-sm">Mon dashboard</Link>
                 )}
                 <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-red-500 text-sm">Déconnexion</button>
               </>

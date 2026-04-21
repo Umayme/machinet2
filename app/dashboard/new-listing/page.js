@@ -5,13 +5,33 @@ import { useRouter } from 'next/navigation'
 
 const wilayas = ['Adrar','Chlef','Laghouat','Oum El Bouaghi','Batna','Béjaïa','Biskra','Béchar','Blida','Bouira','Tamanrasset','Tébessa','Tlemcen','Tiaret','Tizi Ouzou','Alger','Djelfa','Jijel','Sétif','Saïda','Skikda','Sidi Bel Abbès','Annaba','Guelma','Constantine','Médéa','Mostaganem',"M'Sila",'Mascara','Ouargla','Oran','El Bayadh','Illizi','Bordj Bou Arréridj','Boumerdès','El Tarf','Tindouf','Tissemsilt','El Oued','Khenchela','Souk Ahras','Tipaza','Mila','Aïn Defla','Naâma','Aïn Témouchent','Ghardaïa','Relizane','Timimoun','Bordj Badji Mokhtar','Ouled Djellal','Béni Abbès','In Salah','In Guezzam','Touggourt','Djanet',"El M'Ghair",'El Meniaa']
 const categories = ['BTP','IAA','Agricole','Textile','Industrie','Pharma','Mining','Énergie','Autre']
-const conditions = ['Vente neuf','Occasion','Location']
+const conditions = ['Vente neuf','Occasion']
 
 export default function NewListingPage() {
   const router = useRouter()
   const [form, setForm] = useState({ name: '', category: '', price: '', condition: '', wilaya: '', description: '', specs: '' })
+  const [photos, setPhotos] = useState([])
+  const [uploading, setUploading] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const handlePhotoUpload = async (e) => {
+    const files = Array.from(e.target.files)
+    if (!files.length) return
+    setUploading(true)
+    const uploaded = []
+    for (const file of files.slice(0, 5 - photos.length)) {
+      const fd = new FormData()
+      fd.append('file', file)
+      try {
+        const res = await fetch('/api/upload', { method: 'POST', body: fd })
+        const data = await res.json()
+        if (data.url) uploaded.push(data.url)
+      } catch {}
+    }
+    setPhotos(p => [...p, ...uploaded])
+    setUploading(false)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -20,7 +40,7 @@ export default function NewListingPage() {
     const res = await fetch('/api/machines', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ ...form, photos }),
     })
     const data = await res.json()
     setLoading(false)
@@ -85,8 +105,27 @@ export default function NewListingPage() {
             <label className="block text-gray-400 text-sm mb-2">Spécifications techniques</label>
             <textarea rows={3} className="input-dark resize-none" placeholder="Puissance: 120kW, Poids: 18T, ..." value={form.specs} onChange={e => set('specs', e.target.value)} />
           </div>
+          <div>
+            <label className="block text-gray-400 text-sm mb-2">Photos (max 5)</label>
+            <div className="flex flex-wrap gap-3 mb-3">
+              {photos.map((url, i) => (
+                <div key={i} className="relative w-20 h-20 rounded-lg overflow-hidden border border-purple-700/40">
+                  <img src={url} alt="" className="w-full h-full object-cover" />
+                  <button type="button" onClick={() => setPhotos(p => p.filter((_, j) => j !== i))}
+                    className="absolute top-0.5 right-0.5 w-5 h-5 bg-black/70 rounded-full text-white text-xs flex items-center justify-center hover:bg-red-900">×</button>
+                </div>
+              ))}
+              {photos.length < 5 && (
+                <label className="w-20 h-20 rounded-lg border-2 border-dashed border-purple-700/40 flex items-center justify-center cursor-pointer hover:border-purple-500 transition-colors">
+                  <span className="text-gray-500 text-2xl">{uploading ? '...' : '+'}</span>
+                  <input type="file" accept="image/*" multiple className="hidden" onChange={handlePhotoUpload} disabled={uploading} />
+                </label>
+              )}
+            </div>
+            <p className="text-gray-600 text-xs">JPG, PNG ou WebP — max 5 Mo par image</p>
+          </div>
           {error && <p className="text-red-400 text-sm">{error}</p>}
-          <button type="submit" disabled={loading} className="btn-primary w-full justify-center h-12 text-base disabled:opacity-50">
+          <button type="submit" disabled={loading || uploading} className="btn-primary w-full justify-center h-12 text-base disabled:opacity-50">
             {loading ? 'Publication...' : 'Publier l\'annonce →'}
           </button>
         </form>

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import MachineCard from '../../components/MachineCard'
 
 const secteurs = ['Tous', 'BTP', 'IAA', 'Agricole', 'Textile', 'Industrie', 'Pharma', 'Mining', 'Énergie']
-const conditions = ['Tous', 'Vente neuf', 'Occasion', 'Location']
+const conditions = ['Tous', 'Vente neuf', 'Occasion']
 const wilayas = ['Toutes', 'Alger', 'Oran', 'Constantine', 'Blida', 'Sétif', 'Annaba', 'Tlemcen', 'Batna', 'Béjaïa', 'Biskra', 'Tiaret', 'Boumerdès', 'Tipaza', 'Médéa']
 
 function normalize(m) {
@@ -70,7 +70,7 @@ export default function AcheteursPage() {
               Accédez à des centaines de machines vérifiées. Comparez les prix, contactez directement les vendeurs et obtenez des devis gratuits.
             </p>
             <div className="grid grid-cols-2 gap-4">
-              {['Vendeurs vérifiés', 'Prix transparents', 'Conseil IA inclus', '58 wilayas'].map((f, i) => (
+              {['Vendeurs vérifiés', 'Prix transparents', 'Conseil expert inclus', '69 wilayas'].map((f, i) => (
                 <div key={i} className="flex items-center gap-2 text-gray-300 text-sm">
                   <span className="text-purple-400">•</span>{f}
                 </div>
@@ -155,7 +155,6 @@ export default function AcheteursPage() {
           </div>
         ) : (
           <div className="text-center py-20">
-            <p className="text-5xl mb-4">🔍</p>
             <p className="text-white font-semibold text-lg mb-2">Aucune machine trouvée</p>
             <p className="text-gray-500 text-sm">Essayez d'autres filtres ou consultez notre conseiller IA.</p>
             <Link href="/ia-bots" className="btn-primary mt-6 inline-flex">Consulter MachiBot</Link>
@@ -173,8 +172,8 @@ export default function AcheteursPage() {
               { titre: 'Vendeurs vérifiés', desc: 'Chaque vendeur passe par notre processus de vérification : documents, identité entreprise, réputation.' },
               { titre: 'Contact direct', desc: 'Échangez directement avec le vendeur. Pas d\'intermédiaire. Devis gratuit en 24h.' },
               { titre: 'Prix du marché', desc: 'Consultez notre base de données de prix pour négocier en connaissance de cause.' },
-              { titre: 'IA Advisor', desc: 'Notre IA analyse votre besoin et vous recommande les meilleures machines pour votre activité.' },
-              { titre: '58 wilayas', desc: 'Des vendeurs dans toute l\'Algérie. Filtrez par wilaya pour réduire les frais de transport.' },
+              { titre: 'Advisor expert', desc: 'MachiBot analyse votre besoin et vous recommande les meilleures machines pour votre activité.' },
+              { titre: '69 wilayas', desc: 'Des vendeurs dans toute l\'Algérie. Filtrez par wilaya pour réduire les frais de transport.' },
               { titre: 'Occasion & neuf', desc: 'Comparez machines neuves et d\'occasion. Filtrez par état, année, kilométrage.' },
             ].map((f, i) => (
               <div key={i} className="card p-6">

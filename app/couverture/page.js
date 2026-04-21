@@ -61,6 +61,17 @@ const wilayas = [
   { n: '56', nom: 'Djanet', region: 'Grand Sud', vendeurs: 1 },
   { n: '57', nom: "El M'Ghair", region: 'Sud-Est', vendeurs: 3 },
   { n: '58', nom: 'El Meniaa', region: 'Grand Sud', vendeurs: 2 },
+  { n: '59', nom: 'El Eulma', region: 'Nord-Est', vendeurs: 0 },
+  { n: '60', nom: 'Draa El Mizan', region: 'Nord-Centre', vendeurs: 0 },
+  { n: '61', nom: 'Bir El Djir', region: 'Ouest', vendeurs: 0 },
+  { n: '62', nom: 'Ain Oussera', region: 'Hauts Plateaux', vendeurs: 0 },
+  { n: '63', nom: 'El Achir', region: 'Centre-Est', vendeurs: 0 },
+  { n: '64', nom: 'Aïn El Turck', region: 'Ouest', vendeurs: 0 },
+  { n: '65', nom: 'Zemmouri', region: 'Centre', vendeurs: 0 },
+  { n: '66', nom: 'El Khroub', region: 'Nord-Est', vendeurs: 0 },
+  { n: '67', nom: 'Bougaa', region: 'Nord-Est', vendeurs: 0 },
+  { n: '68', nom: 'Corso', region: 'Centre', vendeurs: 0 },
+  { n: '69', nom: 'Sidi Khaled', region: 'Hauts Plateaux Est', vendeurs: 0 },
 ]
 
 const regions = ['Toutes', 'Centre', 'Nord-Est', 'Ouest', 'Est', 'Hauts Plateaux', 'Hauts Plateaux Ouest', 'Hauts Plateaux Est', 'Centre-Ouest', 'Centre-Est', 'Sud', 'Sud-Est', 'Sud-Ouest', 'Grand Sud']
@@ -100,13 +111,13 @@ export default function CouverturePage() {
           <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
           <span className="text-green-300 text-sm font-medium">Couverture nationale complète</span>
         </div>
-        <h1 className="section-title text-5xl mb-4">MachiNet couvre les 58 wilayas</h1>
+        <h1 className="section-title text-5xl mb-4">MachiNet couvre les 69 wilayas</h1>
         <p className="section-subtitle max-w-xl mx-auto mb-10">
           De Tamanrasset à Annaba, des vendeurs et acheteurs partout en Algérie.
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-16">
           {[
-            { v: '58', l: 'Wilayas couvertes' },
+            { v: '69', l: 'Wilayas couvertes' },
             { v: totalVendeurs + '+', l: 'Vendeurs référencés' },
             { v: '100%', l: 'Territoire national' },
             { v: '3 200+', l: 'Machines disponibles' },

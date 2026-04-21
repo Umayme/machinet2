@@ -54,6 +54,8 @@ export default function IABotsPage() {
   const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef(null)
 
+  useEffect(() => { window.scrollTo(0, 0) }, [])
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
@@ -179,7 +181,7 @@ export default function IABotsPage() {
                   onClick={() => sendMessage()}
                   disabled={!input.trim() || loading}
                   className="btn-primary px-5 h-12 disabled:opacity-50 disabled:cursor-not-allowed">
-                  ➤
+                  Envoyer
                 </button>
               </div>
             </div>

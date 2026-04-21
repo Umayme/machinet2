@@ -51,34 +51,31 @@ export default function ContactPage() {
 
           {/* INFOS */}
           <div className="space-y-6">
-            {[
-              { icon: '✉️', titre: 'Email', valeur: 'machinetdz@gmail.com', sub: 'Réponse sous 24h' },
-              { icon: '📱', titre: 'Téléphone', valeur: '+213 XX XX XX XX', sub: 'Dim–Jeu : 8h–17h' },
-              { icon: '📍', titre: 'Adresse', valeur: 'Alger, Algérie', sub: 'Siège social' },
-              { icon: '💬', titre: 'WhatsApp', valeur: '+213 XX XX XX XX', sub: 'Réponse rapide' },
-            ].map((info, i) => (
-              <div key={i} className="card p-6 flex items-start gap-4">
-                <div className="text-3xl">{info.icon}</div>
-                <div>
-                  <h3 className="text-white font-semibold mb-1">{info.titre}</h3>
-                  <p className="text-purple-400 text-sm font-medium">{info.valeur}</p>
-                  <p className="text-gray-600 text-xs mt-1">{info.sub}</p>
-                </div>
+            <div className="card p-6 flex items-start gap-4">
+              <div>
+                <h3 className="text-white font-semibold mb-1">Email</h3>
+                <a href="mailto:machinetdz@gmail.com" className="text-purple-400 text-sm font-medium hover:text-purple-300">machinetdz@gmail.com</a>
+                <p className="text-gray-600 text-xs mt-1">Réponse sous 24h</p>
               </div>
-            ))}
-            <div className="card p-6">
-              <h3 className="text-white font-semibold mb-4">Horaires d'ouverture</h3>
-              <div className="space-y-2">
-                {[
-                  { j: 'Dimanche – Jeudi', h: '8h00 – 17h00' },
-                  { j: 'Vendredi', h: 'Fermé' },
-                  { j: 'Samedi', h: '9h00 – 13h00' },
-                ].map((h, i) => (
-                  <div key={i} className="flex justify-between text-sm">
-                    <span className="text-gray-400">{h.j}</span>
-                    <span className={h.h === 'Fermé' ? 'text-red-400' : 'text-purple-400'}>{h.h}</span>
-                  </div>
-                ))}
+            </div>
+            <div className="card p-6 flex items-start gap-4">
+              <div>
+                <h3 className="text-white font-semibold mb-1">Téléphone</h3>
+                <a href="tel:+213659132072" className="text-purple-400 text-sm font-medium hover:text-purple-300">+213 659 132 072</a>
+              </div>
+            </div>
+            <div className="card p-6 flex items-start gap-4">
+              <div>
+                <h3 className="text-white font-semibold mb-1">Adresse</h3>
+                <p className="text-purple-400 text-sm font-medium">Alger, Algérie</p>
+                <p className="text-gray-600 text-xs mt-1">Siège social</p>
+              </div>
+            </div>
+            <div className="card p-6 flex items-start gap-4">
+              <div>
+                <h3 className="text-white font-semibold mb-1">WhatsApp</h3>
+                <a href="https://wa.me/213659132072" target="_blank" rel="noreferrer" className="text-purple-400 text-sm font-medium hover:text-purple-300">+213 659 132 072</a>
+                <p className="text-gray-600 text-xs mt-1">Réponse rapide</p>
               </div>
             </div>
           </div>
@@ -87,7 +84,6 @@ export default function ContactPage() {
           <div className="lg:col-span-2">
             {sent ? (
               <div className="card p-12 text-center">
-                <div className="text-6xl mb-6">✅</div>
                 <h2 className="text-2xl font-black text-white mb-4">Message envoyé !</h2>
                 <p className="text-gray-400 mb-8">Merci pour votre message. Notre équipe vous répondra dans les 24 heures.</p>
                 <button onClick={() => { setSent(false); setForm({ nom: '', email: '', telephone: '', sujet: '', message: '' }) }} className="btn-primary">
@@ -101,7 +97,7 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label className="text-gray-400 text-sm mb-2 block">Nom complet *</label>
-                      <input type="text" required placeholder="Ahmed Bensalem" className="input-dark"
+                      <input type="text" required placeholder="Votre nom et prénom" className="input-dark"
                         value={form.nom} onChange={(e) => setForm({ ...form, nom: e.target.value })} />
                     </div>
                     <div>
@@ -112,8 +108,8 @@ export default function ContactPage() {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="text-gray-400 text-sm mb-2 block">Téléphone</label>
-                      <input type="tel" placeholder="+213 XX XX XX XX" className="input-dark"
+                      <label className="text-gray-400 text-sm mb-2 block">Téléphone *</label>
+                      <input type="tel" required placeholder="+213 6XX XX XX XX" className="input-dark"
                         value={form.telephone} onChange={(e) => setForm({ ...form, telephone: e.target.value })} />
                     </div>
                     <div>
@@ -135,7 +131,7 @@ export default function ContactPage() {
                   </div>
                   {error && <p className="text-red-400 text-sm">{error}</p>}
                   <button type="submit" disabled={loading} className="btn-primary w-full justify-center py-4 text-base disabled:opacity-50">
-                    {loading ? 'Envoi en cours...' : '📨 Envoyer le message'}
+                    {loading ? 'Envoi en cours...' : 'Envoyer le message'}
                   </button>
                   <p className="text-gray-600 text-xs text-center">
                     En envoyant ce formulaire, vous acceptez notre politique de confidentialité.
@@ -150,12 +146,11 @@ export default function ContactPage() {
           <h2 className="section-title text-center mb-12">Besoin d'aide rapide ?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { icon: '🤖', titre: 'IA Advisor', desc: 'Obtenez une recommandation instantanée sur votre besoin machine', btn: 'Parler à l\'IA', href: '/ia-bots' },
-              { icon: '📞', titre: 'Appel direct', desc: 'Parlez directement à un expert machines algérien', btn: 'Appeler maintenant', href: 'tel:+213XXXXXXXX' },
-              { icon: '📅', titre: 'Consulting expert', desc: 'Réservez une session de conseil de 1h avec notre équipe', btn: 'Réserver', href: '/consulting' },
+              { titre: 'MachiBot', desc: 'Obtenez une recommandation instantanée sur votre besoin machine', btn: 'Parler à MachiBot', href: '/ia-bots' },
+              { titre: 'Appel direct', desc: 'Parlez directement à un expert machines algérien', btn: 'Appeler maintenant', href: 'tel:+213659132072' },
+              { titre: 'Consulting expert', desc: 'Réservez une session de conseil de 1h avec notre équipe', btn: 'Réserver', href: '/consulting' },
             ].map((opt, i) => (
               <div key={i} className="card p-6 text-center">
-                <div className="text-4xl mb-4">{opt.icon}</div>
                 <h3 className="text-white font-bold mb-2">{opt.titre}</h3>
                 <p className="text-gray-500 text-sm mb-6">{opt.desc}</p>
                 <Link href={opt.href} className="btn-outline w-full text-center justify-center block py-2 text-sm">{opt.btn}</Link>

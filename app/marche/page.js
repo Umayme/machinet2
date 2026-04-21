@@ -84,7 +84,7 @@ export default function MarchePage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {[
             { v: '200+', l: 'Types de machines suivis' },
-            { v: '58', l: 'Wilayas couvertes' },
+            { v: '69', l: 'Wilayas couvertes' },
             { v: '500+', l: 'Vendeurs référencés' },
             { v: 'Mensuel', l: 'Fréquence de mise à jour' },
           ].map((s, i) => (

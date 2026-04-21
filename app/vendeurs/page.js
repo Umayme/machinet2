@@ -1,9 +1,10 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import FeedbackForm from '../../components/FeedbackForm'
 
 const avantages = [
-  { titre: 'Visibilité nationale', desc: 'Votre catalogue visible par des acheteurs dans les 58 wilayas d\'Algérie.' },
+  { titre: 'Visibilité nationale', desc: 'Votre catalogue visible par des acheteurs dans les 69 wilayas d\'Algérie.' },
   { titre: 'Leads qualifiés', desc: 'Recevez uniquement des demandes d\'acheteurs avec une vraie intention d\'achat.' },
   { titre: 'Badge vérifié', desc: 'Gagnez la confiance des acheteurs avec notre badge de vendeur vérifié MachiNet.' },
   { titre: 'Dashboard analytics', desc: 'Suivez vos vues, contacts, et performances. Optimisez vos annonces.' },
@@ -12,7 +13,7 @@ const avantages = [
 ]
 
 const etapes = [
-  { n: '1', titre: 'Créez votre profil vendeur', desc: 'Inscription gratuite en 5 minutes. Renseignez votre entreprise, secteur d\'activité et wilaya.' },
+  { n: '1', titre: 'Créez votre profil vendeur', desc: 'Inscription en 5 minutes. Renseignez votre entreprise, secteur d\'activité et wilaya.' },
   { n: '2', titre: 'Publiez vos machines', desc: 'Ajoutez vos machines avec photos, spécifications techniques, prix et disponibilité.' },
   { n: '3', titre: 'Recevez des leads', desc: 'Les acheteurs vous contactent directement. Vous recevez leurs coordonnées complètes.' },
   { n: '4', titre: 'Gérez votre catalogue', desc: 'Dashboard en temps réel. Modifiez vos annonces, suivez vos performances, fermez vos ventes.' },
@@ -58,13 +59,13 @@ export default function VendeursPage() {
                 Voir les tarifs
               </Link>
             </div>
-            <p className="text-gray-600 text-sm mt-4">Inscription gratuite · Pas de commission sur ventes</p>
+            <p className="text-gray-600 text-sm mt-4">Approbation requise · Profil actif sous 24h</p>
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
               { v: '10 000+', l: 'Acheteurs actifs' },
               { v: '45', l: 'Leads/mois en moyenne' },
-              { v: '58', l: 'Wilayas couvertes' },
+              { v: '69', l: 'Wilayas couvertes' },
               { v: '3x', l: 'Plus de visibilité' },
             ].map((s, i) => (
               <div key={i} className="card p-6 text-center">
@@ -170,13 +171,22 @@ export default function VendeursPage() {
         </div>
       </section>
 
+      {/* FEEDBACK */}
+      <section className="py-20 max-w-2xl mx-auto px-6">
+        <div className="text-center mb-8">
+          <h2 className="section-title mb-3">Partagez votre expérience</h2>
+          <p className="section-subtitle">Votre avis aide d'autres vendeurs à rejoindre MachiNet</p>
+        </div>
+        <FeedbackForm />
+      </section>
+
       {/* CTA FINAL */}
       <section className="py-20 max-w-4xl mx-auto px-6 text-center">
         <div className="card p-16">
           <h2 className="text-4xl font-black text-white mb-4">Prêt à recevoir vos premiers leads ?</h2>
           <p className="text-gray-400 text-lg mb-8">Rejoignez 500+ vendeurs qui développent leur business sur MachiNet.</p>
           <Link href="/register?role=seller" className="btn-primary text-base px-12 py-4">
-            Créer mon compte vendeur gratuitement →
+            Créer mon compte vendeur →
           </Link>
         </div>
       </section>
