@@ -70,7 +70,6 @@ export default function MachinePage() {
     return (
       <div className="min-h-screen pt-20 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-6xl mb-4">🔍</p>
           <h2 className="text-white font-bold text-2xl mb-2">Machine introuvable</h2>
           <p className="text-gray-500 mb-6">Cette annonce n'existe pas ou a été supprimée.</p>
           <Link href="/catalogue" className="btn-primary">Retour au catalogue</Link>
@@ -140,8 +139,8 @@ export default function MachinePage() {
               </div>
               <h1 className="text-3xl font-black text-white mb-2">{machine.name}</h1>
               <div className="flex items-center gap-4 text-sm text-gray-500">
-                <span>📍 {machine.wilaya}</span>
-                {machine.seller?.company && <span>🏭 {machine.seller.company}</span>}
+                <span>{machine.wilaya}</span>
+                {machine.seller?.company && <span>{machine.seller.company}</span>}
               </div>
               <div className="mt-4">
                 <p className="text-xs text-gray-600 mb-1">Prix indicatif</p>
@@ -200,7 +199,7 @@ export default function MachinePage() {
                 </div>
               </div>
               <div className="space-y-2 mb-4 text-sm text-gray-400">
-                <p>📍 {machine.seller?.wilaya || machine.wilaya}</p>
+                <p>{machine.seller?.wilaya || machine.wilaya}</p>
               </div>
               {!sent ? (
                 <button onClick={() => setShowContact(!showContact)} className="btn-primary w-full justify-center">

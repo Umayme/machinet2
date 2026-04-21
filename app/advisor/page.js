@@ -15,13 +15,13 @@ const reponsesAuto = [
         keywords: ['laiterie', 'yaourt', 'lait', 'dairy'],
         reponse: `Pour une laiterie de 500L/jour, voici mes recommandations :
 
-**🥛 Équipements essentiels :**
+**Équipements essentiels :**
 - Pasteurisateur 500–1000L/h : 800 000 – 1 500 000 DZD
 - Tank de stockage inox 1000L : 350 000 – 600 000 DZD  
 - Ligne conditionnement yaourt : 2 500 000 – 5 000 000 DZD
 - Chambre froide 20m² : 600 000 – 1 200 000 DZD
 
-**💡 Conseil :** Pour démarrer, privilégiez le pasteurisateur + tank de stockage en premier. Budget minimum recommandé : 4–6M DZD pour une ligne complète opérationnelle.
+**Conseil :** Pour démarrer, privilégiez le pasteurisateur + tank de stockage en premier. Budget minimum recommandé : 4–6M DZD pour une ligne complète opérationnelle.
 
 Voulez-vous que je vous mette en contact avec des fournisseurs vérifiés pour ces équipements ?`
     },
@@ -29,31 +29,31 @@ Voulez-vous que je vous mette en contact avec des fournisseurs vérifiés pour c
         keywords: ['tracteur', 'agricole', 'hectare', 'céréale'],
         reponse: `Pour 50 hectares de céréales, voici ce que je recommande :
 
-**🚜 Tracteur adapté :**
+**Tracteur adapté :**
 - Puissance recommandée : 75–100 CV
 - Modèles courants en Algérie : John Deere 5075E, New Holland T4, Massey Ferguson 5711
 - Prix neuf : 2 500 000 – 4 500 000 DZD
 - Prix occasion (-3 ans) : 1 500 000 – 2 800 000 DZD
 
-**🌾 Équipements complémentaires :**
+**Équipements complémentaires :**
 - Charrue 3 socs : 280 000 – 450 000 DZD
 - Semoir céréales : 350 000 – 700 000 DZD
 
-**💡 Conseil :** Pour 50 ha, un tracteur 75CV est suffisant. Optez pour une occasion récente (<3 ans) pour économiser 40% sur le budget.`
+**Conseil :** Pour 50 ha, un tracteur 75CV est suffisant. Optez pour une occasion récente (<3 ans) pour économiser 40% sur le budget.`
     },
     {
         keywords: ['pelle', 'excavateur', 'btp', 'chantier'],
         reponse: `Pour une pelle hydraulique BTP, voici les fourchettes de prix en Algérie :
 
-**⛏️ Par catégorie :**
+**Par catégorie :**
 - Mini-pelle 3–6T : 3 500 000 – 6 000 000 DZD
 - Pelle 13–20T (standard) : 8 000 000 – 15 000 000 DZD
 - Grande pelle 25–35T : 18 000 000 – 35 000 000 DZD
 
-**🏷️ Marques disponibles en Algérie :**
+**Marques disponibles en Algérie :**
 Caterpillar, Komatsu, Volvo, Hyundai, XCMG (Chine)
 
-**💡 Conseil :** Pour un usage chantier standard, la pelle 13–20T est la plus polyvalente. XCMG offre le meilleur rapport qualité/prix pour les budgets serrés.
+**Conseil :** Pour un usage chantier standard, la pelle 13–20T est la plus polyvalente. XCMG offre le meilleur rapport qualité/prix pour les budgets serrés.
 
 Quel est votre budget approximatif ?`
     },
@@ -63,13 +63,13 @@ export default function AdvisorPage() {
     const [messages, setMessages] = useState([
         {
             role: 'assistant',
-            content: `Bonjour ! 👋 Je suis l'IA Advisor de MachiNet.
+            content: `Bonjour ! Je suis l'IA Advisor de MachiNet.
 
 Je suis spécialisé dans les machines industrielles en Algérie. Je peux vous aider à :
-- 🔍 Trouver la machine adaptée à votre activité
-- 💰 Estimer les prix du marché algérien  
-- ⚖️ Comparer neuf vs occasion vs location
-- 🏭 Identifier les bons fournisseurs
+- Trouver la machine adaptée à votre activité
+- Estimer les prix du marché algérien
+- Comparer neuf vs occasion
+- Identifier les bons fournisseurs
 
 **Posez-moi votre question en français ou en arabe !**`
         }
@@ -93,12 +93,12 @@ Je suis spécialisé dans les machines industrielles en Algérie. Je peux vous a
 
 Je recherche les informations dans notre base de données algérienne...
 
-**📊 Ce que je peux vous dire :**
+**Ce que je peux vous dire :**
 - Ce type de machine est disponible chez plusieurs fournisseurs vérifiés sur MachiNet
 - Les prix varient selon la marque, la capacité et l'état (neuf/occasion)
 - Des fournisseurs sont disponibles dans votre région
 
-**💡 Recommandation :**
+**Recommandation :**
 Consultez notre catalogue avec ce terme de recherche, ou contactez notre équipe pour un conseil personnalisé.
 
 Voulez-vous que je vous aide à affiner votre recherche ?`
@@ -132,7 +132,7 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
                 {/* HEADER */}
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center gap-3 bg-purple-900/20 border border-purple-800/40 rounded-2xl px-6 py-3 mb-4">
-                        <span className="text-3xl animate-float inline-block">🤖</span>
+                        <div className="w-10 h-10 rounded-xl bg-purple-700/40 border border-purple-600/40 flex items-center justify-center"><span className="text-purple-300 font-black text-xs">AI</span></div>
                         <div className="text-left">
                             <p className="text-white font-bold">IA Advisor MachiNet</p>
                             <p className="text-green-400 text-xs">● En ligne — Répond en quelques secondes</p>
@@ -155,7 +155,7 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
                                     }`}>
                                     {msg.role === 'assistant' && (
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-sm">🤖</span>
+                                            <span className="text-purple-400 text-xs font-black">AI</span>
                                             <span className="text-purple-400 text-xs font-semibold">IA Advisor</span>
                                         </div>
                                     )}
@@ -171,7 +171,7 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
                             <div className="flex justify-start">
                                 <div className="bg-white/5 border border-purple-900/30 rounded-2xl rounded-bl-none px-5 py-4">
                                     <div className="flex items-center gap-2">
-                                        <span className="text-sm">🤖</span>
+                                        <span className="text-purple-400 text-xs font-black">AI</span>
                                         <div className="flex gap-1">
                                             <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
                                             <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -187,7 +187,7 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
                     {/* SUGGESTIONS */}
                     {messages.length === 1 && (
                         <div className="px-6 pb-4">
-                            <p className="text-gray-600 text-xs mb-3">💡 Suggestions :</p>
+                            <p className="text-gray-600 text-xs mb-3">Suggestions :</p>
                             <div className="flex flex-wrap gap-2">
                                 {suggestionsInitiales.map((s, i) => (
                                     <button

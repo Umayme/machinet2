@@ -182,7 +182,7 @@ export default function SellerDashboard() {
                       </td>
                       <td className="px-6 py-4 text-center">
                         <span className={`text-xs px-2 py-1 rounded-full ${m.verified ? 'bg-purple-900/30 text-purple-400' : 'bg-yellow-900/20 text-yellow-600'}`}>
-                          {m.verified ? '✓ Vérifiée' : '⏳ En attente'}
+                          {m.verified ? 'Vérifiée' : 'En attente'}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-center text-gray-400 text-sm">{m.contacts?.length || 0}</td>

@@ -61,26 +61,6 @@ const articles = [
 
 const categories = ['Tous', 'BTP', 'IAA', 'Agricole', 'Import', 'Finance', 'Conseil']
 
-const calculateurs = [
-    {
-        icon: '📈',
-        titre: 'Calculateur ROI Machine',
-        desc: 'Estimez le retour sur investissement de votre achat machine en quelques clics',
-        btn: 'Calculer',
-    },
-    {
-        icon: '⚖️',
-        titre: 'Neuf vs Occasion',
-        desc: 'Comparez le coût total de possession selon votre durée d\'utilisation',
-        btn: 'Comparer',
-    },
-    {
-        icon: '💳',
-        titre: 'Simulateur de financement',
-        desc: 'Calculez vos mensualités selon le montant et la durée de crédit',
-        btn: 'Simuler',
-    },
-]
 
 export default function GuidesPage() {
     const [selectedCat, setSelectedCat] = useState('Tous')

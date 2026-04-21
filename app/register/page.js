@@ -119,7 +119,7 @@ export default function RegisterPage() {
             </div>
             {role && selectedRole?.requiresApproval && (
               <div className="bg-yellow-900/10 border border-yellow-800/20 rounded-xl p-3 mb-4 text-xs text-yellow-600">
-                ⚠️ Ce type de compte nécessite une approbation de notre équipe avant d'accéder au dashboard.
+                Ce type de compte nécessite une approbation de notre équipe avant d'accéder au dashboard.
               </div>
             )}
             <button onClick={() => role && setStep(2)} disabled={!role}

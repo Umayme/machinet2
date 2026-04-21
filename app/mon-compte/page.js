@@ -110,13 +110,11 @@ export default function MonComptePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           {(user.role === 'seller' || user.role === 'consultant' || user.role === 'admin') && (
             <Link href={dashboardHref} className="card p-5 hover:border-purple-700/50 transition-all group">
-              <div className="text-2xl mb-2">📊</div>
               <p className="text-white font-semibold text-sm group-hover:text-purple-300 transition-colors">Mon dashboard</p>
               <p className="text-gray-500 text-xs mt-1">Accéder à votre espace</p>
             </Link>
           )}
           <Link href="/catalogue" className="card p-5 hover:border-purple-700/50 transition-all group">
-            <div className="text-2xl mb-2">🔍</div>
             <p className="text-white font-semibold text-sm group-hover:text-purple-300 transition-colors">Catalogue</p>
             <p className="text-gray-500 text-xs mt-1">Parcourir les machines</p>
           </Link>

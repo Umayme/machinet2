@@ -65,8 +65,10 @@ export default function HomePage() {
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-purple-900/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-purple-800/10 rounded-full blur-3xl"></div>
+          <div className="grid-bg absolute inset-0 opacity-60"></div>
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-purple-900/25 rounded-full blur-[120px]"></div>
+          <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-violet-900/15 rounded-full blur-[80px]"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-purple-800/12 rounded-full blur-[80px]"></div>
         </div>
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-2 bg-purple-900/20 border border-purple-800/40 rounded-full px-4 py-2 mb-8">

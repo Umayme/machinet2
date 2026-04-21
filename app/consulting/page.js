@@ -166,7 +166,6 @@ export default function ConsultingPage() {
           </div>
           {sent ? (
             <div className="card p-12 text-center">
-              <div className="text-5xl mb-4">✅</div>
               <h3 className="text-white font-bold text-xl mb-2">Demande envoyée !</h3>
               <p className="text-gray-400 mb-6">Un consultant vous contactera dans les 24 heures.</p>
               <button onClick={() => { setSent(false); setForm({ nom: '', email: '', phone: '', secteur: '', message: '' }) }}

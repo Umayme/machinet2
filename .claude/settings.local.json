@@ -7,7 +7,9 @@
       "Bash(sed -i 's/48 wilayas/58 wilayas/g' app/fournisseurs/page.js)",
       "Bash(sed -i 's/Mars 2025/Avr 2026/g' app/prix/page.js app/guides/page.js)",
       "Bash(sed -i 's/Fév 2025/Avr 2026/g' app/prix/page.js)",
-      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(48\\).toString\\('hex'\\)\\)\")"
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(48\\).toString\\('hex'\\)\\)\")",
+      "Bash(Start-Process \"http://localhost:3000\")",
+      "mcp__Claude_in_Chrome__tabs_context_mcp"
     ]
   }
 }

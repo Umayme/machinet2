@@ -298,7 +298,6 @@ export default function SecretAdminPanel() {
 
                   {pending.length === 0 ? (
                     <div className="card p-16 text-center">
-                      <p className="text-4xl mb-4">✅</p>
                       <h3 className="text-white font-bold text-lg mb-2">Aucune demande en attente</h3>
                       <p className="text-gray-500 text-sm">Toutes les demandes ont été traitées.</p>
                     </div>
@@ -319,11 +318,11 @@ export default function SecretAdminPanel() {
                                 </div>
                                 <p className="text-gray-400 text-sm">{u.email}</p>
                                 <div className="flex gap-4 mt-2 text-xs text-gray-600">
-                                  {u.company && <span>🏭 {u.company}</span>}
-                                  {u.wilaya && <span>📍 {u.wilaya}</span>}
-                                  {u.phone && <span>📞 {u.phone}</span>}
-                                  {u.sector && <span>🔧 {u.sector}</span>}
-                                  <span>📅 {new Date(u.createdAt).toLocaleDateString('fr-DZ')}</span>
+                                  {u.company && <span>{u.company}</span>}
+                                  {u.wilaya && <span>{u.wilaya}</span>}
+                                  {u.phone && <span>{u.phone}</span>}
+                                  {u.sector && <span>{u.sector}</span>}
+                                  <span>{new Date(u.createdAt).toLocaleDateString('fr-DZ')}</span>
                                 </div>
                               </div>
                               <div className="flex gap-2 ml-4">
@@ -359,11 +358,11 @@ export default function SecretAdminPanel() {
                                 </div>
                                 <p className="text-gray-400 text-sm">{u.email}</p>
                                 <div className="flex gap-4 mt-2 text-xs text-gray-600">
-                                  {u.company && <span>🏭 {u.company}</span>}
-                                  {u.wilaya && <span>📍 {u.wilaya}</span>}
-                                  {u.phone && <span>📞 {u.phone}</span>}
-                                  {u.sector && <span>🔧 {u.sector}</span>}
-                                  <span>📅 {new Date(u.createdAt).toLocaleDateString('fr-DZ')}</span>
+                                  {u.company && <span>{u.company}</span>}
+                                  {u.wilaya && <span>{u.wilaya}</span>}
+                                  {u.phone && <span>{u.phone}</span>}
+                                  {u.sector && <span>{u.sector}</span>}
+                                  <span>{new Date(u.createdAt).toLocaleDateString('fr-DZ')}</span>
                                 </div>
                               </div>
                               <div className="flex gap-2 ml-4">
@@ -473,7 +472,7 @@ export default function SecretAdminPanel() {
                               </td>
                               <td className="px-4 py-3 text-center">
                                 <span className={`text-xs px-2 py-0.5 rounded-full ${u.approved ? 'bg-green-900/30 text-green-400' : 'bg-yellow-900/30 text-yellow-500'}`}>
-                                  {u.approved ? '✓' : '⏳'}
+                                  {u.approved ? 'Oui' : 'Non'}
                                 </span>
                               </td>
                               <td className="px-4 py-3 text-gray-400 text-xs">{u.wilaya || '—'}</td>
@@ -495,7 +494,6 @@ export default function SecretAdminPanel() {
                   <p className="text-gray-500 text-sm mb-8">Demandes de conseil — assigner un consultant et mettre à jour le statut</p>
                   {consultations.length === 0 ? (
                     <div className="card p-16 text-center">
-                      <p className="text-4xl mb-4">📅</p>
                       <h3 className="text-white font-bold text-lg mb-2">Aucune consultation</h3>
                       <p className="text-gray-500 text-sm">Les demandes de consultation apparaîtront ici.</p>
                     </div>
@@ -518,9 +516,9 @@ export default function SecretAdminPanel() {
                                 </div>
                                 <div className="flex flex-wrap gap-4 text-xs text-gray-500 mb-1">
                                   <span>👤 {c.clientName}</span>
-                                  <span>✉️ {c.clientEmail}</span>
-                                  {c.clientPhone && <span>📞 {c.clientPhone}</span>}
-                                  <span>📅 {new Date(c.createdAt).toLocaleDateString('fr-DZ')}</span>
+                                  <span>{c.clientEmail}</span>
+                                  {c.clientPhone && <span>{c.clientPhone}</span>}
+                                  <span>{new Date(c.createdAt).toLocaleDateString('fr-DZ')}</span>
                                 </div>
                                 {c.message && <p className="text-gray-600 text-xs bg-white/5 rounded px-3 py-1.5 mt-2">{c.message}</p>}
                                 {c.notes && <p className="text-gray-500 text-xs italic mt-1">Note: {c.notes}</p>}
@@ -584,7 +582,7 @@ export default function SecretAdminPanel() {
                                 <p className="text-white font-bold">{f.nom}</p>
                                 {f.poste && <span className="text-gray-500 text-xs">{f.poste}</span>}
                                 {f.wilaya && <span className="text-gray-600 text-xs">{f.wilaya}</span>}
-                                <span className="text-purple-400">{'★'.repeat(f.note)}</span>
+                                <span className="text-purple-400 font-bold">{f.note}/5</span>
                                 <span className={`text-xs px-2 py-0.5 rounded-full ${f.approved ? 'bg-green-900/30 text-green-400' : 'bg-yellow-900/30 text-yellow-400'}`}>
                                   {f.approved ? 'Publié' : 'En attente'}
                                 </span>

@@ -82,11 +82,10 @@ function CatalogueInner() {
 
         {/* SEARCH */}
         <div className="relative mb-8">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">🔍</span>
           <input
             type="text"
             placeholder="Rechercher une machine, un fournisseur..."
-            className="input-dark pl-12 h-14 text-base"
+            className="input-dark h-14 text-base"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -177,7 +176,6 @@ function CatalogueInner() {
               </div>
             ) : (
               <div className="text-center py-20">
-                <div className="text-6xl mb-4">🔍</div>
                 <h3 className="text-white font-semibold text-xl mb-2">Aucun résultat</h3>
                 <p className="text-gray-500 mb-6">Essayez de modifier vos filtres</p>
                 <button onClick={reset} className="btn-primary">Réinitialiser les filtres</button>

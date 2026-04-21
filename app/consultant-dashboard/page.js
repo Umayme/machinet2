@@ -181,15 +181,15 @@ function BookingCard({ booking, onUpdate }) {
             <span className={`text-xs px-2 py-0.5 rounded-full ${s.color}`}>{s.label}</span>
           </div>
           <div className="flex flex-wrap gap-4 text-sm text-gray-400 mb-2">
-            <span>👤 {booking.clientName}</span>
-            <span>✉️ {booking.clientEmail}</span>
-            {booking.clientPhone && <span>📞 {booking.clientPhone}</span>}
+            <span>{booking.clientName}</span>
+            <span>{booking.clientEmail}</span>
+            {booking.clientPhone && <span>{booking.clientPhone}</span>}
           </div>
           {booking.message && (
             <p className="text-gray-600 text-sm bg-white/5 rounded-lg px-3 py-2 mt-2">{booking.message}</p>
           )}
           {booking.scheduledAt && (
-            <p className="text-cyan-400 text-xs mt-2">📅 Planifié le {new Date(booking.scheduledAt).toLocaleDateString('fr-DZ', { dateStyle: 'long' })}</p>
+            <p className="text-cyan-400 text-xs mt-2">Planifié le {new Date(booking.scheduledAt).toLocaleDateString('fr-DZ', { dateStyle: 'long' })}</p>
           )}
           {booking.notes && (
             <p className="text-gray-500 text-xs mt-2 italic">Note: {booking.notes}</p>

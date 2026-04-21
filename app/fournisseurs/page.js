@@ -113,8 +113,8 @@ export default function FournisseursPage() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {temoignages.map((t, i) => (
                             <div key={i} className="card p-6">
-                                <div className="flex mb-4">
-                                    {[...Array(t.note)].map((_, j) => <span key={j} className="text-purple-400">★</span>)}
+                                <div className="flex gap-1 mb-4">
+                                    {[...Array(t.note)].map((_, j) => <span key={j} className="w-2 h-2 rounded-full bg-purple-500 inline-block"></span>)}
                                 </div>
                                 <p className="text-gray-400 text-sm leading-relaxed mb-6 italic">"{t.texte}"</p>
                                 <div className="flex items-center gap-3">

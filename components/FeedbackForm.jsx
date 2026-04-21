@@ -62,8 +62,7 @@ export default function FeedbackForm({ onSuccess }) {
           <div className="flex gap-1 mt-1">
             {[1, 2, 3, 4, 5].map(n => (
               <button key={n} type="button" onClick={() => setForm(f => ({ ...f, note: n }))}
-                className={`text-2xl transition-colors ${n <= form.note ? 'text-purple-400' : 'text-gray-700 hover:text-gray-500'}`}>
-                ★
+                className={`w-7 h-7 rounded-full border-2 transition-all ${n <= form.note ? 'bg-purple-500 border-purple-400' : 'bg-transparent border-gray-700 hover:border-purple-600'}`}>
               </button>
             ))}
           </div>
