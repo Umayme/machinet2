@@ -76,7 +76,7 @@ export default function Navbar() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
           <span className="logo-text text-2xl group-hover:opacity-80 transition-opacity">
-            <span className="text-white">MACH</span><span className="text-purple-400">NET</span>
+            <span className="text-white">MACHI</span><span className="text-purple-400">NET</span>
           </span>
         </Link>
 

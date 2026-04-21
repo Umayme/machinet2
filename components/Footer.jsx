@@ -1,5 +1,3 @@
-'use client'
-import { useState } from 'react'
 import Link from 'next/link'
 
 const LinkedInIcon = () => (
@@ -21,32 +19,14 @@ const WhatsAppIcon = () => (
 )
 
 export default function Footer() {
-  const [email, setEmail] = useState('')
-  const [subStatus, setSubStatus] = useState('')
-
-  const handleSubscribe = async (e) => {
-    e.preventDefault()
-    if (!email) return
-    try {
-      const res = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      const data = await res.json()
-      if (res.ok) { setSubStatus('ok'); setEmail('') }
-      else setSubStatus(data.error || 'Erreur')
-    } catch { setSubStatus('Erreur réseau') }
-  }
-
   return (
     <footer className="border-t border-purple-900/20 bg-black mt-20">
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
 
           <div>
             <div className="mb-4">
-              <span className="logo-text text-2xl"><span className="text-white">MACH</span><span className="text-purple-400">NET</span></span>
+              <span className="logo-text text-2xl"><span className="text-white">MACHI</span><span className="text-purple-400">NET</span></span>
             </div>
             <p className="text-gray-500 text-sm leading-relaxed mb-6">
               La plateforme B2B dédiée aux machines industrielles en Algérie.
@@ -99,21 +79,6 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-4 text-sm">Newsletter</h4>
-            <p className="text-gray-500 text-sm mb-3">Actualités marché & nouvelles machines</p>
-            {subStatus === 'ok' ? (
-              <p className="text-green-400 text-sm">Inscription confirmée !</p>
-            ) : (
-              <form onSubmit={handleSubscribe} className="flex flex-col gap-2">
-                <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
-                  placeholder="votre@email.com" className="input-dark h-9 text-sm" />
-                <button type="submit" className="btn-primary text-sm py-2 justify-center">S'inscrire</button>
-                {subStatus && subStatus !== 'ok' && <p className="text-red-400 text-xs">{subStatus}</p>}
-              </form>
-            )}
           </div>
 
           <div>
