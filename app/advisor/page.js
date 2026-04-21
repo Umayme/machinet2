@@ -139,7 +139,7 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
                         </div>
                     </div>
                     <h1 className="section-title mb-2">Votre conseiller machines IA</h1>
-                    <p className="section-subtitle">Spécialisé dans le marché algérien · Gratuit · Sans inscription</p>
+                    <p className="section-subtitle">Spécialisé dans le marché algérien · Sans inscription</p>
                 </div>
 
                 {/* CHAT BOX */}

@@ -82,7 +82,7 @@ export default function AcheteursPage() {
             <p className="text-gray-400 text-sm mb-4">Décrivez votre besoin et MachiBot vous trouve les meilleures offres.</p>
             <Link href="/ia-bots" className="btn-primary w-full justify-center">Parler à MachiBot</Link>
             <div className="mt-4 pt-4 border-t border-purple-900/20">
-              <p className="text-gray-600 text-xs text-center">Gratuit · Sans inscription · Réponse en 30 sec</p>
+              <p className="text-gray-600 text-xs text-center">Sans inscription · Réponse en 30 sec</p>
             </div>
           </div>
         </div>

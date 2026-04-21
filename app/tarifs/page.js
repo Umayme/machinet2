@@ -4,12 +4,12 @@ import Link from 'next/link'
 
 const plans = {
   acheteurs: [
-    { nom: 'Gratuit', prix: 0, prixAnnuel: 0, desc: 'Pour découvrir', badge: null, features: ['Accès catalogue complet', 'Recherche & filtres', 'Consultation prix du marché', '3 demandes de contact/mois', 'MachiBot (10 questions/mois)'] },
-    { nom: 'Premium', prix: 3000, prixAnnuel: 2400, desc: 'Pour les acheteurs actifs', badge: 'Populaire', features: ['Tout Gratuit', 'Contacts illimités', 'MachiBot illimité', 'Alertes nouvelles machines', 'Accès prix détaillés', 'Support prioritaire'] },
+    { nom: 'Starter', prix: 0, prixAnnuel: 0, desc: 'Pour découvrir', badge: null, features: ['Accès catalogue complet', 'Recherche & filtres', 'Consultation prix du marché', '3 demandes de contact/mois', 'MachiBot (10 questions/mois)'] },
+    { nom: 'Premium', prix: 3000, prixAnnuel: 2400, desc: 'Pour les acheteurs actifs', badge: 'Populaire', features: ['Tout Starter', 'Contacts illimités', 'MachiBot illimité', 'Alertes nouvelles machines', 'Accès prix détaillés', 'Support prioritaire'] },
     { nom: 'Entreprise', prix: null, prixAnnuel: null, desc: 'Pour les grands comptes', badge: null, features: ['Tout Premium', 'Compte multi-utilisateurs', 'API accès données', 'Consultant dédié', 'Rapports marché mensuels', 'SLA garanti'] },
   ],
   vendeurs: [
-    { nom: 'Gratuit', prix: 0, prixAnnuel: 0, desc: 'Pour démarrer', badge: null, features: ['3 annonces actives', 'Profil entreprise basique', 'Réception contacts acheteurs', 'Tableau de bord simple'] },
+    { nom: 'Starter', prix: 0, prixAnnuel: 0, desc: 'Pour démarrer', badge: null, features: ['3 annonces actives', 'Profil entreprise basique', 'Réception contacts acheteurs', 'Tableau de bord simple'] },
     { nom: 'Pro', prix: 15000, prixAnnuel: 12000, desc: 'Pour les vendeurs sérieux', badge: 'Recommandé', features: ['Annonces illimitées', 'Badge Vérifié', 'Mise en avant catalogue', 'Analytics avancés', 'Leads qualifiés prioritaires', 'Support dédié'] },
     { nom: 'Entreprise', prix: 45000, prixAnnuel: 36000, desc: 'Pour importateurs & grossistes', badge: null, features: ['Tout Pro', 'Page marque premium', 'Matching IA acheteurs', 'Intégration ERP/CRM', 'Account manager dédié', 'Rapport performance mensuel'] },
   ],
@@ -69,7 +69,7 @@ export default function TarifsPage() {
                 {p.prix === null ? (
                   <p className="text-2xl font-black text-white">Sur devis</p>
                 ) : p.prix === 0 ? (
-                  <p className="text-4xl font-black text-purple-400">Gratuit</p>
+                  <p className="text-4xl font-black text-purple-400">0 <span className="text-base text-purple-600 font-normal">DZD/mois</span></p>
                 ) : (
                   <>
                     <p className="text-4xl font-black text-purple-400">
