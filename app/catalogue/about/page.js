@@ -1,12 +1,14 @@
+'use client'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
-const team = [
-  { nom: 'Yassine Hadjadj', titre: 'CEO & Co-fondateur', bg: 'Ingénieur industriel, 10 ans dans le secteur des machines en Algérie.', wilaya: 'Alger' },
-  { nom: 'Sarah Benmansour', titre: 'CTO & Co-fondatrice', bg: 'Développeuse full-stack, spécialisée IA et marketplaces B2B.', wilaya: 'Alger' },
-  { nom: 'Omar Farès', titre: 'Head of Sales', bg: 'Commercial B2B industriel, ancien importateur de matériel BTP.', wilaya: 'Oran' },
-  { nom: 'Nour Slimani', titre: 'Product Designer', bg: 'Designer UX/UI spécialisée SaaS et plateformes industrielles.', wilaya: 'Alger' },
-  { nom: 'Anis Khelifi', titre: 'Responsable Partenariats', bg: 'Développement commercial, réseau de fournisseurs algériens.', wilaya: 'Constantine' },
-  { nom: 'Rania Medjber', titre: 'Cheffe de projet Tech', bg: 'Ingénieure logiciel, infrastructure cloud et sécurité des données.', wilaya: 'Blida' },
+const staticTeam = [
+  { id: 's1', nom: 'Yassine Hadjadj', titre: 'CEO & Co-fondateur', bio: 'Ingénieur industriel, 10 ans dans le secteur des machines en Algérie.', wilaya: 'Alger' },
+  { id: 's2', nom: 'Sarah Benmansour', titre: 'CTO & Co-fondatrice', bio: 'Développeuse full-stack, spécialisée IA et marketplaces B2B.', wilaya: 'Alger' },
+  { id: 's3', nom: 'Omar Farès', titre: 'Head of Sales', bio: 'Commercial B2B industriel, ancien importateur de matériel BTP.', wilaya: 'Oran' },
+  { id: 's4', nom: 'Nour Slimani', titre: 'Product Designer', bio: 'Designer UX/UI spécialisée SaaS et plateformes industrielles.', wilaya: 'Alger' },
+  { id: 's5', nom: 'Anis Khelifi', titre: 'Responsable Partenariats', bio: 'Développement commercial, réseau de fournisseurs algériens.', wilaya: 'Constantine' },
+  { id: 's6', nom: 'Rania Medjber', titre: 'Cheffe de projet Tech', bio: 'Ingénieure logiciel, infrastructure cloud et sécurité des données.', wilaya: 'Blida' },
 ]
 
 const valeurs = [
@@ -26,6 +28,15 @@ const milestones = [
 ]
 
 export default function AboutPage() {
+  const [team, setTeam] = useState(staticTeam)
+
+  useEffect(() => {
+    fetch('/api/team')
+      .then(r => r.json())
+      .then(d => { if (d.members && d.members.length > 0) setTeam(d.members) })
+      .catch(() => {})
+  }, [])
+
   return (
     <div className="min-h-screen pt-20">
 
@@ -115,10 +126,10 @@ export default function AboutPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {team.map((t, i) => (
-              <div key={i} className="card p-6">
+              <div key={t.id || i} className="card p-6">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 to-purple-900 flex items-center justify-center text-white font-black text-xl flex-shrink-0">
-                    {t.nom[0]}
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 to-purple-900 flex items-center justify-center text-white font-black text-xl flex-shrink-0 overflow-hidden">
+                    {t.avatar ? <img src={t.avatar} alt={t.nom} className="w-full h-full object-cover" /> : t.nom[0]}
                   </div>
                   <div>
                     <h3 className="text-white font-bold">{t.nom}</h3>
@@ -126,7 +137,7 @@ export default function AboutPage() {
                     <p className="text-gray-600 text-xs">{t.wilaya}</p>
                   </div>
                 </div>
-                <p className="text-gray-500 text-sm leading-relaxed">{t.bg}</p>
+                <p className="text-gray-500 text-sm leading-relaxed">{t.bio || t.bg}</p>
               </div>
             ))}
           </div>

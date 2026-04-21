@@ -19,10 +19,12 @@ export default function SecretAdminPanel() {
   const [blogs, setBlogs] = useState([])
   const [faqs, setFaqs] = useState([])
   const [prixItems, setPrixItems] = useState([])
+  const [teamMembers, setTeamMembers] = useState([])
   const [loading, setLoading] = useState(false)
   const [blogForm, setBlogForm] = useState(null)
   const [faqForm, setFaqForm] = useState(null)
   const [prixForm, setPrixForm] = useState(null)
+  const [teamForm, setTeamForm] = useState(null)
 
   // Check if already logged in as admin
   useEffect(() => {
@@ -40,7 +42,7 @@ export default function SecretAdminPanel() {
   const loadData = async () => {
     setLoading(true)
     try {
-      const [m, u, c, p, co, fb, nl, bl, fq, pr] = await Promise.all([
+      const [m, u, c, p, co, fb, nl, bl, fq, pr, tm] = await Promise.all([
         fetch('/api/admin/machines').then(r => r.json()),
         fetch('/api/admin/users').then(r => r.json()),
         fetch('/api/contact').then(r => r.json()),
@@ -51,6 +53,7 @@ export default function SecretAdminPanel() {
         fetch('/api/blog?admin=1').then(r => r.json()).catch(() => ({ posts: [] })),
         fetch('/api/faq?admin=1').then(r => r.json()).catch(() => ({ faqs: [] })),
         fetch('/api/prix').then(r => r.json()).catch(() => ({ data: [] })),
+        fetch('/api/team').then(r => r.json()).catch(() => ({ members: [] })),
       ])
       setMachines(m.machines || [])
       setUsers(u.users || [])
@@ -61,10 +64,10 @@ export default function SecretAdminPanel() {
       setNewsletter(nl.subscribers || [])
       setBlogs(bl.posts || [])
       setFaqs(fq.faqs || [])
-      // Flatten prix data
       const allPrix = []
       for (const s of (pr.data || [])) for (const m2 of s.machines) allPrix.push({ ...m2, secteur: s.secteur })
       setPrixItems(allPrix)
+      setTeamMembers(tm.members || [])
     } catch (e) {
       console.error(e)
     }
@@ -135,7 +138,7 @@ export default function SecretAdminPanel() {
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
     setAuthed(false)
-    setMachines([]); setUsers([]); setContacts([]); setPending([]); setConsultations([]); setFeedbacks([]); setNewsletter([]); setBlogs([]); setFaqs([]); setPrixItems([])
+    setMachines([]); setUsers([]); setContacts([]); setPending([]); setConsultations([]); setFeedbacks([]); setNewsletter([]); setBlogs([]); setFaqs([]); setPrixItems([]); setTeamMembers([])
   }
 
   const updateConsultation = async (id, fields) => {
@@ -208,6 +211,7 @@ export default function SecretAdminPanel() {
     { id: 'blog', label: 'Blog & Guides' },
     { id: 'faq', label: 'FAQ' },
     { id: 'prix', label: 'Prix Marché' },
+    { id: 'team', label: 'Équipe' },
   ]
 
   const saveBlog = async (data) => {
@@ -228,6 +232,21 @@ export default function SecretAdminPanel() {
     await fetch('/api/blog', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, published: !current }) })
     setBlogs(prev => prev.map(b => b.id === id ? { ...b, published: !current ? 1 : 0 } : b))
   }
+  const saveTeam = async (data) => {
+    const method = data.id ? 'PATCH' : 'POST'
+    const res = await fetch('/api/team', { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+    if (res.ok) {
+      setTeamForm(null)
+      const d = await fetch('/api/team').then(r => r.json())
+      setTeamMembers(d.members || [])
+    }
+  }
+  const deleteTeam = async (id) => {
+    if (!confirm('Supprimer ce membre ?')) return
+    await fetch('/api/team', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+    setTeamMembers(prev => prev.filter(t => t.id !== id))
+  }
+
   const savePrix = async (data) => {
     const method = data.id ? 'PATCH' : 'POST'
     const res = await fetch('/api/prix', { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
@@ -906,6 +925,63 @@ export default function SecretAdminPanel() {
                       </div>
                     </div>
                   )}
+                </div>
+              )}
+
+              {/* TEAM TAB */}
+              {tab === 'team' && (
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h1 className="text-2xl font-black text-white mb-1">Équipe</h1>
+                      <p className="text-gray-500 text-sm">{teamMembers.length} membre{teamMembers.length !== 1 ? 's' : ''} · Affiché sur /catalogue/about</p>
+                    </div>
+                    <button onClick={() => setTeamForm({ nom: '', titre: '', bio: '', wilaya: 'Alger', avatar: '', ordre: teamMembers.length, active: true })}
+                      className="btn-primary text-sm py-2 px-4">+ Ajouter un membre</button>
+                  </div>
+                  {teamForm && (
+                    <div className="card p-6 space-y-4 mb-6">
+                      <h2 className="text-white font-bold">{teamForm.id ? 'Modifier' : 'Nouveau membre'}</h2>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div><label className="text-gray-400 text-xs mb-1 block">Nom *</label><input className="input-dark text-sm" value={teamForm.nom} onChange={e => setTeamForm(f => ({ ...f, nom: e.target.value }))} /></div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Titre/Poste *</label><input className="input-dark text-sm" value={teamForm.titre} onChange={e => setTeamForm(f => ({ ...f, titre: e.target.value }))} /></div>
+                      </div>
+                      <div><label className="text-gray-400 text-xs mb-1 block">Biographie</label><textarea rows={3} className="input-dark text-sm resize-none" value={teamForm.bio} onChange={e => setTeamForm(f => ({ ...f, bio: e.target.value }))} /></div>
+                      <div className="grid sm:grid-cols-3 gap-4">
+                        <div><label className="text-gray-400 text-xs mb-1 block">Wilaya</label><input className="input-dark text-sm" value={teamForm.wilaya} onChange={e => setTeamForm(f => ({ ...f, wilaya: e.target.value }))} /></div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Photo URL</label><input className="input-dark text-sm" placeholder="/uploads/..." value={teamForm.avatar} onChange={e => setTeamForm(f => ({ ...f, avatar: e.target.value }))} /></div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Ordre</label><input type="number" className="input-dark text-sm" value={teamForm.ordre} onChange={e => setTeamForm(f => ({ ...f, ordre: parseInt(e.target.value) || 0 }))} /></div>
+                      </div>
+                      <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={teamForm.active} onChange={e => setTeamForm(f => ({ ...f, active: e.target.checked }))} className="w-4 h-4 accent-purple-600" /><span className="text-gray-300 text-sm">Actif</span></label>
+                      <div className="flex gap-3">
+                        <button onClick={() => saveTeam(teamForm)} className="btn-primary text-sm py-2">Enregistrer</button>
+                        <button onClick={() => setTeamForm(null)} className="btn-outline text-sm py-2">Annuler</button>
+                      </div>
+                    </div>
+                  )}
+                  {teamMembers.length === 0 && !teamForm && (
+                    <div className="card p-12 text-center text-gray-500">Aucun membre. La page utilise les données statiques par défaut.</div>
+                  )}
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {teamMembers.map(t => (
+                      <div key={t.id} className="card p-4">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-10 h-10 rounded-full bg-purple-900/30 border border-purple-700/40 overflow-hidden flex items-center justify-center flex-shrink-0">
+                            {t.avatar ? <img src={t.avatar} alt={t.nom} className="w-full h-full object-cover" /> : <span className="text-purple-300 font-bold">{t.nom[0]}</span>}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-white text-sm font-semibold truncate">{t.nom}</p>
+                            <p className="text-purple-400 text-xs truncate">{t.titre}</p>
+                          </div>
+                        </div>
+                        {t.bio && <p className="text-gray-500 text-xs mb-3 leading-relaxed line-clamp-2">{t.bio}</p>}
+                        <div className="flex gap-2">
+                          <button onClick={() => setTeamForm({ ...t, active: t.active === 1 || t.active === true })} className="text-xs px-3 py-1 border border-gray-700 text-gray-400 rounded-lg hover:text-white">Modifier</button>
+                          <button onClick={() => deleteTeam(t.id)} className="text-red-500 hover:text-red-400 text-xs px-2">Suppr.</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
