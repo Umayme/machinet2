@@ -18,9 +18,11 @@ export default function SecretAdminPanel() {
   const [newsletter, setNewsletter] = useState([])
   const [blogs, setBlogs] = useState([])
   const [faqs, setFaqs] = useState([])
+  const [prixItems, setPrixItems] = useState([])
   const [loading, setLoading] = useState(false)
-  const [blogForm, setBlogForm] = useState(null) // null = list, object = edit/new
+  const [blogForm, setBlogForm] = useState(null)
   const [faqForm, setFaqForm] = useState(null)
+  const [prixForm, setPrixForm] = useState(null)
 
   // Check if already logged in as admin
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function SecretAdminPanel() {
   const loadData = async () => {
     setLoading(true)
     try {
-      const [m, u, c, p, co, fb, nl, bl, fq] = await Promise.all([
+      const [m, u, c, p, co, fb, nl, bl, fq, pr] = await Promise.all([
         fetch('/api/admin/machines').then(r => r.json()),
         fetch('/api/admin/users').then(r => r.json()),
         fetch('/api/contact').then(r => r.json()),
@@ -48,6 +50,7 @@ export default function SecretAdminPanel() {
         fetch('/api/newsletter/admin').then(r => r.json()).catch(() => ({ subscribers: [] })),
         fetch('/api/blog?admin=1').then(r => r.json()).catch(() => ({ posts: [] })),
         fetch('/api/faq?admin=1').then(r => r.json()).catch(() => ({ faqs: [] })),
+        fetch('/api/prix').then(r => r.json()).catch(() => ({ data: [] })),
       ])
       setMachines(m.machines || [])
       setUsers(u.users || [])
@@ -58,6 +61,10 @@ export default function SecretAdminPanel() {
       setNewsletter(nl.subscribers || [])
       setBlogs(bl.posts || [])
       setFaqs(fq.faqs || [])
+      // Flatten prix data
+      const allPrix = []
+      for (const s of (pr.data || [])) for (const m2 of s.machines) allPrix.push({ ...m2, secteur: s.secteur })
+      setPrixItems(allPrix)
     } catch (e) {
       console.error(e)
     }
@@ -128,7 +135,7 @@ export default function SecretAdminPanel() {
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
     setAuthed(false)
-    setMachines([]); setUsers([]); setContacts([]); setPending([]); setConsultations([]); setFeedbacks([]); setNewsletter([]); setBlogs([]); setFaqs([])
+    setMachines([]); setUsers([]); setContacts([]); setPending([]); setConsultations([]); setFeedbacks([]); setNewsletter([]); setBlogs([]); setFaqs([]); setPrixItems([])
   }
 
   const updateConsultation = async (id, fields) => {
@@ -200,6 +207,7 @@ export default function SecretAdminPanel() {
     { id: 'newsletter', label: 'Newsletter' },
     { id: 'blog', label: 'Blog & Guides' },
     { id: 'faq', label: 'FAQ' },
+    { id: 'prix', label: 'Prix Marché' },
   ]
 
   const saveBlog = async (data) => {
@@ -220,6 +228,23 @@ export default function SecretAdminPanel() {
     await fetch('/api/blog', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, published: !current }) })
     setBlogs(prev => prev.map(b => b.id === id ? { ...b, published: !current ? 1 : 0 } : b))
   }
+  const savePrix = async (data) => {
+    const method = data.id ? 'PATCH' : 'POST'
+    const res = await fetch('/api/prix', { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+    if (res.ok) {
+      setPrixForm(null)
+      const d = await fetch('/api/prix').then(r => r.json())
+      const flat = []
+      for (const s of (d.data || [])) for (const m2 of s.machines) flat.push({ ...m2, secteur: s.secteur })
+      setPrixItems(flat)
+    }
+  }
+  const deletePrix = async (id) => {
+    if (!confirm('Supprimer cette donnée ?')) return
+    await fetch('/api/prix', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+    setPrixItems(prev => prev.filter(p => p.id !== id))
+  }
+
   const saveFaq = async (data) => {
     const method = data.id ? 'PATCH' : 'POST'
     const res = await fetch('/api/faq', { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
@@ -798,6 +823,87 @@ export default function SecretAdminPanel() {
                         )
                       })}
                       {faqs.length === 0 && <div className="card p-12 text-center text-gray-500">Aucune FAQ. Créez la première !</div>}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* PRIX TAB */}
+              {tab === 'prix' && (
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h1 className="text-2xl font-black text-white mb-1">Prix Marché</h1>
+                      <p className="text-gray-500 text-sm">{prixItems.length} données · Affiché sur /prix</p>
+                    </div>
+                    <button onClick={() => setPrixForm({ secteur: 'BTP', nom: '', min: '', max: '', tendance: '→', pct: 'stable' })}
+                      className="btn-primary text-sm py-2 px-4">+ Ajouter un prix</button>
+                  </div>
+                  {prixItems.length === 0 && !prixForm && (
+                    <div className="card p-12 text-center">
+                      <h3 className="text-white font-bold mb-2">Aucune donnée</h3>
+                      <p className="text-gray-500 text-sm mb-4">Les données de prix du marché seront affichées sur la page /prix</p>
+                      <p className="text-gray-600 text-xs">La page utilise des données statiques par défaut tant qu'aucune donnée n'est saisie ici.</p>
+                    </div>
+                  )}
+                  {prixForm && (
+                    <div className="card p-6 space-y-4 mb-6">
+                      <h2 className="text-white font-bold">{prixForm.id ? 'Modifier' : 'Nouveau prix'}</h2>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div><label className="text-gray-400 text-xs mb-1 block">Secteur</label>
+                          <select className="input-dark text-sm" value={prixForm.secteur} onChange={e => setPrixForm(f => ({ ...f, secteur: e.target.value }))}>
+                            {['BTP','IAA','Agricole','Textile','Industrie','Pharma','Mining','Énergie'].map(s => <option key={s}>{s}</option>)}
+                          </select>
+                        </div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Nom machine *</label><input className="input-dark text-sm" value={prixForm.nom} onChange={e => setPrixForm(f => ({ ...f, nom: e.target.value }))} /></div>
+                      </div>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div><label className="text-gray-400 text-xs mb-1 block">Prix min (DZD)</label><input className="input-dark text-sm" placeholder="ex: 2 500 000" value={prixForm.min} onChange={e => setPrixForm(f => ({ ...f, min: e.target.value }))} /></div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Prix max (DZD)</label><input className="input-dark text-sm" placeholder="ex: 5 000 000" value={prixForm.max} onChange={e => setPrixForm(f => ({ ...f, max: e.target.value }))} /></div>
+                      </div>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div><label className="text-gray-400 text-xs mb-1 block">Tendance</label>
+                          <select className="input-dark text-sm" value={prixForm.tendance} onChange={e => setPrixForm(f => ({ ...f, tendance: e.target.value }))}>
+                            <option value="↗">↗ Hausse</option><option value="→">→ Stable</option><option value="↘">↘ Baisse</option>
+                          </select>
+                        </div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Variation</label><input className="input-dark text-sm" placeholder="ex: +5% ou stable" value={prixForm.pct} onChange={e => setPrixForm(f => ({ ...f, pct: e.target.value }))} /></div>
+                      </div>
+                      <div className="flex gap-3">
+                        <button onClick={() => savePrix(prixForm)} className="btn-primary text-sm py-2">Enregistrer</button>
+                        <button onClick={() => setPrixForm(null)} className="btn-outline text-sm py-2">Annuler</button>
+                      </div>
+                    </div>
+                  )}
+                  {prixItems.length > 0 && (
+                    <div className="card overflow-hidden">
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead><tr className="border-b border-purple-900/30">
+                            <th className="text-left px-4 py-3 text-gray-500 text-xs uppercase">Secteur</th>
+                            <th className="text-left px-4 py-3 text-gray-500 text-xs uppercase">Machine</th>
+                            <th className="text-left px-4 py-3 text-gray-500 text-xs uppercase">Fourchette</th>
+                            <th className="text-center px-4 py-3 text-gray-500 text-xs uppercase">Tendance</th>
+                            <th className="text-center px-4 py-3 text-gray-500 text-xs uppercase">Actions</th>
+                          </tr></thead>
+                          <tbody>
+                            {prixItems.map((p, i) => (
+                              <tr key={i} className="border-b border-purple-900/10 hover:bg-purple-900/5">
+                                <td className="px-4 py-3"><span className="text-xs px-2 py-0.5 rounded-full bg-purple-900/30 text-purple-400">{p.secteur}</span></td>
+                                <td className="px-4 py-3 text-white text-sm">{p.nom}</td>
+                                <td className="px-4 py-3 text-gray-400 text-xs">{p.min} — {p.max} DZD</td>
+                                <td className="px-4 py-3 text-center">
+                                  <span className={`font-bold ${p.tendance === '↗' ? 'text-green-400' : p.tendance === '↘' ? 'text-red-400' : 'text-gray-400'}`}>{p.tendance} {p.pct}</span>
+                                </td>
+                                <td className="px-4 py-3 text-center flex items-center justify-center gap-2">
+                                  <button onClick={() => setPrixForm({ ...p })} className="text-gray-400 hover:text-white text-xs">Modifier</button>
+                                  <button onClick={() => deletePrix(p.id)} className="text-red-500 hover:text-red-400 text-xs">Suppr.</button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   )}
                 </div>

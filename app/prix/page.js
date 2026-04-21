@@ -1,8 +1,8 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
-const prixData = [
+const staticPrixData = [
     {
         secteur: 'BTP',
         machines: [
@@ -54,6 +54,14 @@ const tendanceColor = {
 export default function PrixPage() {
     const [selectedSecteur, setSelectedSecteur] = useState('Tous')
     const [search, setSearch] = useState('')
+    const [prixData, setPrixData] = useState(staticPrixData)
+
+    useEffect(() => {
+        fetch('/api/prix')
+            .then(r => r.json())
+            .then(d => { if (d.data && d.data.length > 0) setPrixData(d.data) })
+            .catch(() => {})
+    }, [])
 
     const filtered = prixData
         .filter(s => selectedSecteur === 'Tous' || s.secteur === selectedSecteur)
