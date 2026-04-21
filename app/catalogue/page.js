@@ -167,7 +167,17 @@ function CatalogueInner() {
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className="card h-64 animate-pulse bg-purple-900/10"></div>
+                  <div key={i} className="card overflow-hidden">
+                    <div className="skeleton h-48 rounded-none"></div>
+                    <div className="p-5 space-y-3">
+                      <div className="skeleton h-4 rounded w-3/4"></div>
+                      <div className="skeleton h-3 rounded w-1/2"></div>
+                      <div className="flex justify-between pt-2">
+                        <div className="skeleton h-5 rounded w-1/3"></div>
+                        <div className="skeleton h-8 rounded-lg w-16"></div>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             ) : filtered.length > 0 ? (

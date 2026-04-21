@@ -35,7 +35,7 @@ export default function MachineCard({ machine }) {
         <div className="card group cursor-pointer overflow-hidden">
             <div className="relative h-48 bg-gradient-to-br from-purple-900/20 to-black overflow-hidden">
                 {photoUrl ? (
-                    <img src={photoUrl} alt={nom} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                    <img src={photoUrl} alt={nom} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center">
                         <div className="w-16 h-16 rounded-full bg-purple-900/20 border border-purple-800/30 flex items-center justify-center opacity-40">
@@ -46,6 +46,7 @@ export default function MachineCard({ machine }) {
                         </div>
                     </div>
                 )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
                 <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
                     {verifie && <span className="badge-verified">Vérifié</span>}
                     <span className={`px-2 py-0.5 rounded-full text-xs font-medium border ${secteurColors[secteur] || 'bg-purple-900/30 text-purple-400 border-purple-800/40'}`}>

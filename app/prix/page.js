@@ -99,7 +99,7 @@ export default function PrixPage() {
                         { val: 'Mensuel', label: 'Fréquence mise à jour' },
                     ].map((s, i) => (
                         <div key={i} className="card p-4 text-center">
-                            <p className="text-2xl font-black text-purple-400">{s.val}</p>
+                            <p className="stat-value">{s.val}</p>
                             <p className="text-gray-500 text-xs mt-1">{s.label}</p>
                         </div>
                     ))}

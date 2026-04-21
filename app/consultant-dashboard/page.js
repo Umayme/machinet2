@@ -72,7 +72,20 @@ export default function ConsultantDashboard() {
   }
 
   if (!authChecked || loading) {
-    return <div className="min-h-screen pt-20 flex items-center justify-center"><div className="text-gray-500">Chargement...</div></div>
+    return (
+      <div className="min-h-screen pt-20">
+        <div className="max-w-7xl mx-auto px-6 py-10">
+          <div className="skeleton h-9 rounded w-56 mb-3"></div>
+          <div className="skeleton h-4 rounded w-44 mb-10"></div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            {[...Array(4)].map((_, i) => <div key={i} className="card p-5"><div className="skeleton h-8 rounded w-10 mx-auto mb-2"></div><div className="skeleton h-3 rounded w-20 mx-auto"></div></div>)}
+          </div>
+          <div className="space-y-4">
+            {[...Array(3)].map((_, i) => <div key={i} className="card p-5"><div className="skeleton h-4 rounded w-1/2 mb-3"></div><div className="skeleton h-3 rounded w-1/3"></div></div>)}
+          </div>
+        </div>
+      </div>
+    )
   }
   if (!user) return null
 
@@ -121,7 +134,7 @@ export default function ConsultantDashboard() {
           <div>
             <div className="flex items-center gap-3 mb-1">
               <h1 className="text-3xl font-black text-white">Espace Consultant</h1>
-              <span className="text-xs px-2 py-1 rounded-full bg-cyan-900/30 text-cyan-400 border border-cyan-800/30">✓ Consultant approuvé</span>
+              <span className="text-xs px-2 py-1 rounded-full bg-cyan-900/30 text-cyan-400 border border-cyan-800/30">Consultant approuvé</span>
             </div>
             <p className="text-gray-500 text-sm">Bienvenue, <span className="text-cyan-300">{user.name}</span> — Vos demandes de consultation</p>
           </div>
@@ -160,13 +173,13 @@ export default function ConsultantDashboard() {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           {[
-            { v: bookings.length, l: 'Total consultations', c: 'text-cyan-400' },
-            { v: pendingBookings.length, l: 'En attente', c: 'text-yellow-400' },
-            { v: confirmedBookings.length, l: 'Confirmées', c: 'text-green-400' },
-            { v: completedBookings.length, l: 'Terminées', c: 'text-purple-400' },
+            { v: bookings.length, l: 'Total consultations' },
+            { v: pendingBookings.length, l: 'En attente' },
+            { v: confirmedBookings.length, l: 'Confirmées' },
+            { v: completedBookings.length, l: 'Terminées' },
           ].map((s, i) => (
             <div key={i} className="card p-5 text-center">
-              <p className={`text-2xl font-black ${s.c}`}>{s.v}</p>
+              <p className="stat-value">{s.v}</p>
               <p className="text-gray-500 text-xs mt-1">{s.l}</p>
             </div>
           ))}
@@ -256,20 +269,20 @@ function BookingCard({ booking, onUpdate }) {
               {booking.status === 'pending' && (
                 <>
                   <button onClick={() => handleUpdate('confirmed')} className="text-xs px-3 py-1.5 bg-green-900/30 text-green-400 border border-green-800/40 rounded-lg hover:bg-green-900/50 transition-all whitespace-nowrap">
-                    ✓ Confirmer
+                    Confirmer
                   </button>
                   <button onClick={() => handleUpdate('cancelled')} className="text-xs px-3 py-1.5 bg-red-900/20 text-red-500 border border-red-900/30 rounded-lg hover:bg-red-900/40 transition-all whitespace-nowrap">
-                    ✕ Annuler
+                    Annuler
                   </button>
                 </>
               )}
               {booking.status === 'confirmed' && (
                 <>
                   <button onClick={() => handleUpdate('completed')} className="text-xs px-3 py-1.5 bg-purple-900/30 text-purple-400 border border-purple-800/40 rounded-lg hover:bg-purple-900/50 transition-all whitespace-nowrap">
-                    ✓ Marquer terminé
+                    Marquer terminé
                   </button>
                   <button onClick={() => handleUpdate('cancelled')} className="text-xs px-3 py-1.5 bg-red-900/20 text-red-500 border border-red-900/30 rounded-lg hover:bg-red-900/40 transition-all whitespace-nowrap">
-                    ✕ Annuler
+                    Annuler
                   </button>
                 </>
               )}

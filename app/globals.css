@@ -249,3 +249,73 @@ table { border-collapse: collapse; }
   background: linear-gradient(135deg, rgba(168,85,247,0.4), rgba(109,40,217,0.15), transparent);
   z-index: -1;
 }
+
+/* Skeleton loader */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, rgba(109,40,217,0.08) 25%, rgba(168,85,247,0.12) 50%, rgba(109,40,217,0.08) 75%);
+  background-size: 2000px 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 8px;
+}
+
+/* Stat value emphasis */
+.stat-value {
+  font-size: 2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+/* Tag / chip */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(109,40,217,0.15);
+  color: #c084fc;
+  border: 1px solid rgba(109,40,217,0.25);
+  letter-spacing: 0.01em;
+}
+
+/* Divider with gradient */
+.divider-gradient {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(168,85,247,0.3), transparent);
+  border: none;
+  margin: 2rem 0;
+}
+
+/* Glassmorphism panel */
+.glass {
+  background: rgba(15, 10, 26, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(168, 85, 247, 0.12);
+}
+
+/* Purple glow text for hero */
+.hero-title {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+/* Animated gradient border */
+@keyframes border-glow {
+  0%, 100% { border-color: rgba(168,85,247,0.3); }
+  50% { border-color: rgba(168,85,247,0.7); }
+}
+.border-pulse {
+  animation: border-glow 2s ease-in-out infinite;
+}

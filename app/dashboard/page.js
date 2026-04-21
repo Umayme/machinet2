@@ -57,7 +57,21 @@ export default function SellerDashboard() {
   }
 
   if (!authChecked || loading) {
-    return <div className="min-h-screen pt-20 flex items-center justify-center"><div className="text-gray-500">Chargement...</div></div>
+    return (
+      <div className="min-h-screen pt-20">
+        <div className="max-w-7xl mx-auto px-6 py-10">
+          <div className="skeleton h-9 rounded w-64 mb-3"></div>
+          <div className="skeleton h-4 rounded w-48 mb-10"></div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            {[...Array(4)].map((_, i) => <div key={i} className="card p-5"><div className="skeleton h-8 rounded w-12 mx-auto mb-2"></div><div className="skeleton h-3 rounded w-24 mx-auto"></div></div>)}
+          </div>
+          <div className="skeleton h-10 rounded-lg w-full mb-6"></div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[...Array(3)].map((_, i) => <div key={i} className="card p-5"><div className="skeleton h-5 rounded w-3/4 mb-3"></div><div className="skeleton h-3 rounded w-1/2 mb-2"></div><div className="skeleton h-3 rounded w-1/3"></div></div>)}
+          </div>
+        </div>
+      </div>
+    )
   }
   if (!user) return null
 
@@ -136,7 +150,7 @@ export default function SellerDashboard() {
           <div>
             <div className="flex items-center gap-3 mb-1">
               <h1 className="text-3xl font-black text-white">Mon Dashboard</h1>
-              <span className="text-xs px-2 py-1 rounded-full bg-green-900/30 text-green-400 border border-green-800/30">✓ Vendeur approuvé</span>
+              <span className="text-xs px-2 py-1 rounded-full bg-green-900/30 text-green-400 border border-green-800/30">Vendeur approuvé</span>
             </div>
             <p className="text-gray-500 text-sm">Bienvenue, <span className="text-purple-300">{user.name}</span> — Gérez vos annonces de machines</p>
           </div>
@@ -146,13 +160,13 @@ export default function SellerDashboard() {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
-            { v: machines.length, l: 'Annonces totales', c: 'text-purple-400' },
-            { v: activeMachines, l: 'Annonces actives', c: 'text-green-400' },
-            { v: verifiedMachines, l: 'Annonces vérifiées', c: 'text-blue-400' },
-            { v: totalContacts, l: 'Contacts reçus', c: 'text-orange-400' },
+            { v: machines.length, l: 'Annonces totales' },
+            { v: activeMachines, l: 'Annonces actives' },
+            { v: verifiedMachines, l: 'Annonces vérifiées' },
+            { v: totalContacts, l: 'Contacts reçus' },
           ].map((s, i) => (
             <div key={i} className="card p-5 text-center">
-              <p className={`text-2xl font-black ${s.c}`}>{s.v}</p>
+              <p className="stat-value">{s.v}</p>
               <p className="text-gray-500 text-xs mt-1">{s.l}</p>
             </div>
           ))}

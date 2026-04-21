@@ -119,7 +119,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, i) => (
               <div key={i} className="text-center">
-                <div className="text-4xl font-black text-purple-400 mb-2">{stat.value}</div>
+                <div className="stat-value mb-2">{stat.value}</div>
                 <div className="text-gray-500 text-sm">{stat.label}</div>
               </div>
             ))}
@@ -154,8 +154,21 @@ export default function HomePage() {
             <Link href="/catalogue" className="btn-outline text-sm">Voir tout →</Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredMachines.map((machine) => (
+            {featuredMachines.length > 0 ? featuredMachines.map((machine) => (
               <MachineCard key={machine.id} machine={machine} />
+            )) : [...Array(6)].map((_, i) => (
+              <div key={i} className="card overflow-hidden">
+                <div className="skeleton h-48 rounded-none"></div>
+                <div className="p-5 space-y-3">
+                  <div className="skeleton h-4 rounded w-3/4"></div>
+                  <div className="skeleton h-3 rounded w-1/2"></div>
+                  <div className="skeleton h-3 rounded w-1/3"></div>
+                  <div className="flex justify-between items-center pt-2">
+                    <div className="skeleton h-6 rounded w-1/3"></div>
+                    <div className="skeleton h-8 rounded-lg w-16"></div>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -253,14 +266,15 @@ export default function HomePage() {
           </div>
           <div className="space-y-3">
             {prixMarche.map((p, i) => (
-              <div key={i} className="card p-4 flex items-center justify-between">
-                <div>
-                  <p className="text-white text-sm font-medium">{p.machine}</p>
-                  <p className="text-purple-400 text-xs mt-1">{p.fourchette}</p>
+              <div key={i} className="card p-4 flex items-center justify-between group hover:border-purple-500/40 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm flex-shrink-0 ${p.tendance === '↗' ? 'bg-green-900/30 text-green-400' : p.tendance === '↘' ? 'bg-red-900/30 text-red-400' : 'bg-gray-900/30 text-gray-400'}`}>{p.tendance}</div>
+                  <div>
+                    <p className="text-white text-sm font-medium">{p.machine}</p>
+                    <p className="text-purple-400 text-xs mt-0.5">{p.fourchette}</p>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <span className={`text-sm font-bold ${p.tendance === '↗' ? 'text-green-400' : p.tendance === '↘' ? 'text-red-400' : 'text-gray-400'}`}>{p.pct}</span>
-                </div>
+                <span className={`tag text-xs ${p.tendance === '↗' ? 'bg-green-900/20 text-green-400 border-green-800/30' : p.tendance === '↘' ? 'bg-red-900/20 text-red-400 border-red-800/30' : 'bg-gray-900/20 text-gray-400 border-gray-700/30'}`}>{p.pct}</span>
               </div>
             ))}
           </div>

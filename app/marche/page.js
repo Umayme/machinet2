@@ -5,7 +5,7 @@ import Link from 'next/link'
 const secteursPrix = [
   {
     secteur: 'BTP & Construction',
-    icon: '',
+
     color: 'text-orange-400',
     machines: [
       { nom: 'Pelle hydraulique 20-25T', min: '8 500 000', max: '14 000 000', tendance: 'up', pct: '+8%', mois: 'Avr 2026' },
@@ -17,7 +17,7 @@ const secteursPrix = [
   },
   {
     secteur: 'IAA & Agroalimentaire',
-    icon: '',
+
     color: 'text-green-400',
     machines: [
       { nom: 'Ligne conditionnement yaourt', min: '3 200 000', max: '8 500 000', tendance: 'stable', pct: 'stable', mois: 'Avr 2026' },
@@ -29,7 +29,7 @@ const secteursPrix = [
   },
   {
     secteur: 'Agriculture',
-    icon: '',
+
     color: 'text-lime-400',
     machines: [
       { nom: 'Tracteur 75-100CV', min: '2 100 000', max: '4 500 000', tendance: 'down', pct: '-2%', mois: 'Avr 2026' },
@@ -40,7 +40,7 @@ const secteursPrix = [
   },
   {
     secteur: 'Textile & Habillement',
-    icon: '',
+
     color: 'text-pink-400',
     machines: [
       { nom: 'Machine à coudre industrielle Juki', min: '280 000', max: '500 000', tendance: 'stable', pct: 'stable', mois: 'Avr 2026' },
@@ -89,7 +89,7 @@ export default function MarchePage() {
             { v: 'Mensuel', l: 'Fréquence de mise à jour' },
           ].map((s, i) => (
             <div key={i} className="card p-5 text-center">
-              <p className="text-2xl font-black text-purple-400">{s.v}</p>
+              <p className="stat-value">{s.v}</p>
               <p className="text-gray-500 text-xs mt-1">{s.l}</p>
             </div>
           ))}
@@ -153,7 +153,7 @@ export default function MarchePage() {
                         <td className="px-6 py-4 text-right text-gray-300 text-sm">{m.min}</td>
                         <td className="px-6 py-4 text-right text-purple-400 text-sm font-semibold">{m.max}</td>
                         <td className="px-6 py-4 text-center">
-                          <span className={`text-xs ${m.tendance === 'up' ? 'text-green-500' : m.tendance === 'down' ? 'text-red-500' : 'text-gray-500'}`}>{m.pct}</span>
+                          <span className={`tag text-xs ${m.tendance === 'up' ? 'bg-green-900/20 text-green-400 border-green-800/30' : m.tendance === 'down' ? 'bg-red-900/20 text-red-400 border-red-800/30' : 'bg-gray-900/20 text-gray-400 border-gray-700/30'}`}>{m.pct}</span>
                         </td>
                         <td className="px-6 py-4 text-right text-gray-600 text-xs">{m.mois}</td>
                       </tr>

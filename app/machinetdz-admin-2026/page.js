@@ -438,13 +438,13 @@ export default function SecretAdminPanel() {
                                   onClick={() => approveUser(u.id, 'approve')}
                                   className="px-4 py-2 bg-green-900/30 text-green-400 border border-green-800/40 rounded-lg text-sm hover:bg-green-900/50 transition-all"
                                 >
-                                  ✓ Approuver
+                                  Approuver
                                 </button>
                                 <button
                                   onClick={() => approveUser(u.id, 'reject')}
                                   className="px-4 py-2 bg-red-900/20 text-red-500 border border-red-900/30 rounded-lg text-sm hover:bg-red-900/40 transition-all"
                                 >
-                                  ✕ Rejeter
+                                  Rejeter
                                 </button>
                               </div>
                             </div>
@@ -478,13 +478,13 @@ export default function SecretAdminPanel() {
                                   onClick={() => approveUser(u.id, 'approve')}
                                   className="px-4 py-2 bg-green-900/30 text-green-400 border border-green-800/40 rounded-lg text-sm hover:bg-green-900/50 transition-all"
                                 >
-                                  ✓ Approuver
+                                  Approuver
                                 </button>
                                 <button
                                   onClick={() => approveUser(u.id, 'reject')}
                                   className="px-4 py-2 bg-red-900/20 text-red-500 border border-red-900/30 rounded-lg text-sm hover:bg-red-900/40 transition-all"
                                 >
-                                  ✕ Rejeter
+                                  Rejeter
                                 </button>
                               </div>
                             </div>

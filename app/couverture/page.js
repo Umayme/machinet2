@@ -135,7 +135,7 @@ export default function CouverturePage() {
             { v: '3 200+', l: 'Machines disponibles' },
           ].map((s, i) => (
             <div key={i} className="card p-5 text-center">
-              <p className="text-2xl font-black text-purple-400">{s.v}</p>
+              <p className="stat-value">{s.v}</p>
               <p className="text-gray-500 text-xs mt-1">{s.l}</p>
             </div>
           ))}
