@@ -9,6 +9,10 @@ export default function SellerDashboard() {
   const [machines, setMachines] = useState([])
   const [contacts, setContacts] = useState([])
   const [tab, setTab] = useState('listings')
+  const [profileForm, setProfileForm] = useState(null)
+  const [profileSaving, setProfileSaving] = useState(false)
+  const [profileMsg, setProfileMsg] = useState('')
+  const [avatarUploading, setAvatarUploading] = useState(false)
   const [loading, setLoading] = useState(true)
   const [authChecked, setAuthChecked] = useState(false)
 
@@ -20,6 +24,7 @@ export default function SellerDashboard() {
         if (!d.user) { router.push('/login'); return }
         if (d.user.role !== 'seller') { router.push('/'); return }
         setUser(d.user)
+        setProfileForm({ name: d.user.name || '', phone: d.user.phone || '', company: d.user.company || '', wilaya: d.user.wilaya || '', avatar: d.user.avatar || '' })
         if (d.user.approved) {
           Promise.all([
             fetch('/api/seller/machines').then(r => r.json()),
@@ -93,6 +98,37 @@ export default function SellerDashboard() {
   const activeMachines = machines.filter(m => m.active).length
   const verifiedMachines = machines.filter(m => m.verified).length
 
+  const handleAvatarUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setAvatarUploading(true)
+    const fd = new FormData()
+    fd.append('file', file)
+    const res = await fetch('/api/upload', { method: 'POST', body: fd })
+    const data = await res.json()
+    setAvatarUploading(false)
+    if (data.url) setProfileForm(f => ({ ...f, avatar: data.url }))
+  }
+
+  const handleProfileSave = async (e) => {
+    e.preventDefault()
+    setProfileSaving(true)
+    setProfileMsg('')
+    const res = await fetch('/api/auth/profile', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(profileForm),
+    })
+    const data = await res.json()
+    setProfileSaving(false)
+    if (res.ok) {
+      setUser(data.user)
+      setProfileMsg('Profil mis à jour avec succès.')
+    } else {
+      setProfileMsg(data.error || 'Erreur lors de la mise à jour.')
+    }
+  }
+
   return (
     <div className="min-h-screen pt-20">
       <div className="max-w-7xl mx-auto px-6 py-10">
@@ -135,6 +171,12 @@ export default function SellerDashboard() {
             className={`px-5 py-2.5 text-sm font-semibold rounded-t-lg transition-all ${tab === 'contacts' ? 'bg-purple-900/30 text-white border border-b-0 border-purple-800/40' : 'text-gray-500 hover:text-white'}`}
           >
             Contacts reçus {totalContacts > 0 && <span className="ml-1 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">{totalContacts}</span>}
+          </button>
+          <button
+            onClick={() => setTab('profile')}
+            className={`px-5 py-2.5 text-sm font-semibold rounded-t-lg transition-all ${tab === 'profile' ? 'bg-purple-900/30 text-white border border-b-0 border-purple-800/40' : 'text-gray-500 hover:text-white'}`}
+          >
+            Mon Profil
           </button>
         </div>
 
@@ -248,6 +290,60 @@ export default function SellerDashboard() {
               </table>
             </div>
           )
+        )}
+        {/* PROFILE TAB */}
+        {tab === 'profile' && profileForm && (
+          <form onSubmit={handleProfileSave} className="max-w-xl">
+            <div className="card p-8 space-y-5">
+              <h2 className="text-white font-bold text-xl mb-2">Mon Profil</h2>
+
+              {/* Avatar */}
+              <div className="flex items-center gap-5">
+                <div className="w-20 h-20 rounded-2xl bg-purple-900/30 border-2 border-purple-700/40 overflow-hidden flex items-center justify-center flex-shrink-0">
+                  {profileForm.avatar ? (
+                    <img src={profileForm.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-purple-300 font-black text-3xl">{(profileForm.name || user.name || 'U')[0]}</span>
+                  )}
+                </div>
+                <div>
+                  <label className="btn-outline text-xs py-2 px-4 cursor-pointer">
+                    {avatarUploading ? 'Chargement...' : 'Changer la photo'}
+                    <input type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} disabled={avatarUploading} />
+                  </label>
+                  <p className="text-gray-600 text-xs mt-1">JPG, PNG ou WebP · max 5 Mo</p>
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-gray-400 text-sm mb-1 block">Nom complet *</label>
+                  <input required className="input-dark" value={profileForm.name} onChange={e => setProfileForm(f => ({ ...f, name: e.target.value }))} />
+                </div>
+                <div>
+                  <label className="text-gray-400 text-sm mb-1 block">Téléphone</label>
+                  <input className="input-dark" value={profileForm.phone} onChange={e => setProfileForm(f => ({ ...f, phone: e.target.value }))} />
+                </div>
+              </div>
+              <div>
+                <label className="text-gray-400 text-sm mb-1 block">Entreprise</label>
+                <input className="input-dark" value={profileForm.company} onChange={e => setProfileForm(f => ({ ...f, company: e.target.value }))} />
+              </div>
+              <div>
+                <label className="text-gray-400 text-sm mb-1 block">Wilaya</label>
+                <input className="input-dark" value={profileForm.wilaya} onChange={e => setProfileForm(f => ({ ...f, wilaya: e.target.value }))} />
+              </div>
+              <div>
+                <label className="text-gray-400 text-sm mb-1 block">Email</label>
+                <input className="input-dark opacity-60 cursor-not-allowed" value={user.email} disabled />
+                <p className="text-gray-600 text-xs mt-1">L'email ne peut pas être modifié.</p>
+              </div>
+              {profileMsg && <p className={`text-sm ${profileMsg.includes('succès') ? 'text-green-400' : 'text-red-400'}`}>{profileMsg}</p>}
+              <button type="submit" disabled={profileSaving} className="btn-primary w-full justify-center disabled:opacity-50">
+                {profileSaving ? 'Enregistrement...' : 'Enregistrer les modifications'}
+              </button>
+            </div>
+          </form>
         )}
       </div>
     </div>

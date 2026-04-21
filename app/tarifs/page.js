@@ -13,6 +13,11 @@ const plans = {
     { nom: 'Pro', prix: 15000, prixAnnuel: 12000, desc: 'Pour les vendeurs sérieux', badge: 'Recommandé', features: ['Annonces illimitées', 'Badge Vérifié', 'Mise en avant catalogue', 'Analytics avancés', 'Leads qualifiés prioritaires', 'Support dédié'] },
     { nom: 'Entreprise', prix: 45000, prixAnnuel: 36000, desc: 'Pour importateurs & grossistes', badge: null, features: ['Tout Pro', 'Page marque premium', 'Matching IA acheteurs', 'Intégration ERP/CRM', 'Account manager dédié', 'Rapport performance mensuel'] },
   ],
+  consultants: [
+    { nom: 'Starter', prix: 0, prixAnnuel: 0, desc: 'Pour lancer votre activité', badge: null, features: ['Profil consultant public', '3 missions/mois', 'Accès aux demandes acheteurs', 'Tableau de bord basique', 'Badge consultant vérifié (sur approbation)'] },
+    { nom: 'Pro', prix: 12000, prixAnnuel: 9600, desc: 'Pour les consultants actifs', badge: 'Recommandé', features: ['Tout Starter', 'Missions illimitées', 'Mise en avant profil', 'Analytics & rapports', 'Accès leads prioritaires', 'Support dédié 7j/7'] },
+    { nom: 'Cabinet', prix: null, prixAnnuel: null, desc: 'Pour les cabinets industriels', badge: null, features: ['Tout Pro', 'Comptes équipe multi-consultants', 'Page cabinet premium', 'Intégration CRM', 'Account manager dédié', 'Contrats-cadres'] },
+  ],
 }
 
 export default function TarifsPage() {
@@ -29,10 +34,10 @@ export default function TarifsPage() {
 
           {/* Tabs */}
           <div className="inline-flex bg-white/5 border border-purple-900/30 rounded-xl p-1 mb-8">
-            {['vendeurs', 'acheteurs'].map(t => (
-              <button key={t} onClick={() => setTab(t)}
-                className={`px-6 py-2 rounded-lg text-sm font-medium transition-all ${tab === t ? 'bg-purple-700 text-white' : 'text-gray-400 hover:text-white'}`}>
-                {t === 'vendeurs' ? 'Vendeurs' : 'Acheteurs'}
+            {[['vendeurs', 'Vendeurs'], ['acheteurs', 'Acheteurs'], ['consultants', 'Consultants']].map(([v, l]) => (
+              <button key={v} onClick={() => setTab(v)}
+                className={`px-6 py-2 rounded-lg text-sm font-medium transition-all ${tab === v ? 'bg-purple-700 text-white' : 'text-gray-400 hover:text-white'}`}>
+                {l}
               </button>
             ))}
           </div>
@@ -83,7 +88,7 @@ export default function TarifsPage() {
                   </li>
                 ))}
               </ul>
-              <Link href={p.prix === null ? '/contact' : '/register'}
+              <Link href={p.prix === null ? '/contact' : tab === 'consultants' ? '/register?role=consultant' : tab === 'vendeurs' ? '/register?role=seller' : '/register'}
                 className={`w-full justify-center ${p.badge ? 'btn-primary' : 'btn-outline'}`}>
                 {p.prix === 0 ? 'Commencer gratuitement' : p.prix === null ? 'Nous contacter' : "S'abonner"}
               </Link>

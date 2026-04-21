@@ -1,6 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import FeedbackForm from '../../components/FeedbackForm'
 
 const temoignages = [
     { nom: 'Karim Mansouri', poste: 'Importateur machines IAA', wilaya: 'Alger', note: 5, texte: "En 3 mois j'ai reçu 45 leads qualifiés. Mon chiffre d'affaires a augmenté de 30%." },
@@ -8,15 +9,28 @@ const temoignages = [
     { nom: 'Nassim Tebbal', poste: 'AgriMach Sétif', wilaya: 'Sétif', note: 5, texte: "Le badge vérifié a vraiment boosté ma crédibilité. Les clients me contactent avec confiance." },
 ]
 
-const faqItems = [
-    { q: "Comment fonctionne la vérification fournisseur ?", r: "Notre équipe vérifie votre registre de commerce, vos références clients et la qualité de vos machines avant d'attribuer le badge vérifié. Délai : 3–5 jours ouvrables." },
-    { q: "Combien de leads puis-je recevoir par mois ?", r: "Avec le plan Pro, il n'y a pas de limite. En moyenne, nos fournisseurs Pro reçoivent 15–40 leads qualifiés par mois selon leur secteur." },
-    { q: "Puis-je publier des machines de plusieurs marques ?", r: "Oui, absolument. Vous pouvez publier toutes les marques que vous distribuez, avec des fiches produits séparées pour chacune." },
-    { q: "Comment sont qualifiés les leads ?", r: "Chaque acheteur doit renseigner son secteur, budget approximatif et wilaya avant de vous contacter. Vous recevez uniquement des prospects avec une vraie intention d'achat." },
+const staticFaq = [
+    { id: 's1', q: "Comment fonctionne la vérification fournisseur ?", r: "Notre équipe vérifie votre registre de commerce, vos références clients et la qualité de vos machines avant d'attribuer le badge vérifié. Délai : 3–5 jours ouvrables." },
+    { id: 's2', q: "Combien de leads puis-je recevoir par mois ?", r: "Avec le plan Pro, il n'y a pas de limite. En moyenne, nos fournisseurs Pro reçoivent 15–40 leads qualifiés par mois selon leur secteur." },
+    { id: 's3', q: "Puis-je publier des machines de plusieurs marques ?", r: "Oui, absolument. Vous pouvez publier toutes les marques que vous distribuez, avec des fiches produits séparées pour chacune." },
+    { id: 's4', q: "Comment sont qualifiés les leads ?", r: "Chaque acheteur doit renseigner son secteur, budget approximatif et wilaya avant de vous contacter. Vous recevez uniquement des prospects avec une vraie intention d'achat." },
 ]
 
 export default function FournisseursPage() {
     const [openFaq, setOpenFaq] = useState(null)
+    const [faqItems, setFaqItems] = useState(staticFaq)
+    const [dbFeedbacks, setDbFeedbacks] = useState([])
+
+    useEffect(() => {
+        fetch('/api/faq?page=fournisseurs')
+            .then(r => r.json())
+            .then(d => { if (d.faqs && d.faqs.length > 0) setFaqItems(d.faqs.map(f => ({ id: f.id, q: f.question, r: f.reponse }))) })
+            .catch(() => {})
+        fetch('/api/feedback')
+            .then(r => r.json())
+            .then(d => { if (d.feedbacks) setDbFeedbacks(d.feedbacks) })
+            .catch(() => {})
+    }, [])
 
     return (
         <div className="min-h-screen pt-24 pb-20">
@@ -111,24 +125,33 @@ export default function FournisseursPage() {
                         <h2 className="section-title mb-4">Ce que disent nos fournisseurs</h2>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {temoignages.map((t, i) => (
+                        {(dbFeedbacks.length > 0 ? dbFeedbacks.slice(0, 6) : temoignages).map((t, i) => (
                             <div key={i} className="card p-6">
                                 <div className="flex gap-1 mb-4">
-                                    {[...Array(t.note)].map((_, j) => <span key={j} className="w-2 h-2 rounded-full bg-purple-500 inline-block"></span>)}
+                                    {[...Array(t.note || 5)].map((_, j) => <span key={j} className="w-2 h-2 rounded-full bg-purple-500 inline-block"></span>)}
                                 </div>
-                                <p className="text-gray-400 text-sm leading-relaxed mb-6 italic">"{t.texte}"</p>
+                                <p className="text-gray-400 text-sm leading-relaxed mb-6 italic">"{t.texte || t.texte}"</p>
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-full bg-purple-900/30 border border-purple-700/40 flex items-center justify-center text-purple-400 font-bold">
-                                        {t.nom[0]}
+                                        {(t.nom || '?')[0]}
                                     </div>
                                     <div>
                                         <p className="text-white text-sm font-semibold">{t.nom}</p>
-                                        <p className="text-gray-600 text-xs">{t.poste} · {t.wilaya}</p>
+                                        <p className="text-gray-600 text-xs">{t.poste}{t.wilaya ? ` · ${t.wilaya}` : ''}</p>
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
+                </div>
+
+                {/* FEEDBACK FORM */}
+                <div className="mb-20 max-w-2xl mx-auto">
+                    <div className="text-center mb-8">
+                        <h2 className="section-title mb-3">Partagez votre expérience</h2>
+                        <p className="section-subtitle">Votre témoignage aide d'autres fournisseurs à rejoindre MachiNet</p>
+                    </div>
+                    <FeedbackForm />
                 </div>
 
                 {/* FAQ */}

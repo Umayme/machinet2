@@ -10,7 +10,8 @@ export async function GET() {
     const session = await getSession()
     if (!session) return NextResponse.json({ user: null })
     const db = getDb()
-    const user = db.prepare('SELECT id, email, name, role, approved, company, wilaya, phone FROM User WHERE id = ?').get(session.id)
+    try { db.prepare('ALTER TABLE User ADD COLUMN avatar TEXT').run() } catch {}
+    const user = db.prepare('SELECT id, email, name, role, approved, company, wilaya, phone, avatar FROM User WHERE id = ?').get(session.id)
     db.close()
     if (!user) return NextResponse.json({ user: null })
     return NextResponse.json({ user: { ...user, approved: Boolean(user.approved) } })

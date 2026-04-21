@@ -16,6 +16,28 @@ export default function ConsultantDashboard() {
   const [bookings, setBookings] = useState([])
   const [loading, setLoading] = useState(true)
   const [authChecked, setAuthChecked] = useState(false)
+  const [showProfile, setShowProfile] = useState(false)
+  const [profileForm, setProfileForm] = useState(null)
+  const [profileSaving, setProfileSaving] = useState(false)
+  const [profileMsg, setProfileMsg] = useState('')
+  const [avatarUploading, setAvatarUploading] = useState(false)
+
+  const handleAvatarUpload = async (e) => {
+    const file = e.target.files[0]; if (!file) return
+    setAvatarUploading(true)
+    const fd = new FormData(); fd.append('file', file)
+    const res = await fetch('/api/upload', { method: 'POST', body: fd })
+    const data = await res.json()
+    setAvatarUploading(false)
+    if (data.url) setProfileForm(f => ({ ...f, avatar: data.url }))
+  }
+  const handleProfileSave = async (e) => {
+    e.preventDefault(); setProfileSaving(true); setProfileMsg('')
+    const res = await fetch('/api/auth/profile', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(profileForm) })
+    const data = await res.json()
+    setProfileSaving(false)
+    if (res.ok) { setUser(data.user); setProfileMsg('Profil mis à jour.') } else { setProfileMsg(data.error || 'Erreur.') }
+  }
 
   useEffect(() => {
     fetch('/api/auth/me')
@@ -25,6 +47,7 @@ export default function ConsultantDashboard() {
         if (!d.user) { router.push('/login'); return }
         if (d.user.role !== 'consultant') { router.push('/'); return }
         setUser(d.user)
+        setProfileForm({ name: d.user.name || '', phone: d.user.phone || '', company: d.user.company || '', wilaya: d.user.wilaya || '', avatar: d.user.avatar || '' })
         if (d.user.approved) {
           fetch('/api/consultant/bookings')
             .then(r => r.json())
@@ -102,7 +125,37 @@ export default function ConsultantDashboard() {
             </div>
             <p className="text-gray-500 text-sm">Bienvenue, <span className="text-cyan-300">{user.name}</span> — Vos demandes de consultation</p>
           </div>
+          <button onClick={() => setShowProfile(p => !p)} className="btn-outline text-sm py-2 px-4">
+            {showProfile ? 'Fermer profil' : 'Mon Profil'}
+          </button>
         </div>
+
+        {/* PROFILE SECTION */}
+        {showProfile && profileForm && (
+          <form onSubmit={handleProfileSave} className="max-w-xl mb-10">
+            <div className="card p-6 space-y-4">
+              <h2 className="text-white font-bold text-lg">Mon Profil</h2>
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-xl bg-cyan-900/30 border-2 border-cyan-700/40 overflow-hidden flex items-center justify-center flex-shrink-0">
+                  {profileForm.avatar ? <img src={profileForm.avatar} alt="Avatar" className="w-full h-full object-cover" /> : <span className="text-cyan-300 font-black text-2xl">{(profileForm.name || 'C')[0]}</span>}
+                </div>
+                <label className="btn-outline text-xs py-1.5 px-3 cursor-pointer">
+                  {avatarUploading ? 'Chargement...' : 'Changer la photo'}
+                  <input type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} disabled={avatarUploading} />
+                </label>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div><label className="text-gray-400 text-sm mb-1 block">Nom *</label><input required className="input-dark" value={profileForm.name} onChange={e => setProfileForm(f => ({ ...f, name: e.target.value }))} /></div>
+                <div><label className="text-gray-400 text-sm mb-1 block">Téléphone</label><input className="input-dark" value={profileForm.phone} onChange={e => setProfileForm(f => ({ ...f, phone: e.target.value }))} /></div>
+              </div>
+              <div><label className="text-gray-400 text-sm mb-1 block">Entreprise</label><input className="input-dark" value={profileForm.company} onChange={e => setProfileForm(f => ({ ...f, company: e.target.value }))} /></div>
+              <div><label className="text-gray-400 text-sm mb-1 block">Wilaya</label><input className="input-dark" value={profileForm.wilaya} onChange={e => setProfileForm(f => ({ ...f, wilaya: e.target.value }))} /></div>
+              {profileMsg && <p className={`text-sm ${profileMsg.includes('jour') ? 'text-green-400' : 'text-red-400'}`}>{profileMsg}</p>}
+              <button type="submit" disabled={profileSaving} className="btn-primary w-full justify-center disabled:opacity-50">{profileSaving ? 'Enregistrement...' : 'Enregistrer'}</button>
+            </div>
+          </form>
+        )}
+
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">

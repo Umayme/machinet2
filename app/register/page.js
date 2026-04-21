@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -40,6 +40,15 @@ export default function RegisterPage() {
   const [userName, setUserName] = useState('')
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const roleParam = params.get('role')
+    if (roleParam && roleOptions.find(r => r.v === roleParam)) {
+      setRole(roleParam)
+      setStep(2)
+    }
+  }, [])
 
   const selectedRole = roleOptions.find(r => r.v === role)
 

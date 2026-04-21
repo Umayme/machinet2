@@ -16,7 +16,11 @@ export default function SecretAdminPanel() {
   const [consultations, setConsultations] = useState([])
   const [feedbacks, setFeedbacks] = useState([])
   const [newsletter, setNewsletter] = useState([])
+  const [blogs, setBlogs] = useState([])
+  const [faqs, setFaqs] = useState([])
   const [loading, setLoading] = useState(false)
+  const [blogForm, setBlogForm] = useState(null) // null = list, object = edit/new
+  const [faqForm, setFaqForm] = useState(null)
 
   // Check if already logged in as admin
   useEffect(() => {
@@ -34,7 +38,7 @@ export default function SecretAdminPanel() {
   const loadData = async () => {
     setLoading(true)
     try {
-      const [m, u, c, p, co, fb, nl] = await Promise.all([
+      const [m, u, c, p, co, fb, nl, bl, fq] = await Promise.all([
         fetch('/api/admin/machines').then(r => r.json()),
         fetch('/api/admin/users').then(r => r.json()),
         fetch('/api/contact').then(r => r.json()),
@@ -42,6 +46,8 @@ export default function SecretAdminPanel() {
         fetch('/api/admin/consultations').then(r => r.json()),
         fetch('/api/feedback?admin=1').then(r => r.json()),
         fetch('/api/newsletter/admin').then(r => r.json()).catch(() => ({ subscribers: [] })),
+        fetch('/api/blog?admin=1').then(r => r.json()).catch(() => ({ posts: [] })),
+        fetch('/api/faq?admin=1').then(r => r.json()).catch(() => ({ faqs: [] })),
       ])
       setMachines(m.machines || [])
       setUsers(u.users || [])
@@ -50,6 +56,8 @@ export default function SecretAdminPanel() {
       setConsultations(co.consultations || [])
       setFeedbacks(fb.feedbacks || [])
       setNewsletter(nl.subscribers || [])
+      setBlogs(bl.posts || [])
+      setFaqs(fq.faqs || [])
     } catch (e) {
       console.error(e)
     }
@@ -120,7 +128,7 @@ export default function SecretAdminPanel() {
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
     setAuthed(false)
-    setMachines([]); setUsers([]); setContacts([]); setPending([]); setConsultations([]); setFeedbacks([]); setNewsletter([])
+    setMachines([]); setUsers([]); setContacts([]); setPending([]); setConsultations([]); setFeedbacks([]); setNewsletter([]); setBlogs([]); setFaqs([])
   }
 
   const updateConsultation = async (id, fields) => {
@@ -190,7 +198,42 @@ export default function SecretAdminPanel() {
     { id: 'contacts', label: 'Contacts' },
     { id: 'feedbacks', label: `Avis${feedbacks.filter(f => !f.approved).length > 0 ? ` (${feedbacks.filter(f => !f.approved).length})` : ''}` },
     { id: 'newsletter', label: 'Newsletter' },
+    { id: 'blog', label: 'Blog & Guides' },
+    { id: 'faq', label: 'FAQ' },
   ]
+
+  const saveBlog = async (data) => {
+    const method = data.id ? 'PATCH' : 'POST'
+    const res = await fetch('/api/blog', { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+    if (res.ok) {
+      setBlogForm(null)
+      const d = await fetch('/api/blog?admin=1').then(r => r.json())
+      setBlogs(d.posts || [])
+    }
+  }
+  const deleteBlog = async (id) => {
+    if (!confirm('Supprimer cet article ?')) return
+    await fetch('/api/blog', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+    setBlogs(prev => prev.filter(b => b.id !== id))
+  }
+  const toggleBlogPublished = async (id, current) => {
+    await fetch('/api/blog', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, published: !current }) })
+    setBlogs(prev => prev.map(b => b.id === id ? { ...b, published: !current ? 1 : 0 } : b))
+  }
+  const saveFaq = async (data) => {
+    const method = data.id ? 'PATCH' : 'POST'
+    const res = await fetch('/api/faq', { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+    if (res.ok) {
+      setFaqForm(null)
+      const d = await fetch('/api/faq?admin=1').then(r => r.json())
+      setFaqs(d.faqs || [])
+    }
+  }
+  const deleteFaq = async (id) => {
+    if (!confirm('Supprimer cette FAQ ?')) return
+    await fetch('/api/faq', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+    setFaqs(prev => prev.filter(f => f.id !== id))
+  }
 
   const approveFeedback = async (id, approved) => {
     await fetch('/api/feedback', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, approved }) })
@@ -515,7 +558,7 @@ export default function SecretAdminPanel() {
                                   }`}>{c.status}</span>
                                 </div>
                                 <div className="flex flex-wrap gap-4 text-xs text-gray-500 mb-1">
-                                  <span>👤 {c.clientName}</span>
+                                  <span>{c.clientName}</span>
                                   <span>{c.clientEmail}</span>
                                   {c.clientPhone && <span>{c.clientPhone}</span>}
                                   <span>{new Date(c.createdAt).toLocaleDateString('fr-DZ')}</span>
@@ -634,6 +677,129 @@ export default function SecretAdminPanel() {
                       </table>
                     </div>
                   </div>
+                </div>
+              )}
+
+              {/* BLOG TAB */}
+              {tab === 'blog' && (
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h1 className="text-2xl font-black text-white mb-1">Blog & Guides</h1>
+                      <p className="text-gray-500 text-sm">{blogs.length} article{blogs.length !== 1 ? 's' : ''}</p>
+                    </div>
+                    <button onClick={() => setBlogForm({ titre: '', categorie: 'BTP', desc: '', contenu: '', image: '', tags: '', temps: '5 min', published: false })}
+                      className="btn-primary text-sm py-2 px-4">+ Nouvel article</button>
+                  </div>
+                  {blogForm ? (
+                    <div className="card p-6 space-y-4">
+                      <h2 className="text-white font-bold">{blogForm.id ? 'Modifier l\'article' : 'Nouvel article'}</h2>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div><label className="text-gray-400 text-xs mb-1 block">Titre *</label><input className="input-dark text-sm" value={blogForm.titre} onChange={e => setBlogForm(f => ({ ...f, titre: e.target.value }))} /></div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Catégorie</label>
+                          <select className="input-dark text-sm" value={blogForm.categorie} onChange={e => setBlogForm(f => ({ ...f, categorie: e.target.value }))}>
+                            {['BTP','IAA','Agricole','Import','Finance','Conseil','Général'].map(c => <option key={c}>{c}</option>)}
+                          </select>
+                        </div>
+                      </div>
+                      <div><label className="text-gray-400 text-xs mb-1 block">Résumé</label><input className="input-dark text-sm" value={blogForm.desc} onChange={e => setBlogForm(f => ({ ...f, desc: e.target.value }))} /></div>
+                      <div><label className="text-gray-400 text-xs mb-1 block">Contenu (texte)</label><textarea rows={6} className="input-dark text-sm resize-none" value={blogForm.contenu} onChange={e => setBlogForm(f => ({ ...f, contenu: e.target.value }))} /></div>
+                      <div className="grid sm:grid-cols-3 gap-4">
+                        <div><label className="text-gray-400 text-xs mb-1 block">Image URL</label><input className="input-dark text-sm" placeholder="/uploads/..." value={blogForm.image} onChange={e => setBlogForm(f => ({ ...f, image: e.target.value }))} /></div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Tags (séparés par ,)</label><input className="input-dark text-sm" value={blogForm.tags} onChange={e => setBlogForm(f => ({ ...f, tags: e.target.value }))} /></div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Temps de lecture</label><input className="input-dark text-sm" placeholder="5 min" value={blogForm.temps} onChange={e => setBlogForm(f => ({ ...f, temps: e.target.value }))} /></div>
+                      </div>
+                      <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={blogForm.published} onChange={e => setBlogForm(f => ({ ...f, published: e.target.checked }))} className="w-4 h-4 accent-purple-600" /><span className="text-gray-300 text-sm">Publié</span></label>
+                      <div className="flex gap-3">
+                        <button onClick={() => saveBlog({ ...blogForm, tags: (blogForm.tags || '').split(',').map(t => t.trim()).filter(Boolean) })} className="btn-primary text-sm py-2">Enregistrer</button>
+                        <button onClick={() => setBlogForm(null)} className="btn-outline text-sm py-2">Annuler</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {blogs.length === 0 && <div className="card p-12 text-center text-gray-500">Aucun article. Créez le premier !</div>}
+                      {blogs.map(b => (
+                        <div key={b.id} className="card p-4 flex items-center justify-between gap-4">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <p className="text-white font-semibold text-sm truncate">{b.titre}</p>
+                              <span className="text-xs px-2 py-0.5 rounded-full bg-purple-900/30 text-purple-400 flex-shrink-0">{b.categorie}</span>
+                              <span className={`text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${b.published ? 'bg-green-900/30 text-green-400' : 'bg-gray-900/30 text-gray-500'}`}>{b.published ? 'Publié' : 'Brouillon'}</span>
+                            </div>
+                            <p className="text-gray-500 text-xs truncate">{b.desc}</p>
+                          </div>
+                          <div className="flex gap-2 flex-shrink-0">
+                            <button onClick={() => toggleBlogPublished(b.id, b.published)} className="text-xs px-3 py-1.5 border border-purple-900/40 text-purple-400 rounded-lg hover:bg-purple-900/20">
+                              {b.published ? 'Dépublier' : 'Publier'}
+                            </button>
+                            <button onClick={() => setBlogForm({ ...b, tags: (b.tags || []).join(', ') })} className="text-xs px-3 py-1.5 border border-gray-700 text-gray-400 rounded-lg hover:text-white">Modifier</button>
+                            <button onClick={() => deleteBlog(b.id)} className="text-red-500 hover:text-red-400 text-xs px-2">Suppr.</button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* FAQ TAB */}
+              {tab === 'faq' && (
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h1 className="text-2xl font-black text-white mb-1">FAQ</h1>
+                      <p className="text-gray-500 text-sm">{faqs.length} question{faqs.length !== 1 ? 's' : ''}</p>
+                    </div>
+                    <button onClick={() => setFaqForm({ question: '', reponse: '', page: 'fournisseurs', ordre: faqs.length, active: true })}
+                      className="btn-primary text-sm py-2 px-4">+ Nouvelle FAQ</button>
+                  </div>
+                  {faqForm ? (
+                    <div className="card p-6 space-y-4">
+                      <h2 className="text-white font-bold">{faqForm.id ? 'Modifier la FAQ' : 'Nouvelle FAQ'}</h2>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div><label className="text-gray-400 text-xs mb-1 block">Page</label>
+                          <select className="input-dark text-sm" value={faqForm.page} onChange={e => setFaqForm(f => ({ ...f, page: e.target.value }))}>
+                            {['fournisseurs','acheteurs','tarifs','guides','general'].map(p => <option key={p}>{p}</option>)}
+                          </select>
+                        </div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Ordre</label><input type="number" className="input-dark text-sm" value={faqForm.ordre} onChange={e => setFaqForm(f => ({ ...f, ordre: parseInt(e.target.value) || 0 })) } /></div>
+                      </div>
+                      <div><label className="text-gray-400 text-xs mb-1 block">Question *</label><input className="input-dark text-sm" value={faqForm.question} onChange={e => setFaqForm(f => ({ ...f, question: e.target.value }))} /></div>
+                      <div><label className="text-gray-400 text-xs mb-1 block">Réponse *</label><textarea rows={4} className="input-dark text-sm resize-none" value={faqForm.reponse} onChange={e => setFaqForm(f => ({ ...f, reponse: e.target.value }))} /></div>
+                      <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={faqForm.active} onChange={e => setFaqForm(f => ({ ...f, active: e.target.checked }))} className="w-4 h-4 accent-purple-600" /><span className="text-gray-300 text-sm">Active</span></label>
+                      <div className="flex gap-3">
+                        <button onClick={() => saveFaq(faqForm)} className="btn-primary text-sm py-2">Enregistrer</button>
+                        <button onClick={() => setFaqForm(null)} className="btn-outline text-sm py-2">Annuler</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      {['fournisseurs','acheteurs','tarifs','guides','general'].map(pageName => {
+                        const pageFaqs = faqs.filter(f => f.page === pageName)
+                        if (pageFaqs.length === 0) return null
+                        return (
+                          <div key={pageName} className="mb-6">
+                            <h2 className="text-purple-400 text-sm font-bold uppercase tracking-wider mb-3">{pageName} ({pageFaqs.length})</h2>
+                            <div className="space-y-2">
+                              {pageFaqs.sort((a,b) => a.ordre - b.ordre).map(f => (
+                                <div key={f.id} className={`card p-4 flex items-start justify-between gap-4 ${!f.active ? 'opacity-50' : ''}`}>
+                                  <div className="flex-1">
+                                    <p className="text-white text-sm font-medium mb-1">{f.question}</p>
+                                    <p className="text-gray-500 text-xs leading-relaxed">{f.reponse}</p>
+                                  </div>
+                                  <div className="flex gap-2 flex-shrink-0">
+                                    <button onClick={() => setFaqForm({ ...f, active: f.active === 1 || f.active === true })} className="text-xs px-3 py-1.5 border border-gray-700 text-gray-400 rounded-lg hover:text-white">Modifier</button>
+                                    <button onClick={() => deleteFaq(f.id)} className="text-red-500 hover:text-red-400 text-xs px-2">Suppr.</button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )
+                      })}
+                      {faqs.length === 0 && <div className="card p-12 text-center text-gray-500">Aucune FAQ. Créez la première !</div>}
+                    </div>
+                  )}
                 </div>
               )}
 

@@ -51,7 +51,7 @@ export default function AboutPage() {
             {[
               { v: '2026', l: 'Lancé en' },
               { v: '500+', l: 'Vendeurs actifs' },
-              { v: '58', l: 'Wilayas couvertes' },
+              { v: '69', l: 'Wilayas couvertes' },
               { v: '10 000+', l: 'Acheteurs inscrits' },
             ].map((s, i) => (
               <div key={i} className="card p-6 text-center">
