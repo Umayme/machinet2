@@ -187,7 +187,7 @@ export default function HomePage() {
               <h3 className="text-white font-bold text-lg">Pour les Acheteurs</h3>
             </div>
             {[
-              { n: '1', titre: 'Décrivez votre besoin', desc: 'Secteur, type de machine, budget, wilaya — notre plateforme fait le reste.' },
+              { n: '1', titre: 'Décrivez votre besoin', desc: 'Secteur, type de machine, budget et wilaya. Recherche avancée et filtres intelligents.' },
               { n: '2', titre: 'Recevez des recommandations IA', desc: 'Comparatif prix, fournisseurs vérifiés, spécifications côte à côte.' },
               { n: '3', titre: 'Contactez directement', desc: "Mise en relation directe, devis gratuit, sans intermédiaire inutile." },
             ].map((step) => (
@@ -247,7 +247,7 @@ export default function HomePage() {
                   Consulting expert
                 </Link>
               </div>
-              <p className="text-gray-600 text-sm mt-4">Gratuit · Réponse instantanée · Sans inscription</p>
+              <p className="text-gray-600 text-sm mt-4">Réponse instantanée · Sans inscription</p>
             </div>
           </div>
         </div>

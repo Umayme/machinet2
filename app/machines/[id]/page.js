@@ -220,7 +220,7 @@ export default function MachinePage() {
                 <form onSubmit={handleContact} className="space-y-3">
                   <input required placeholder="Votre nom *" className="input-dark h-10 text-sm" value={form.nom} onChange={e => setForm({ ...form, nom: e.target.value })} />
                   <input required type="email" placeholder="Email *" className="input-dark h-10 text-sm" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
-                  <input placeholder="Téléphone" className="input-dark h-10 text-sm" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
+                  <input required type="tel" placeholder="Téléphone *" className="input-dark h-10 text-sm" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
                   <textarea rows={4} className="input-dark text-sm resize-none" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} />
                   <button type="submit" disabled={sending} className="btn-primary w-full justify-center h-10 text-sm disabled:opacity-50">
                     {sending ? 'Envoi...' : 'Envoyer →'}
@@ -237,6 +237,17 @@ export default function MachinePage() {
               <h3 className="text-white font-semibold mb-2">Pas sûr de votre choix ?</h3>
               <p className="text-gray-500 text-xs mb-4">MachiBot compare les machines et vous conseille.</p>
               <Link href="/ia-bots" className="btn-outline text-xs py-2 px-4 w-full justify-center">Parler à MachiBot</Link>
+            </div>
+
+            {/* Consultant suggestion */}
+            <div className="card p-6">
+              <h3 className="text-white font-bold mb-2">Besoin d'un expert {secteur} ?</h3>
+              <p className="text-gray-500 text-sm mb-4 leading-relaxed">
+                Nos consultants spécialisés vous accompagnent dans le sourcing, la négociation et la mise en service.
+              </p>
+              <Link href={`/consulting`} className="btn-primary w-full justify-center text-sm py-2">
+                Consulter un expert →
+              </Link>
             </div>
 
           </div>

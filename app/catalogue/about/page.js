@@ -164,7 +164,7 @@ export default function AboutPage() {
           Rejoignez des centaines d'industriels algériens qui font confiance à MachiNet.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/register" className="btn-primary">Créer un compte gratuit</Link>
+          <Link href="/register" className="btn-primary">Rejoindre MachiNet →</Link>
           <Link href="/contact" className="btn-outline">Nous contacter</Link>
         </div>
       </section>

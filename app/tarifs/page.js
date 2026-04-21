@@ -90,7 +90,7 @@ export default function TarifsPage() {
               </ul>
               <Link href={p.prix === null ? '/contact' : tab === 'consultants' ? '/register?role=consultant' : tab === 'vendeurs' ? '/register?role=seller' : '/register'}
                 className={`w-full justify-center ${p.badge ? 'btn-primary' : 'btn-outline'}`}>
-                {p.prix === 0 ? 'Commencer gratuitement' : p.prix === null ? 'Nous contacter' : "S'abonner"}
+                {p.prix === 0 ? "S'inscrire" : p.prix === null ? 'Nous contacter' : "S'abonner"}
               </Link>
             </div>
           ))}
@@ -127,7 +127,7 @@ export default function TarifsPage() {
             { q: 'Puis-je changer de plan à tout moment ?', r: 'Oui, upgrade ou downgrade à tout moment sans pénalité.' },
             { q: 'Y a-t-il une commission sur les ventes ?', r: 'Non. MachiNet ne prend aucune commission. Vous payez uniquement l\'abonnement mensuel.' },
             { q: 'Comment payer en Algérie ?', r: 'Virement bancaire, CCP, ou paiement en agence. Facture officielle fournie.' },
-            { q: "L'essai gratuit est-il vraiment gratuit ?", r: "Oui, le plan Gratuit est permanent. Pas de carte bancaire requise." },
+            { q: "Comment fonctionne le plan Starter ?", r: "Le plan Starter vous permet de démarrer avec des fonctionnalités de base. Pas de carte bancaire requise pour démarrer." },
           ].map((f, i) => (
             <div key={i} className="card p-5 mb-3">
               <p className="text-white font-medium text-sm mb-2">{f.q}</p>

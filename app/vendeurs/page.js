@@ -26,8 +26,8 @@ const temoignages = [
 ]
 
 const faqs = [
-  { q: "Combien coûte l'inscription pour un vendeur ?", r: "L'inscription de base est gratuite. Le plan Pro à 15 000 DZD/mois vous donne accès aux leads illimités et au badge vérifié." },
-  { q: "Combien de machines puis-je publier ?", r: "Le plan gratuit permet jusqu'à 3 annonces actives. Le plan Pro est illimité." },
+  { q: "Combien coûte l'inscription pour un vendeur ?", r: "Le plan Starter permet de publier jusqu'à 3 annonces. Le plan Pro à 15 000 DZD/mois vous donne accès aux leads illimités, au badge vérifié et aux analytics avancés." },
+  { q: "Combien de machines puis-je publier ?", r: "Le plan Starter permet jusqu'à 3 annonces actives. Le plan Pro est illimité." },
   { q: "Comment fonctionne la vérification vendeur ?", r: "Vous envoyez vos documents d'entreprise (RC, NIS). Notre équipe vérifie sous 48h. Vous recevez ensuite le badge vérifié." },
   { q: "Les acheteurs peuvent-ils me contacter directement ?", r: "Oui. Les acheteurs vous envoient une demande de contact avec leurs coordonnées. Vous les rappelez directement." },
 ]

@@ -84,7 +84,7 @@ export default function GuidesPage() {
                                 De la recherche fournisseur à la livraison, en passant par la négociation et les aspects légaux.
                             </p>
                             <div className="flex items-center gap-4">
-                                <Link href="#" className="btn-primary">Lire le guide →</Link>
+                                <Link href="/consulting" className="btn-primary">Parler à un expert →</Link>
                                 <span className="text-gray-600 text-sm">15 min de lecture</span>
                             </div>
                         </div>
@@ -142,9 +142,11 @@ export default function GuidesPage() {
                                     <span>{article.temps} de lecture</span>
                                     <span>{formatDate(article.createdAt)}</span>
                                 </div>
-                                <Link href={article.slug ? `/guides/${article.slug}` : '#'} className="text-purple-400 hover:text-purple-300 text-sm font-semibold transition-colors">
-                                    Lire →
-                                </Link>
+                                {article.slug && (
+                                    <Link href={`/guides/${article.slug}`} className="text-purple-400 hover:text-purple-300 text-sm font-semibold transition-colors">
+                                        Lire →
+                                    </Link>
+                                )}
                             </div>
                         </div>
                     ))}

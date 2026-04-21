@@ -70,8 +70,14 @@ export default function Navbar() {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass border-b border-purple-900/30' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
-        <Link href="/" className="flex items-center group">
-          <span className="logo-text text-3xl text-white group-hover:opacity-80 transition-opacity">MACHINET</span>
+        <Link href="/" className="flex items-center gap-2 group">
+          <svg className="w-7 h-7 text-purple-400 group-hover:text-purple-300 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span className="logo-text text-2xl group-hover:opacity-80 transition-opacity">
+            <span className="text-white">MACH</span><span className="text-purple-400">NET</span>
+          </span>
         </Link>
 
         {/* Desktop Nav */}
@@ -157,7 +163,7 @@ export default function Navbar() {
                 Connexion
               </Link>
               <Link href="/register" className="btn-primary text-sm py-2 px-5">
-                Commencer gratuitement
+                S'inscrire
               </Link>
             </>
           )}
@@ -209,7 +215,7 @@ export default function Navbar() {
             ) : (
               <>
                 <Link href="/login" className="block text-center py-2 text-gray-400">Connexion</Link>
-                <Link href="/register" className="btn-primary w-full text-center justify-center">Commencer gratuitement</Link>
+                <Link href="/register" className="btn-primary w-full text-center justify-center">S'inscrire</Link>
               </>
             )}
           </div>

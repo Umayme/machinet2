@@ -46,7 +46,7 @@ export default function Footer() {
 
           <div>
             <div className="mb-4">
-              <span className="logo-text text-2xl text-white">MACHINET</span>
+              <span className="logo-text text-2xl"><span className="text-white">MACH</span><span className="text-purple-400">NET</span></span>
             </div>
             <p className="text-gray-500 text-sm leading-relaxed mb-6">
               La plateforme B2B dédiée aux machines industrielles en Algérie.

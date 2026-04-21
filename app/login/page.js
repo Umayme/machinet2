@@ -76,7 +76,7 @@ export default function LoginPage() {
         </Suspense>
         <p className="text-center text-gray-500 text-sm mt-6">
           Pas encore de compte ?{' '}
-          <Link href="/register" className="text-purple-400 hover:text-purple-300">Créer un compte gratuit</Link>
+          <Link href="/register" className="text-purple-400 hover:text-purple-300">Créer un compte</Link>
         </p>
       </div>
     </div>
