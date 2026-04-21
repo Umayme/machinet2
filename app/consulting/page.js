@@ -1,8 +1,8 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
-const services = [
+const staticServices = [
   {
     titre: 'Audit & Sourcing',
     prix: '45 000 DZD',
@@ -36,10 +36,10 @@ const expertises = [
   { secteur: 'Import & Douanes', desc: 'Accompagnement import, classification douanière, domiciliation' },
 ]
 
-const consultants = [
-  { nom: 'Mehdi Tounsi', titre: 'Expert IAA & Process', exp: '15 ans', wilaya: 'Alger', specialite: 'IAA · Pharma' },
-  { nom: 'Amina Khelil', titre: 'Ingénieure BTP', exp: '12 ans', wilaya: 'Oran', specialite: 'BTP · Infrastructure' },
-  { nom: 'Salim Benali', titre: 'Expert Agri & Import', exp: '10 ans', wilaya: 'Sétif', specialite: 'Agricole · Import DZ' },
+const staticConsultants = [
+  { id: 'sc1', nom: 'Mehdi Tounsi', titre: 'Expert IAA & Process', exp: '15 ans', wilaya: 'Alger', specialite: 'IAA · Pharma' },
+  { id: 'sc2', nom: 'Amina Khelil', titre: 'Ingénieure BTP', exp: '12 ans', wilaya: 'Oran', specialite: 'BTP · Infrastructure' },
+  { id: 'sc3', nom: 'Salim Benali', titre: 'Expert Agri & Import', exp: '10 ans', wilaya: 'Sétif', specialite: 'Agricole · Import DZ' },
 ]
 
 export default function ConsultingPage() {
@@ -47,6 +47,22 @@ export default function ConsultingPage() {
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [services, setServices] = useState(staticServices)
+  const [consultants, setConsultants] = useState(staticConsultants)
+
+  useEffect(() => {
+    fetch('/api/consulting-packages')
+      .then(r => r.json())
+      .then(d => { if (d.packages && d.packages.length > 0) setServices(d.packages) })
+      .catch(() => {})
+    fetch('/api/admin/users')
+      .then(r => r.json())
+      .then(d => {
+        const approved = (d.users || []).filter(u => u.role === 'consultant' && u.approved)
+        if (approved.length > 0) setConsultants(approved.map(u => ({ id: u.id, nom: u.name, titre: u.sector || 'Consultant industriel', exp: '', wilaya: u.wilaya || 'Algérie', specialite: u.sector || '' })))
+      })
+      .catch(() => {})
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()

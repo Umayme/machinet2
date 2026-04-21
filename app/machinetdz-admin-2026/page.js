@@ -20,11 +20,13 @@ export default function SecretAdminPanel() {
   const [faqs, setFaqs] = useState([])
   const [prixItems, setPrixItems] = useState([])
   const [teamMembers, setTeamMembers] = useState([])
+  const [packages, setPackages] = useState([])
   const [loading, setLoading] = useState(false)
   const [blogForm, setBlogForm] = useState(null)
   const [faqForm, setFaqForm] = useState(null)
   const [prixForm, setPrixForm] = useState(null)
   const [teamForm, setTeamForm] = useState(null)
+  const [packageForm, setPackageForm] = useState(null)
 
   // Check if already logged in as admin
   useEffect(() => {
@@ -42,7 +44,7 @@ export default function SecretAdminPanel() {
   const loadData = async () => {
     setLoading(true)
     try {
-      const [m, u, c, p, co, fb, nl, bl, fq, pr, tm] = await Promise.all([
+      const [m, u, c, p, co, fb, nl, bl, fq, pr, tm, pkg] = await Promise.all([
         fetch('/api/admin/machines').then(r => r.json()),
         fetch('/api/admin/users').then(r => r.json()),
         fetch('/api/contact').then(r => r.json()),
@@ -54,6 +56,7 @@ export default function SecretAdminPanel() {
         fetch('/api/faq?admin=1').then(r => r.json()).catch(() => ({ faqs: [] })),
         fetch('/api/prix').then(r => r.json()).catch(() => ({ data: [] })),
         fetch('/api/team').then(r => r.json()).catch(() => ({ members: [] })),
+        fetch('/api/consulting-packages').then(r => r.json()).catch(() => ({ packages: [] })),
       ])
       setMachines(m.machines || [])
       setUsers(u.users || [])
@@ -68,6 +71,7 @@ export default function SecretAdminPanel() {
       for (const s of (pr.data || [])) for (const m2 of s.machines) allPrix.push({ ...m2, secteur: s.secteur })
       setPrixItems(allPrix)
       setTeamMembers(tm.members || [])
+      setPackages(pkg.packages || [])
     } catch (e) {
       console.error(e)
     }
@@ -138,7 +142,7 @@ export default function SecretAdminPanel() {
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
     setAuthed(false)
-    setMachines([]); setUsers([]); setContacts([]); setPending([]); setConsultations([]); setFeedbacks([]); setNewsletter([]); setBlogs([]); setFaqs([]); setPrixItems([]); setTeamMembers([])
+    setMachines([]); setUsers([]); setContacts([]); setPending([]); setConsultations([]); setFeedbacks([]); setNewsletter([]); setBlogs([]); setFaqs([]); setPrixItems([]); setTeamMembers([]); setPackages([])
   }
 
   const updateConsultation = async (id, fields) => {
@@ -212,6 +216,7 @@ export default function SecretAdminPanel() {
     { id: 'faq', label: 'FAQ' },
     { id: 'prix', label: 'Prix Marché' },
     { id: 'team', label: 'Équipe' },
+    { id: 'packages', label: 'Packages Consulting' },
   ]
 
   const saveBlog = async (data) => {
@@ -232,6 +237,22 @@ export default function SecretAdminPanel() {
     await fetch('/api/blog', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, published: !current }) })
     setBlogs(prev => prev.map(b => b.id === id ? { ...b, published: !current ? 1 : 0 } : b))
   }
+  const savePackage = async (data) => {
+    const method = data.id ? 'PATCH' : 'POST'
+    const payload = { ...data, inclus: (data.inclus || '').split('\n').map(s => s.trim()).filter(Boolean) }
+    const res = await fetch('/api/consulting-packages', { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    if (res.ok) {
+      setPackageForm(null)
+      const d = await fetch('/api/consulting-packages').then(r => r.json())
+      setPackages(d.packages || [])
+    }
+  }
+  const deletePackage = async (id) => {
+    if (!confirm('Supprimer ce package ?')) return
+    await fetch('/api/consulting-packages', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+    setPackages(prev => prev.filter(p => p.id !== id))
+  }
+
   const saveTeam = async (data) => {
     const method = data.id ? 'PATCH' : 'POST'
     const res = await fetch('/api/team', { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
@@ -978,6 +999,63 @@ export default function SecretAdminPanel() {
                         <div className="flex gap-2">
                           <button onClick={() => setTeamForm({ ...t, active: t.active === 1 || t.active === true })} className="text-xs px-3 py-1 border border-gray-700 text-gray-400 rounded-lg hover:text-white">Modifier</button>
                           <button onClick={() => deleteTeam(t.id)} className="text-red-500 hover:text-red-400 text-xs px-2">Suppr.</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* PACKAGES TAB */}
+              {tab === 'packages' && (
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h1 className="text-2xl font-black text-white mb-1">Packages Consulting</h1>
+                      <p className="text-gray-500 text-sm">{packages.length} package{packages.length !== 1 ? 's' : ''} · Affichés sur /consulting et /tarifs</p>
+                    </div>
+                    <button onClick={() => setPackageForm({ titre: '', prix: '', duree: '', desc: '', inclus: '', badge: '', ordre: packages.length, active: true })}
+                      className="btn-primary text-sm py-2 px-4">+ Nouveau package</button>
+                  </div>
+                  {packages.length === 0 && !packageForm && (
+                    <div className="card p-12 text-center text-gray-500">Aucun package. La page utilise des données statiques par défaut.</div>
+                  )}
+                  {packageForm && (
+                    <div className="card p-6 space-y-4 mb-6">
+                      <h2 className="text-white font-bold">{packageForm.id ? 'Modifier' : 'Nouveau package'}</h2>
+                      <div className="grid sm:grid-cols-3 gap-4">
+                        <div><label className="text-gray-400 text-xs mb-1 block">Titre *</label><input className="input-dark text-sm" value={packageForm.titre} onChange={e => setPackageForm(f => ({ ...f, titre: e.target.value }))} /></div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Prix *</label><input className="input-dark text-sm" placeholder="ex: 45 000 DZD" value={packageForm.prix} onChange={e => setPackageForm(f => ({ ...f, prix: e.target.value }))} /></div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Durée</label><input className="input-dark text-sm" placeholder="ex: 3-5 jours" value={packageForm.duree} onChange={e => setPackageForm(f => ({ ...f, duree: e.target.value }))} /></div>
+                      </div>
+                      <div><label className="text-gray-400 text-xs mb-1 block">Description</label><textarea rows={3} className="input-dark text-sm resize-none" value={packageForm.desc} onChange={e => setPackageForm(f => ({ ...f, desc: e.target.value }))} /></div>
+                      <div><label className="text-gray-400 text-xs mb-1 block">Ce qui est inclus (une ligne par item)</label><textarea rows={4} className="input-dark text-sm resize-none" placeholder="Analyse des besoins&#10;Benchmark 3+ fournisseurs&#10;..." value={packageForm.inclus} onChange={e => setPackageForm(f => ({ ...f, inclus: e.target.value }))} /></div>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div><label className="text-gray-400 text-xs mb-1 block">Badge (ex: Populaire)</label><input className="input-dark text-sm" value={packageForm.badge} onChange={e => setPackageForm(f => ({ ...f, badge: e.target.value }))} /></div>
+                        <div><label className="text-gray-400 text-xs mb-1 block">Ordre</label><input type="number" className="input-dark text-sm" value={packageForm.ordre} onChange={e => setPackageForm(f => ({ ...f, ordre: parseInt(e.target.value) || 0 }))} /></div>
+                      </div>
+                      <div className="flex gap-3">
+                        <button onClick={() => savePackage(packageForm)} className="btn-primary text-sm py-2">Enregistrer</button>
+                        <button onClick={() => setPackageForm(null)} className="btn-outline text-sm py-2">Annuler</button>
+                      </div>
+                    </div>
+                  )}
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    {packages.map(pkg2 => (
+                      <div key={pkg2.id} className="card p-5 relative">
+                        {pkg2.badge && <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-purple-700 text-white text-xs font-bold px-3 py-0.5 rounded-full">{pkg2.badge}</span>}
+                        <h3 className="text-white font-bold mb-1">{pkg2.titre}</h3>
+                        <p className="text-purple-400 font-black text-lg mb-1">{pkg2.prix}</p>
+                        <p className="text-gray-600 text-xs mb-2">{pkg2.duree}</p>
+                        <p className="text-gray-500 text-xs mb-3">{pkg2.desc}</p>
+                        {(pkg2.inclus || []).length > 0 && (
+                          <ul className="space-y-1 mb-3">
+                            {pkg2.inclus.map((item, i) => <li key={i} className="text-gray-600 text-xs">• {item}</li>)}
+                          </ul>
+                        )}
+                        <div className="flex gap-2">
+                          <button onClick={() => setPackageForm({ ...pkg2, inclus: (pkg2.inclus || []).join('\n') })} className="text-xs px-3 py-1 border border-gray-700 text-gray-400 rounded-lg hover:text-white">Modifier</button>
+                          <button onClick={() => deletePackage(pkg2.id)} className="text-red-500 hover:text-red-400 text-xs">Suppr.</button>
                         </div>
                       </div>
                     ))}
