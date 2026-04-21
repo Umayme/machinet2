@@ -1,8 +1,8 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
-const wilayas = [
+const wilayasBase = [
   { n: '01', nom: 'Adrar', region: 'Sud', vendeurs: 3 },
   { n: '02', nom: 'Chlef', region: 'Centre-Ouest', vendeurs: 18 },
   { n: '03', nom: 'Laghouat', region: 'Hauts Plateaux', vendeurs: 8 },
@@ -93,6 +93,18 @@ function getDot(vendeurs) {
 export default function CouverturePage() {
   const [search, setSearch] = useState('')
   const [region, setRegion] = useState('Toutes')
+  const [wilayas, setWilayas] = useState(wilayasBase)
+
+  useEffect(() => {
+    fetch('/api/stats/wilayas')
+      .then(r => r.json())
+      .then(d => {
+        if (d.wilayaCounts && Object.keys(d.wilayaCounts).length > 0) {
+          setWilayas(wilayasBase.map(w => ({ ...w, vendeurs: d.wilayaCounts[w.nom] ?? w.vendeurs })))
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   const filtered = wilayas.filter(w => {
     const matchSearch = w.nom.toLowerCase().includes(search.toLowerCase()) || w.n.includes(search)
