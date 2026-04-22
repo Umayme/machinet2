@@ -19,6 +19,7 @@ function normalize(m) {
     type: m.type || m.condition || 'Vente neuf',
     secteur: m.secteur || m.category || 'Industrie',
     verifie: m.verifie ?? m.verified ?? false,
+    photos: m.photos,
   }
 }
 

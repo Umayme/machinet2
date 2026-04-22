@@ -57,7 +57,9 @@ export default function IABotsPage() {
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messages.length > 1) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
   }, [messages])
 
   const sendMessage = async (text) => {

@@ -21,6 +21,7 @@ export default function MachinePage() {
   const [form, setForm] = useState({ nom: '', email: '', phone: '', message: '' })
   const [sent, setSent] = useState(false)
   const [sending, setSending] = useState(false)
+  const [selectedPhoto, setSelectedPhoto] = useState(0)
 
   useEffect(() => {
     fetch(`/api/machines/${params.id}`)
@@ -38,7 +39,7 @@ export default function MachinePage() {
           if (m.photos) {
             try { photos = JSON.parse(m.photos) } catch { if (m.photos) photos = [m.photos] }
           }
-          setMachine({ ...m, specsObj: specs, photosList: photos })
+          setMachine({ ...m, specsObj: specs, photosList: photos.slice(0, 10) })
           setForm(f => ({ ...f, message: `Bonjour, je suis intéressé par "${m.name}". Pouvez-vous me donner plus d'informations et votre meilleur prix ?` }))
         }
         setLoading(false)
@@ -102,11 +103,23 @@ export default function MachinePage() {
             {/* Images */}
             {machine.photosList?.length > 0 ? (
               <div className="card overflow-hidden">
-                <img src={machine.photosList[0]} alt={machine.name} className="w-full h-80 object-cover" onError={e => e.target.style.display='none'} />
+                <div className="relative">
+                  <img src={machine.photosList[selectedPhoto]} alt={machine.name} className="w-full h-80 object-cover" onError={e => e.target.style.display='none'} />
+                  {machine.photosList.length > 1 && (
+                    <>
+                      <button onClick={() => setSelectedPhoto(i => (i - 1 + machine.photosList.length) % machine.photosList.length)}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white transition-all">‹</button>
+                      <button onClick={() => setSelectedPhoto(i => (i + 1) % machine.photosList.length)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white transition-all">›</button>
+                      <span className="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded-md">{selectedPhoto + 1} / {machine.photosList.length}</span>
+                    </>
+                  )}
+                </div>
                 {machine.photosList.length > 1 && (
                   <div className="flex gap-2 p-3 overflow-x-auto">
-                    {machine.photosList.slice(1).map((url, i) => (
-                      <img key={i} src={url} alt="" className="h-16 w-24 object-cover rounded-lg flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" />
+                    {machine.photosList.map((url, i) => (
+                      <img key={i} src={url} alt="" onClick={() => setSelectedPhoto(i)}
+                        className={`h-16 w-24 object-cover rounded-lg flex-shrink-0 cursor-pointer transition-all ${i === selectedPhoto ? 'ring-2 ring-purple-500 opacity-100' : 'opacity-50 hover:opacity-80'}`} />
                     ))}
                   </div>
                 )}
