@@ -1,32 +1,11 @@
 import { NextResponse } from 'next/server'
-import Database from 'better-sqlite3'
-import path from 'path'
-import { randomBytes } from 'crypto'
 import { getSession } from '@/lib/auth'
-
-function getDb() {
-  const db = new Database(path.join(process.cwd(), 'prisma', 'dev.db'))
-  db.prepare(`
-    CREATE TABLE IF NOT EXISTS PrixMarche (
-      id TEXT PRIMARY KEY,
-      secteur TEXT NOT NULL,
-      nom TEXT NOT NULL,
-      min TEXT NOT NULL,
-      max TEXT NOT NULL,
-      tendance TEXT NOT NULL DEFAULT '→',
-      pct TEXT NOT NULL DEFAULT 'stable',
-      updatedAt TEXT NOT NULL
-    )
-  `).run()
-  return db
-}
+import { prisma } from '@/lib/prisma'
+import { randomBytes } from 'crypto'
 
 export async function GET() {
   try {
-    const db = getDb()
-    const rows = db.prepare('SELECT * FROM PrixMarche ORDER BY secteur, nom ASC').all()
-    db.close()
-    // Group by secteur
+    const rows = await prisma.prixMarche.findMany({ orderBy: [{ secteur: 'asc' }, { nom: 'asc' }] })
     const grouped = {}
     for (const row of rows) {
       if (!grouped[row.secteur]) grouped[row.secteur] = []
@@ -43,19 +22,11 @@ export async function GET() {
 export async function POST(request) {
   try {
     const session = await getSession()
-    if (!session || session.role !== 'admin') {
-      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-    }
+    if (!session || session.role !== 'admin') return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     const { secteur, nom, min, max, tendance, pct } = await request.json()
-    if (!secteur || !nom || !min || !max) {
-      return NextResponse.json({ error: 'Champs requis manquants' }, { status: 400 })
-    }
+    if (!secteur || !nom || !min || !max) return NextResponse.json({ error: 'Champs requis manquants' }, { status: 400 })
     const id = 'p' + randomBytes(12).toString('hex')
-    const db = getDb()
-    db.prepare('INSERT INTO PrixMarche (id, secteur, nom, min, max, tendance, pct, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)').run(
-      id, secteur, nom, min, max, tendance || '→', pct || 'stable', new Date().toISOString()
-    )
-    db.close()
+    await prisma.prixMarche.create({ data: { id, secteur, nom, min, max, tendance: tendance||'→', pct: pct||'stable' } })
     return NextResponse.json({ success: true, id })
   } catch (error) {
     console.error('Prix POST error:', error)
@@ -66,15 +37,9 @@ export async function POST(request) {
 export async function PATCH(request) {
   try {
     const session = await getSession()
-    if (!session || session.role !== 'admin') {
-      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-    }
+    if (!session || session.role !== 'admin') return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     const { id, secteur, nom, min, max, tendance, pct } = await request.json()
-    const db = getDb()
-    db.prepare('UPDATE PrixMarche SET secteur=?, nom=?, min=?, max=?, tendance=?, pct=?, updatedAt=? WHERE id=?').run(
-      secteur, nom, min, max, tendance || '→', pct || 'stable', new Date().toISOString(), id
-    )
-    db.close()
+    await prisma.prixMarche.update({ where: { id }, data: { secteur, nom, min, max, tendance: tendance||'→', pct: pct||'stable' } })
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Prix PATCH error:', error)
@@ -85,13 +50,9 @@ export async function PATCH(request) {
 export async function DELETE(request) {
   try {
     const session = await getSession()
-    if (!session || session.role !== 'admin') {
-      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-    }
+    if (!session || session.role !== 'admin') return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     const { id } = await request.json()
-    const db = getDb()
-    db.prepare('DELETE FROM PrixMarche WHERE id = ?').run(id)
-    db.close()
+    await prisma.prixMarche.delete({ where: { id } })
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Prix DELETE error:', error)

@@ -1,18 +1,16 @@
 import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
-import Database from 'better-sqlite3'
-import path from 'path'
-
-function getDb() { return new Database(path.join(process.cwd(), 'prisma', 'dev.db')) }
+import { prisma } from '@/lib/prisma'
 
 export async function GET() {
   try {
     const session = await getSession()
     if (!session) return NextResponse.json({ user: null })
-    const db = getDb()
-    const user = db.prepare('SELECT id, email, name, role, approved, company, wilaya, phone, avatar FROM User WHERE id = ?').get(session.id)
-    db.close()
+    const user = await prisma.user.findUnique({
+      where: { id: session.id },
+      select: { id: true, email: true, name: true, role: true, approved: true, company: true, wilaya: true, phone: true, avatar: true },
+    })
     if (!user) return NextResponse.json({ user: null })
-    return NextResponse.json({ user: { ...user, approved: Boolean(user.approved) } })
+    return NextResponse.json({ user })
   } catch (e) { return NextResponse.json({ user: null }) }
 }

@@ -1,25 +1,14 @@
 import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
-import Database from 'better-sqlite3'
-import path from 'path'
-import { randomBytes } from 'crypto'
+import { prisma } from '@/lib/prisma'
 import { sendContactNotification } from '@/lib/email'
-
-function getDb() { return new Database(path.join(process.cwd(), 'prisma', 'dev.db')) }
-function cuid() { return 'c' + randomBytes(16).toString('hex') }
 
 export async function GET() {
   try {
     const session = await getSession()
     if (!session || session.role !== 'admin') return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
-    const db = getDb()
-    const contacts = db.prepare(`
-      SELECT c.*, m.name as machineName FROM Contact c
-      LEFT JOIN Machine m ON m.id = c.machineId
-      ORDER BY c.createdAt DESC
-    `).all()
-    db.close()
-    return NextResponse.json({ contacts: contacts || [] })
+    const contacts = await prisma.contact.findMany({ include: { machine: { select: { name: true } } }, orderBy: { createdAt: 'desc' } })
+    return NextResponse.json({ contacts })
   } catch (e) { return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 }) }
 }
 
@@ -28,13 +17,8 @@ export async function POST(request) {
     const { name, email, phone, message, machineId } = await request.json()
     if (!name || !email || !message) return NextResponse.json({ error: 'Nom, email et message sont requis' }, { status: 400 })
     const session = await getSession()
-    const id = cuid()
-    const now = new Date().toISOString()
-    const db = getDb()
-    db.prepare(`INSERT INTO Contact (id, name, email, phone, message, machineId, userId, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, 'new', ?)`
-    ).run(id, name, email, phone||null, message, machineId||null, session?.id||null, now)
-    db.close()
+    const contact = await prisma.contact.create({ data: { name, email, phone: phone || null, message, machineId: machineId || null, userId: session?.id || null } })
     try { await sendContactNotification({ name, email, phone: phone||'', message, machineId }) } catch {}
-    return NextResponse.json({ success: true, id }, { status: 201 })
+    return NextResponse.json({ success: true, id: contact.id }, { status: 201 })
   } catch (e) { console.error(e); return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 }) }
 }

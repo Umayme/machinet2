@@ -19,6 +19,7 @@ model User {
   role          String         @default("buyer")
   approved      Boolean        @default(false)
   approvedAt    DateTime?
+  avatar        String?
   createdAt     DateTime       @default(now())
   machines      Machine[]
   contacts      Contact[]
@@ -70,4 +71,82 @@ model Consultation {
   scheduledAt  DateTime?
   notes        String?
   createdAt    DateTime  @default(now())
+}
+
+model BlogPost {
+  id        String   @id
+  titre     String
+  slug      String   @unique
+  categorie String
+  contenu   String?
+  desc      String?
+  image     String?
+  tags      String?
+  temps     String   @default("5 min")
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Faq {
+  id        String   @id
+  question  String
+  reponse   String
+  page      String
+  ordre     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Feedback {
+  id        String   @id
+  nom       String
+  poste     String?
+  wilaya    String?
+  note      Int
+  texte     String
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Newsletter {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model PrixMarche {
+  id       String   @id
+  secteur  String
+  nom      String
+  min      String
+  max      String
+  tendance String   @default("→")
+  pct      String   @default("stable")
+  updatedAt DateTime @updatedAt
+}
+
+model ConsultingPackage {
+  id        String   @id
+  titre     String
+  prix      String
+  duree     String
+  desc      String?
+  inclus    String?
+  badge     String?
+  ordre     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model TeamMember {
+  id        String   @id
+  nom       String
+  titre     String
+  bio       String?
+  wilaya    String?
+  avatar    String?
+  ordre     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
 }
