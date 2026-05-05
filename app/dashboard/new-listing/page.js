@@ -20,7 +20,7 @@ export default function NewListingPage() {
     if (!files.length) return
     setUploading(true)
     const uploaded = []
-    for (const file of files.slice(0, 10 - photos.length)) {
+    for (const file of files.slice(0, 5 - photos.length)) {
       const fd = new FormData()
       fd.append('file', file)
       try {

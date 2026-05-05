@@ -11,16 +11,15 @@ const stats = [
 ]
 
 const secteurs = [
-  { label: 'IAA', desc: 'Agroalimentaire', href: '/catalogue?secteur=IAA' },
-  { label: 'BTP', desc: 'Construction', href: '/catalogue?secteur=BTP' },
-  { label: 'Agricole', desc: 'Agriculture', href: '/catalogue?secteur=Agricole' },
-  { label: 'Pharma', desc: 'Pharmaceutique', href: '/catalogue?secteur=Pharma' },
-  { label: 'Bois', desc: 'Menuiserie', href: '/catalogue?secteur=Bois' },
-  { label: 'Textile', desc: 'Habillement', href: '/catalogue?secteur=Textile' },
-  { label: 'Mining', desc: 'Carrières & Mines', href: '/catalogue?secteur=Mining' },
-  { label: 'Énergie', desc: 'Électrique & Solaire', href: '/catalogue?secteur=Energie' },
+  { label: 'IAA', desc: 'Agroalimentaire', href: '/catalogue?secteur=IAA', img: '/images/iaa.png' },
+  { label: 'BTP', desc: 'Construction', href: '/catalogue?secteur=BTP', img: '/images/btp.png' },
+  { label: 'Agricole', desc: 'Agriculture', href: '/catalogue?secteur=Agricole', img: '/images/agricole.png' },
+  { label: 'Pharma', desc: 'Pharmaceutique', href: '/catalogue?secteur=Pharma', img: '/images/pharma.png' },
+  { label: 'Bois', desc: 'Menuiserie', href: '/catalogue?secteur=Bois', img: '/images/bois.png' },
+  { label: 'Textile', desc: 'Habillement', href: '/catalogue?secteur=Textile', img: '/images/textile.png' },
+  { label: 'Mining', desc: 'Carrières & Mines', href: '/catalogue?secteur=Mining', img: '/images/mining.png' },
+  { label: 'Énergie', desc: 'Électrique & Solaire', href: '/catalogue?secteur=Energie', img: '/images/energie.png' },
 ]
-
 const temoignages = [
   { nom: 'Ahmed Bensalem', poste: 'Directeur usine IAA', wilaya: 'Blida', note: 5, texte: "Grâce à MachiNet j'ai trouvé ma ligne de conditionnement en 3 jours au lieu de 3 mois." },
   { nom: 'Karim Mansouri', poste: 'Importateur machines', wilaya: 'Alger', note: 5, texte: "En tant que fournisseur, j'ai reçu 12 leads qualifiés le premier mois d'abonnement." },
@@ -56,7 +55,7 @@ export default function HomePage() {
     fetch('/api/machines?limit=6')
       .then(r => r.json())
       .then(d => { if (d.machines?.length) setFeaturedMachines(d.machines.map(normalizeMachine)) })
-      .catch(() => {})
+      .catch(() => { })
   }, [])
 
   return (
@@ -64,8 +63,19 @@ export default function HomePage() {
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="grid-bg absolute inset-0 opacity-60"></div>
+        {/* Background image */}
+        <img
+          src="/images/hero-bg.png"
+          alt="Machines industrielles MachiNet"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        />
+        {/* Dark overlay to keep text readable */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40 z-[1]"></div>
+        <div className="absolute inset-0 bg-black/40 z-[1]"></div>
+
+        {/* Decorative effects on top of the image */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
+          <div className="grid-bg absolute inset-0 opacity-30"></div>
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-purple-900/25 rounded-full blur-[120px]"></div>
           <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-violet-900/15 rounded-full blur-[80px]"></div>
           <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-purple-800/12 rounded-full blur-[80px]"></div>
@@ -135,9 +145,19 @@ export default function HomePage() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {secteurs.map((s, i) => (
-            <Link key={i} href={s.href} className="card p-6 text-center group">
-              <div className="text-white font-bold text-lg mb-1 group-hover:text-purple-300 transition-colors">{s.label}</div>
-              <div className="text-gray-500 text-sm">{s.desc}</div>
+            <Link key={i} href={s.href} className="relative rounded-2xl overflow-hidden group h-36">
+              {s.img && (
+                <img
+                  src={s.img}
+                  alt={s.label}
+                  className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+              <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-4">
+                <div className="text-white font-bold text-lg mb-1 group-hover:text-purple-300 transition-colors">{s.label}</div>
+                <div className="text-gray-300 text-sm">{s.desc}</div>
+              </div>
             </Link>
           ))}
         </div>

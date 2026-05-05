@@ -70,11 +70,12 @@ export default function Navbar() {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass border-b border-purple-900/30' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
-        <Link href="/" className="flex items-center gap-2 group">
-          <svg className="w-7 h-7 text-purple-400 group-hover:text-purple-300 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
+        <Link href="/" className="flex items-center gap-2 group ml-20">
+          <img
+            src="/images/logo.png"
+            alt="MachiNet"
+            className="h-9 w-auto group-hover:opacity-80 transition-opacity"
+          />
           <span className="logo-text text-2xl group-hover:opacity-80 transition-opacity">
             <span className="text-white">MACHI</span><span className="text-purple-400">NET</span>
           </span>
@@ -137,11 +138,10 @@ export default function Navbar() {
                   <div className="px-3 py-2 border-b border-purple-900/20 mb-1">
                     <p className="text-white text-sm font-semibold truncate">{user.name}</p>
                     <p className="text-gray-600 text-xs truncate">{user.email}</p>
-                    <span className={`text-xs px-2 py-0.5 rounded-full mt-1 inline-block ${
-                      user.role === 'seller' ? 'bg-purple-900/30 text-purple-400' :
+                    <span className={`text-xs px-2 py-0.5 rounded-full mt-1 inline-block ${user.role === 'seller' ? 'bg-purple-900/30 text-purple-400' :
                       user.role === 'consultant' ? 'bg-cyan-900/30 text-cyan-400' :
-                      'bg-blue-900/30 text-blue-400'
-                    }`}>{user.role}</span>
+                        'bg-blue-900/30 text-blue-400'
+                      }`}>{user.role}</span>
                   </div>
                   {(user.role === 'seller' || user.role === 'consultant') && (
                     <Link href={dashboardLink()} className="block px-3 py-2 rounded-lg hover:bg-purple-900/20 text-gray-300 text-sm hover:text-white transition-colors">

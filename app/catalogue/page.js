@@ -3,25 +3,11 @@ import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import MachineCard from '../../components/MachineCard'
+import { normalizeMachine as normalize } from '../../lib/normalize'
 
 const wilayas = ['Toutes', 'Adrar','Chlef','Laghouat','Oum El Bouaghi','Batna','Béjaïa','Biskra','Béchar','Blida','Bouira','Tamanrasset','Tébessa','Tlemcen','Tiaret','Tizi Ouzou','Alger','Djelfa','Jijel','Sétif','Saïda','Skikda','Sidi Bel Abbès','Annaba','Guelma','Constantine','Médéa','Mostaganem','Ouargla','Oran','El Bayadh','Boumerdès','El Tarf','Tindouf','Tissemsilt','El Oued','Khenchela','Souk Ahras','Tipaza','Mila','Aïn Defla','Naâma','Aïn Témouchent','Ghardaïa','Relizane']
 const secteurs = ['Tous', 'IAA', 'BTP', 'Agricole', 'Textile', 'Pharma', 'Mining', 'Industrie', 'Énergie']
 const types = ['Tous', 'Vente neuf', 'Occasion']
-
-function normalize(m) {
-  // Handle both real DB format and legacy demo format
-  return {
-    id: m.id,
-    nom: m.nom || m.name || 'Machine industrielle',
-    fournisseur: m.fournisseur || m.seller?.name || m.seller?.company || 'Vendeur',
-    wilaya: m.wilaya,
-    prix: String(m.prix || m.price || 0),
-    type: m.type || m.condition || 'Vente neuf',
-    secteur: m.secteur || m.category || 'Industrie',
-    verifie: m.verifie ?? m.verified ?? false,
-    photos: m.photos,
-  }
-}
 
 export default function CataloguePage() {
   return (

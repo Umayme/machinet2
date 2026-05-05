@@ -2,24 +2,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import MachineCard from '../../components/MachineCard'
+import { normalizeMachine as normalize } from '../../lib/normalize'
 
 const secteurs = ['Tous', 'BTP', 'IAA', 'Agricole', 'Textile', 'Industrie', 'Pharma', 'Mining', 'Énergie']
 const conditions = ['Tous', 'Vente neuf', 'Occasion']
 const wilayas = ['Toutes', 'Alger', 'Oran', 'Constantine', 'Blida', 'Sétif', 'Annaba', 'Tlemcen', 'Batna', 'Béjaïa', 'Biskra', 'Tiaret', 'Boumerdès', 'Tipaza', 'Médéa']
-
-function normalize(m) {
-  return {
-    id: m.id,
-    nom: m.nom || m.name || 'Machine industrielle',
-    fournisseur: m.fournisseur || m.seller?.name || m.seller?.company || 'Vendeur',
-    wilaya: m.wilaya,
-    prix: String(m.prix || m.price || 0),
-    type: m.type || m.condition || 'Vente neuf',
-    secteur: m.secteur || m.category || 'Industrie',
-    verifie: m.verifie ?? m.verified ?? false,
-    photos: m.photos,
-  }
-}
 
 export default function AcheteursPage() {
   const [machines, setMachines] = useState([])

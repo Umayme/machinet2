@@ -25,7 +25,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
 
           <div>
-            <div className="mb-4">
+            <div className="mb-4 flex items-center gap-2">
+              <img src="/images/logo.png" alt="MachiNet" className="h-9 w-auto" />
               <span className="logo-text text-2xl"><span className="text-white">MACHI</span><span className="text-purple-400">NET</span></span>
             </div>
             <p className="text-gray-500 text-sm leading-relaxed mb-6">

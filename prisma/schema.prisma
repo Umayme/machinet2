@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 model User {
@@ -26,7 +26,7 @@ model User {
 }
 
 model Machine {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   category    String
   price       Int
@@ -36,10 +36,10 @@ model Machine {
   specs       String?
   photos      String?
   sellerId    String
-  seller      User     @relation(fields: [sellerId], references: [id])
-  verified    Boolean  @default(false)
-  active      Boolean  @default(true)
-  createdAt   DateTime @default(now())
+  seller      User      @relation(fields: [sellerId], references: [id])
+  verified    Boolean   @default(false)
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
   contacts    Contact[]
 }
 
@@ -58,16 +58,16 @@ model Contact {
 }
 
 model Consultation {
-  id            String    @id @default(cuid())
-  clientName    String
-  clientEmail   String
-  clientPhone   String?
-  subject       String
-  message       String?
-  consultantId  String?
-  consultant    User?     @relation(fields: [consultantId], references: [id])
-  status        String    @default("pending")
-  scheduledAt   DateTime?
-  notes         String?
-  createdAt     DateTime  @default(now())
+  id           String    @id @default(cuid())
+  clientName   String
+  clientEmail  String
+  clientPhone  String?
+  subject      String
+  message      String?
+  consultantId String?
+  consultant   User?     @relation(fields: [consultantId], references: [id])
+  status       String    @default("pending")
+  scheduledAt  DateTime?
+  notes        String?
+  createdAt    DateTime  @default(now())
 }
