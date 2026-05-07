@@ -70,7 +70,7 @@ export default function Footer() {
           <div>
             <h4 className="text-[#141313] font-semibold mb-4 text-sm">Contact</h4>
             <ul className="space-y-2 text-[#8c8b8b] text-sm">
-              <li>machinet60@gmail.com</li>
+              <li>machinetdz@gmail.com</li>
               <li>+213 659 132 072</li>
               <li>Algérie</li>
             </ul>
