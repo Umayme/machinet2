@@ -18,7 +18,7 @@ const catColors = {
     'Agricole': 'bg-lime-900/30 text-lime-400',
     'Import': 'bg-blue-900/30 text-blue-400',
     'Finance': 'bg-yellow-900/30 text-yellow-400',
-    'Conseil': 'bg-purple-900/30 text-purple-400',
+    'Conseil': 'bg-[#f9f9f8] text-[#e46a33]',
 }
 
 function formatDate(iso) {
@@ -70,22 +70,22 @@ export default function GuidesPage() {
 
                 {/* ARTICLE FEATURED */}
                 <div className="card p-8 mb-12 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-purple-900/10 rounded-full blur-3xl"></div>
+                    <div className="hidden"></div>
                     <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
-                        <div className="w-24 h-24 rounded-2xl bg-purple-900/30 border border-purple-700/40 flex items-center justify-center flex-shrink-0">
-                            <span className="text-purple-300 font-black text-2xl">PDF</span>
+                        <div className="w-24 h-24 rounded-2xl bg-[#f9f9f8] border border-[#e9e9e9] flex items-center justify-center flex-shrink-0">
+                            <span className="text-[#e46a33] font-black text-2xl">PDF</span>
                         </div>
                         <div className="flex-1">
                             <span className="badge-verified mb-3 inline-block">Article du mois</span>
-                            <h2 className="text-white font-black text-2xl mb-3">
+                            <h2 className="font-black text-[#141313] text-2xl mb-3">
                                 Guide complet : Acheter une machine industrielle en Algérie en 2026
                             </h2>
-                            <p className="text-gray-400 mb-6">
+                            <p className="text-[#8c8b8b] mb-6">
                                 De la recherche fournisseur à la livraison, en passant par la négociation et les aspects légaux.
                             </p>
                             <div className="flex items-center gap-4">
-                                <Link href="/consulting" className="btn-primary">Parler à un expert →</Link>
-                                <span className="text-gray-600 text-sm">15 min de lecture</span>
+                                <Link href="/experts" className="btn-primary">Parler à un expert →</Link>
+                                <span className="text-[#434042] text-sm">15 min de lecture</span>
                             </div>
                         </div>
                     </div>
@@ -106,8 +106,8 @@ export default function GuidesPage() {
                         {allCats.map(c => (
                             <button key={c} onClick={() => setSelectedCat(c)}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border ${selectedCat === c
-                                    ? 'bg-purple-700/30 text-purple-300 border-purple-700/50'
-                                    : 'text-gray-500 border-gray-700 hover:border-purple-700/50 hover:text-white'}`}>
+                                    ? 'bg-[#e46a33]/10 text-[#e46a33] border-[#e46a33]'
+                                    : 'text-[#8c8b8b] border-[#e9e9e9] hover:border-[#e46a33] hover:text-[#e46a33]'}`}>
                                 {c}
                             </button>
                         ))}
@@ -119,31 +119,31 @@ export default function GuidesPage() {
                     {filtered.map((article) => (
                         <div key={article.id} className="card p-6 group cursor-pointer">
                             {article.image && (
-                                <div className="w-full h-40 rounded-xl overflow-hidden mb-4 bg-purple-900/20">
+                                <div className="w-full h-40 rounded-xl overflow-hidden mb-4 bg-[#f9f9f8]">
                                     <img src={article.image} alt={article.titre} className="w-full h-full object-cover" />
                                 </div>
                             )}
                             <div className="flex items-start justify-between mb-4">
-                                <span className={`px-2 py-1 rounded-lg text-xs font-medium ${catColors[article.categorie] || 'bg-purple-900/30 text-purple-400'}`}>
+                                <span className={`px-2 py-1 rounded-lg text-xs font-medium ${catColors[article.categorie] || 'bg-[#f9f9f8] text-[#e46a33]'}`}>
                                     {article.categorie}
                                 </span>
                             </div>
-                            <h3 className="text-white font-bold mb-3 group-hover:text-purple-300 transition-colors leading-snug">
+                            <h3 className="font-bold text-[#141313] mb-3 group-hover:text-[#e46a33] transition-colors leading-snug">
                                 {article.titre}
                             </h3>
-                            <p className="text-gray-500 text-sm leading-relaxed mb-4">{article.desc}</p>
+                            <p className="text-[#8c8b8b] text-sm leading-relaxed mb-4">{article.desc}</p>
                             <div className="flex flex-wrap gap-2 mb-4">
                                 {(article.tags || []).map(tag => (
-                                    <span key={tag} className="px-2 py-0.5 bg-white/5 rounded-md text-gray-600 text-xs">#{tag}</span>
+                                    <span key={tag} className="px-2 py-0.5 bg-white/5 rounded-md text-[#434042] text-xs">#{tag}</span>
                                 ))}
                             </div>
-                            <div className="flex items-center justify-between pt-4 border-t border-purple-900/20">
-                                <div className="flex items-center gap-3 text-gray-600 text-xs">
+                            <div className="flex items-center justify-between pt-4 border-t border-[#e9e9e9]">
+                                <div className="flex items-center gap-3 text-[#434042] text-xs">
                                     <span>{article.temps} de lecture</span>
                                     <span>{formatDate(article.createdAt)}</span>
                                 </div>
                                 {article.slug && (
-                                    <Link href={`/guides/${article.slug}`} className="text-purple-400 hover:text-purple-300 text-sm font-semibold transition-colors">
+                                    <Link href={`/guides/${article.slug}`} className="text-[#e46a33] hover:text-[#e46a33] text-sm font-semibold transition-colors">
                                         Lire →
                                     </Link>
                                 )}
@@ -154,10 +154,10 @@ export default function GuidesPage() {
 
                 {/* CTA CONSULTING */}
                 <div className="card p-10 text-center">
-                    <h2 className="text-2xl font-black text-white mb-3">Besoin d'un conseil personnalisé ?</h2>
-                    <p className="text-gray-400 mb-6">Nos consultants industriels vous accompagnent dans vos projets d'investissement.</p>
+                    <h2 className="font-black text-[#141313] text-2xl mb-3">Besoin d'un conseil personnalisé ?</h2>
+                    <p className="text-[#8c8b8b] mb-6">Nos consultants industriels vous accompagnent dans vos projets d'investissement.</p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Link href="/consulting" className="btn-primary">Demander un conseil</Link>
+                        <Link href="/experts" className="btn-primary">Demander un conseil</Link>
                         <Link href="/ia-bots" className="btn-outline">Parler à MachiBot</Link>
                     </div>
                 </div>

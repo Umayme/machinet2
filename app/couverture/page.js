@@ -77,16 +77,16 @@ const wilayasBase = [
 const regions = ['Toutes', 'Centre', 'Nord-Est', 'Ouest', 'Est', 'Hauts Plateaux', 'Hauts Plateaux Ouest', 'Hauts Plateaux Est', 'Centre-Ouest', 'Centre-Est', 'Sud', 'Sud-Est', 'Sud-Ouest', 'Grand Sud']
 
 function getColor(vendeurs) {
-  if (vendeurs >= 50) return 'border-purple-500 bg-purple-900/30'
-  if (vendeurs >= 20) return 'border-purple-700/60 bg-purple-900/20'
-  if (vendeurs >= 10) return 'border-purple-900/60 bg-purple-900/10'
-  return 'border-white/10 bg-white/3'
+  if (vendeurs >= 50) return 'border-[#e46a33] bg-[#f9f9f8]'
+  if (vendeurs >= 20) return 'border-[#e46a33]/60 bg-[#f9f9f8]'
+  if (vendeurs >= 10) return 'border-[#e9e9e9] bg-[#f9f9f8]'
+  return 'border-[#e9e9e9] bg-white/3'
 }
 
 function getDot(vendeurs) {
-  if (vendeurs >= 50) return 'bg-purple-400'
-  if (vendeurs >= 20) return 'bg-purple-600'
-  if (vendeurs >= 10) return 'bg-purple-800'
+  if (vendeurs >= 50) return 'bg-[#e46a33]'
+  if (vendeurs >= 20) return 'bg-[#e46a33]'
+  if (vendeurs >= 10) return 'bg-[#141313]'
   return 'bg-gray-700'
 }
 
@@ -119,7 +119,7 @@ export default function CouverturePage() {
 
       {/* HERO */}
       <section className="py-16 max-w-7xl mx-auto px-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-purple-900/20 border border-purple-800/40 rounded-full px-4 py-2 mb-6">
+        <div className="inline-flex items-center gap-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-full px-4 py-2 mb-6">
           <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
           <span className="text-green-300 text-sm font-medium">Couverture nationale complète</span>
         </div>
@@ -136,7 +136,7 @@ export default function CouverturePage() {
           ].map((s, i) => (
             <div key={i} className="card p-5 text-center">
               <p className="stat-value">{s.v}</p>
-              <p className="text-gray-500 text-xs mt-1">{s.l}</p>
+              <p className="text-[#8c8b8b] text-xs mt-1">{s.l}</p>
             </div>
           ))}
         </div>
@@ -145,16 +145,16 @@ export default function CouverturePage() {
       {/* LÉGENDE */}
       <section className="max-w-7xl mx-auto px-6 mb-6">
         <div className="flex flex-wrap gap-4 items-center">
-          <span className="text-gray-500 text-sm">Densité de vendeurs :</span>
+          <span className="text-[#8c8b8b] text-sm">Densité de vendeurs :</span>
           {[
-            { color: 'bg-purple-400', label: '50+ vendeurs' },
-            { color: 'bg-purple-600', label: '20-49 vendeurs' },
-            { color: 'bg-purple-800', label: '10-19 vendeurs' },
+            { color: 'bg-[#e46a33]', label: '50+ vendeurs' },
+            { color: 'bg-[#e46a33]', label: '20-49 vendeurs' },
+            { color: 'bg-[#141313]', label: '10-19 vendeurs' },
             { color: 'bg-gray-700', label: '1-9 vendeurs' },
           ].map((l, i) => (
             <div key={i} className="flex items-center gap-2">
               <span className={`w-3 h-3 rounded-full ${l.color}`}></span>
-              <span className="text-gray-400 text-xs">{l.label}</span>
+              <span className="text-[#8c8b8b] text-xs">{l.label}</span>
             </div>
           ))}
         </div>
@@ -175,7 +175,7 @@ export default function CouverturePage() {
           <select className="input-dark h-10 text-sm w-full sm:w-56" value={region} onChange={e => setRegion(e.target.value)}>
             {regions.map(r => <option key={r} value={r}>{r}</option>)}
           </select>
-          <span className="text-gray-500 text-sm self-center">{filtered.length} wilaya{filtered.length !== 1 ? 's' : ''}</span>
+          <span className="text-[#8c8b8b] text-sm self-center">{filtered.length} wilaya{filtered.length !== 1 ? 's' : ''}</span>
         </div>
       </section>
 
@@ -184,37 +184,37 @@ export default function CouverturePage() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
           {filtered.map((w, i) => (
             <Link key={i} href={`/catalogue?wilaya=${encodeURIComponent(w.nom)}`}
-              className={`border rounded-xl p-4 hover:border-purple-500/60 hover:shadow-lg hover:shadow-purple-900/20 transition-all group ${getColor(w.vendeurs)}`}>
+              className={`border rounded-xl p-4 hover:border-[#e46a33]/40 hover:shadow-lg hover:shadow-[#e9e9e9] transition-all group ${getColor(w.vendeurs)}`}>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-gray-600 text-xs font-mono">{w.n}</span>
+                <span className="text-[#434042] text-xs font-mono">{w.n}</span>
                 <span className={`w-2.5 h-2.5 rounded-full ${getDot(w.vendeurs)}`}></span>
               </div>
-              <p className="text-white text-sm font-semibold leading-tight group-hover:text-purple-300 transition-colors">{w.nom}</p>
-              <p className="text-gray-600 text-xs mt-1">{w.region}</p>
-              <p className="text-purple-500 text-xs mt-2 font-medium">{w.vendeurs} vendeur{w.vendeurs !== 1 ? 's' : ''}</p>
+              <p className="text-[#141313] text-sm font-semibold leading-tight group-hover:text-[#e46a33] transition-colors">{w.nom}</p>
+              <p className="text-[#434042] text-xs mt-1">{w.region}</p>
+              <p className="text-[#e46a33] text-xs mt-2 font-medium">{w.vendeurs} vendeur{w.vendeurs !== 1 ? 's' : ''}</p>
             </Link>
           ))}
         </div>
 
         {filtered.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-gray-500">Aucune wilaya trouvée pour "{search}"</p>
+            <p className="text-[#8c8b8b]">Aucune wilaya trouvée pour "{search}"</p>
           </div>
         )}
       </section>
 
       {/* TOP WILAYAS */}
-      <section className="py-16 bg-gradient-to-b from-black via-purple-950/5 to-black">
+      <section className="py-16 bg-gradient-to-b from-[#f9f9f8] to-[#f9f9f8]">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="section-title text-center mb-12">Top wilayas par nombre de vendeurs</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {[...wilayas].sort((a, b) => b.vendeurs - a.vendeurs).slice(0, 5).map((w, i) => (
-              <Link key={i} href={`/catalogue?wilaya=${encodeURIComponent(w.nom)}`} className="card p-5 text-center hover:border-purple-500/60 transition-all">
-                <div className="text-3xl font-black text-purple-400 mb-1">#{i + 1}</div>
-                <p className="text-white font-bold">{w.nom}</p>
-                <p className="text-gray-500 text-xs mt-1">{w.region}</p>
-                <p className="text-purple-400 text-lg font-black mt-2">{w.vendeurs}</p>
-                <p className="text-gray-600 text-xs">vendeurs</p>
+              <Link key={i} href={`/catalogue?wilaya=${encodeURIComponent(w.nom)}`} className="card p-5 text-center hover:border-[#e46a33]/40 transition-all">
+                <div className="text-3xl font-black text-[#e46a33] mb-1">#{i + 1}</div>
+                <p className="font-bold text-[#141313]">{w.nom}</p>
+                <p className="text-[#8c8b8b] text-xs mt-1">{w.region}</p>
+                <p className="text-[#e46a33] text-lg font-black mt-2">{w.vendeurs}</p>
+                <p className="text-[#434042] text-xs">vendeurs</p>
               </Link>
             ))}
           </div>
@@ -223,8 +223,8 @@ export default function CouverturePage() {
 
       {/* CTA */}
       <section className="py-20 max-w-4xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-black text-white mb-4">Vous êtes vendeur dans une wilaya peu couverte ?</h2>
-        <p className="text-gray-400 mb-8">C'est l'occasion idéale. Moins de concurrence, plus de visibilité pour vos annonces.</p>
+        <h2 className="section-title mb-4">Vous êtes vendeur dans une wilaya peu couverte ?</h2>
+        <p className="text-[#8c8b8b] mb-8">C'est l'occasion idéale. Moins de concurrence, plus de visibilité pour vos annonces.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/register?role=seller" className="btn-primary">Publier mes machines →</Link>
           <Link href="/catalogue" className="btn-outline">Voir le catalogue</Link>

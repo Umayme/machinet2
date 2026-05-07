@@ -131,8 +131,8 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
 
                 {/* HEADER */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center gap-3 bg-purple-900/20 border border-purple-800/40 rounded-2xl px-6 py-3 mb-4">
-                        <div className="w-10 h-10 rounded-xl bg-purple-700/40 border border-purple-600/40 flex items-center justify-center"><span className="text-purple-300 font-black text-xs">AI</span></div>
+                    <div className="inline-flex items-center gap-3 bg-[#f9f9f8] border border-[#e9e9e9] rounded-2xl px-6 py-3 mb-4">
+                        <div className="w-10 h-10 rounded-xl bg-[#e46a33]/40 border border-[#e9e9e9] flex items-center justify-center"><span className="text-[#e46a33] font-black text-xs">AI</span></div>
                         <div className="text-left">
                             <p className="text-white font-bold">IA Advisor MachiNet</p>
                             <p className="text-green-400 text-xs">● En ligne — Répond en quelques secondes</p>
@@ -150,13 +150,13 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
                         {messages.map((msg, i) => (
                             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`max-w-[80%] rounded-2xl px-5 py-4 ${msg.role === 'user'
-                                        ? 'bg-purple-700 text-white rounded-br-none'
-                                        : 'bg-white/5 border border-purple-900/30 text-gray-200 rounded-bl-none'
+                                        ? 'bg-[#e46a33] text-white rounded-br-none'
+                                        : 'bg-white/5 border border-[#e9e9e9] text-gray-200 rounded-bl-none'
                                     }`}>
                                     {msg.role === 'assistant' && (
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-purple-400 text-xs font-black">AI</span>
-                                            <span className="text-purple-400 text-xs font-semibold">IA Advisor</span>
+                                            <span className="text-[#e46a33] text-xs font-black">AI</span>
+                                            <span className="text-[#e46a33] text-xs font-semibold">IA Advisor</span>
                                         </div>
                                     )}
                                     <div
@@ -169,13 +169,13 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
 
                         {loading && (
                             <div className="flex justify-start">
-                                <div className="bg-white/5 border border-purple-900/30 rounded-2xl rounded-bl-none px-5 py-4">
+                                <div className="bg-white/5 border border-[#e9e9e9] rounded-2xl rounded-bl-none px-5 py-4">
                                     <div className="flex items-center gap-2">
-                                        <span className="text-purple-400 text-xs font-black">AI</span>
+                                        <span className="text-[#e46a33] text-xs font-black">AI</span>
                                         <div className="flex gap-1">
-                                            <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
-                                            <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                                            <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                                            <div className="w-2 h-2 bg-[#e46a33] rounded-full animate-bounce"></div>
+                                            <div className="w-2 h-2 bg-[#e46a33] rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                                            <div className="w-2 h-2 bg-[#e46a33] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                                         </div>
                                     </div>
                                 </div>
@@ -187,13 +187,13 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
                     {/* SUGGESTIONS */}
                     {messages.length === 1 && (
                         <div className="px-6 pb-4">
-                            <p className="text-gray-600 text-xs mb-3">Suggestions :</p>
+                            <p className="text-[#434042] text-xs mb-3">Suggestions :</p>
                             <div className="flex flex-wrap gap-2">
                                 {suggestionsInitiales.map((s, i) => (
                                     <button
                                         key={i}
                                         onClick={() => sendMessage(s)}
-                                        className="px-3 py-2 bg-purple-900/20 border border-purple-800/30 rounded-lg text-gray-400 hover:text-purple-300 hover:border-purple-600/50 text-xs transition-all"
+                                        className="px-3 py-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-lg text-[#8c8b8b] hover:text-[#e46a33] hover:border-[#e9e9e9] text-xs transition-all"
                                     >
                                         {s}
                                     </button>
@@ -203,7 +203,7 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
                     )}
 
                     {/* INPUT */}
-                    <div className="p-4 border-t border-purple-900/20">
+                    <div className="p-4 border-t border-[#e9e9e9]">
                         <div className="flex gap-3">
                             <input
                                 type="text"
@@ -223,7 +223,7 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
                         </div>
                         <p className="text-gray-700 text-xs mt-2 text-center">
                             IA basée sur les données du marché algérien · Pour un conseil expert:{' '}
-                            <Link href="/contact" className="text-purple-600 hover:text-purple-400">contactez notre équipe</Link>
+                            <Link href="/contact" className="text-[#e46a33] hover:text-[#e46a33]">contactez notre équipe</Link>
                         </p>
                     </div>
                 </div>

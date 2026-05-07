@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const secteursPrix = [
   {
-    secteur: 'BTP & Construction',
+    secteur: 'Bâtiment & Travaux Publics',
 
     color: 'text-orange-400',
     machines: [
@@ -16,7 +16,7 @@ const secteursPrix = [
     ],
   },
   {
-    secteur: 'IAA & Agroalimentaire',
+    secteur: 'Industrie Agroalimentaire',
 
     color: 'text-green-400',
     machines: [
@@ -52,9 +52,9 @@ const secteursPrix = [
 
 const tendances = [
   { titre: 'Engins BTP en hausse', desc: 'La reprise des chantiers publics pousse les prix des pelles et grues à la hausse.', color: 'text-green-400', pct: '+6% moy.' },
-  { titre: 'Tracteurs stables', desc: 'Le marché agricole est calme malgré la saison. Bonne période pour acheter.', color: 'text-gray-400', pct: 'Stable' },
+  { titre: 'Tracteurs stables', desc: 'Le marché agricole est calme malgré la saison. Bonne période pour acheter.', color: 'text-[#8c8b8b]', pct: 'Stable' },
   { titre: 'IAA en croissance', desc: "L'industrie agroalimentaire continue de se développer, les lignes d'emballage s'apprécient.", color: 'text-green-400', pct: '+5% moy.' },
-  { titre: 'Textile sous pression', desc: "Les importations de machines textiles ont légèrement diminué, les prix locaux tiennent.", color: 'text-gray-400', pct: 'Stable' },
+  { titre: 'Textile sous pression', desc: "Les importations de machines textiles ont légèrement diminué, les prix locaux tiennent.", color: 'text-[#8c8b8b]', pct: 'Stable' },
 ]
 
 export default function MarchePage() {
@@ -70,7 +70,7 @@ export default function MarchePage() {
       {/* HERO */}
       <section className="py-16 max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-purple-900/20 border border-purple-800/40 rounded-full px-4 py-2 mb-6">
+          <div className="inline-flex items-center gap-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-full px-4 py-2 mb-6">
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
             <span className="text-green-300 text-sm font-medium">Données mises à jour en continu</span>
           </div>
@@ -90,7 +90,7 @@ export default function MarchePage() {
           ].map((s, i) => (
             <div key={i} className="card p-5 text-center">
               <p className="stat-value">{s.v}</p>
-              <p className="text-gray-500 text-xs mt-1">{s.l}</p>
+              <p className="text-[#8c8b8b] text-xs mt-1">{s.l}</p>
             </div>
           ))}
         </div>
@@ -98,13 +98,13 @@ export default function MarchePage() {
 
       {/* TENDANCES */}
       <section className="py-8 max-w-7xl mx-auto px-6">
-        <h2 className="text-2xl font-bold text-white mb-6">Tendances du mois — Avril 2026</h2>
+        <h2 className="text-2xl font-bold text-[#141313] mb-6">Tendances du mois — Avril 2026</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
           {tendances.map((t, i) => (
             <div key={i} className="card p-5">
               <p className={`text-sm font-bold mb-1 ${t.color}`}>{t.pct}</p>
-              <h3 className="text-white font-semibold text-sm mb-2">{t.titre}</h3>
-              <p className="text-gray-500 text-xs leading-relaxed">{t.desc}</p>
+              <h3 className="text-[#141313] font-semibold text-sm mb-2">{t.titre}</h3>
+              <p className="text-[#8c8b8b] text-xs leading-relaxed">{t.desc}</p>
             </div>
           ))}
         </div>
@@ -122,7 +122,7 @@ export default function MarchePage() {
           ].map(f => (
             <button key={f.v}
               onClick={() => setSecteurActif(f.v)}
-              className={`px-4 py-2 rounded-lg text-sm transition-all ${secteurActif === f.v ? 'bg-purple-700 text-white' : 'bg-white/5 text-gray-400 hover:bg-purple-900/20 hover:text-purple-300 border border-white/10'}`}>
+              className={`px-4 py-2 rounded-lg text-sm transition-all ${secteurActif === f.v ? 'bg-[#e46a33] text-white' : 'bg-white/5 text-[#8c8b8b] hover:bg-[#f9f9f8] hover:text-[#e46a33] border border-[#e9e9e9]'}`}>
               {f.l}
             </button>
           ))}
@@ -138,24 +138,24 @@ export default function MarchePage() {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-purple-900/30">
-                      <th className="text-left px-6 py-4 text-gray-500 text-xs uppercase tracking-wider font-medium">Machine</th>
-                      <th className="text-right px-6 py-4 text-gray-500 text-xs uppercase tracking-wider font-medium">Prix min (DZD)</th>
-                      <th className="text-right px-6 py-4 text-gray-500 text-xs uppercase tracking-wider font-medium">Prix max (DZD)</th>
-                      <th className="text-center px-6 py-4 text-gray-500 text-xs uppercase tracking-wider font-medium">Tendance</th>
-                      <th className="text-right px-6 py-4 text-gray-500 text-xs uppercase tracking-wider font-medium">Màj</th>
+                    <tr className="border-b border-[#e9e9e9]">
+                      <th className="text-left px-6 py-4 text-[#8c8b8b] text-xs uppercase tracking-wider font-medium">Machine</th>
+                      <th className="text-right px-6 py-4 text-[#8c8b8b] text-xs uppercase tracking-wider font-medium">Prix min (DZD)</th>
+                      <th className="text-right px-6 py-4 text-[#8c8b8b] text-xs uppercase tracking-wider font-medium">Prix max (DZD)</th>
+                      <th className="text-center px-6 py-4 text-[#8c8b8b] text-xs uppercase tracking-wider font-medium">Tendance</th>
+                      <th className="text-right px-6 py-4 text-[#8c8b8b] text-xs uppercase tracking-wider font-medium">Màj</th>
                     </tr>
                   </thead>
                   <tbody>
                     {s.machines.map((m, j) => (
-                      <tr key={j} className="border-b border-purple-900/10 hover:bg-purple-900/5 transition-colors">
-                        <td className="px-6 py-4 text-white text-sm font-medium">{m.nom}</td>
-                        <td className="px-6 py-4 text-right text-gray-300 text-sm">{m.min}</td>
-                        <td className="px-6 py-4 text-right text-purple-400 text-sm font-semibold">{m.max}</td>
+                      <tr key={j} className="border-b border-[#e9e9e9] hover:bg-[#f9f9f8] transition-colors">
+                        <td className="px-6 py-4 text-[#141313] text-sm font-medium">{m.nom}</td>
+                        <td className="px-6 py-4 text-right text-[#434042] text-sm">{m.min}</td>
+                        <td className="px-6 py-4 text-right text-[#e46a33] text-sm font-semibold">{m.max}</td>
                         <td className="px-6 py-4 text-center">
-                          <span className={`tag text-xs ${m.tendance === 'up' ? 'bg-green-900/20 text-green-400 border-green-800/30' : m.tendance === 'down' ? 'bg-red-900/20 text-red-400 border-red-800/30' : 'bg-gray-900/20 text-gray-400 border-gray-700/30'}`}>{m.pct}</span>
+                          <span className={`tag text-xs ${m.tendance === 'up' ? 'bg-green-900/20 text-green-400 border-green-800/30' : m.tendance === 'down' ? 'bg-red-900/20 text-red-400 border-red-800/30' : 'bg-gray-900/20 text-[#8c8b8b] border-gray-700/30'}`}>{m.pct}</span>
                         </td>
-                        <td className="px-6 py-4 text-right text-gray-600 text-xs">{m.mois}</td>
+                        <td className="px-6 py-4 text-right text-[#434042] text-xs">{m.mois}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -169,8 +169,8 @@ export default function MarchePage() {
       {/* CTA */}
       <section className="py-16 max-w-4xl mx-auto px-6 text-center">
         <div className="card p-12">
-          <h2 className="text-3xl font-black text-white mb-4">Vous vendez une machine ?</h2>
-          <p className="text-gray-400 mb-8">Publiez votre annonce et touchez des acheteurs dans toute l'Algérie.</p>
+          <h2 className="section-title mb-4">Vous vendez une machine ?</h2>
+          <p className="text-[#8c8b8b] mb-8">Publiez votre annonce et touchez des acheteurs dans toute l'Algérie.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/register" className="btn-primary">Publier une annonce</Link>
             <Link href="/catalogue" className="btn-outline">Voir le catalogue</Link>

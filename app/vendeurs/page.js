@@ -42,8 +42,8 @@ export default function VendeursPage() {
       <section className="py-20 max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 bg-purple-900/20 border border-purple-800/40 rounded-full px-4 py-2 mb-6">
-              <span className="text-purple-300 text-sm font-medium">Pour les Vendeurs & Importateurs</span>
+            <div className="inline-flex items-center gap-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-full px-4 py-2 mb-6">
+              <span className="text-[#e46a33] text-sm font-medium">Pour les Vendeurs</span>
             </div>
             <h1 className="section-title text-5xl mb-6">
               Vendez vos machines à des acheteurs qualifiés dans toute l'Algérie
@@ -59,7 +59,7 @@ export default function VendeursPage() {
                 Voir les tarifs
               </Link>
             </div>
-            <p className="text-gray-600 text-sm mt-4">Approbation requise · Profil actif sous 24h</p>
+            <p className="text-[#434042] text-sm mt-4">Profil actif sous 24h</p>
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
@@ -69,8 +69,8 @@ export default function VendeursPage() {
               { v: '3x', l: 'Plus de visibilité' },
             ].map((s, i) => (
               <div key={i} className="card p-6 text-center">
-                <p className="text-3xl font-black text-purple-400 mb-1">{s.v}</p>
-                <p className="text-gray-500 text-sm">{s.l}</p>
+                <p className="text-3xl font-black text-[#e46a33] mb-1">{s.v}</p>
+                <p className="text-[#8c8b8b] text-sm">{s.l}</p>
               </div>
             ))}
           </div>
@@ -78,7 +78,7 @@ export default function VendeursPage() {
       </section>
 
       {/* AVANTAGES */}
-      <section className="py-20 bg-gradient-to-b from-black via-purple-950/5 to-black">
+      <section className="py-20 bg-gradient-to-b from-[#f9f9f8] to-[#f9f9f8]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="section-title mb-4">Pourquoi vendre sur MachiNet ?</h2>
@@ -87,8 +87,8 @@ export default function VendeursPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {avantages.map((a, i) => (
               <div key={i} className="card p-6">
-                <h3 className="text-white font-bold mb-2">{a.titre}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{a.desc}</p>
+                <h3 className="font-semibold text-[#141313] mb-2">{a.titre}</h3>
+                <p className="text-[#8c8b8b] text-sm leading-relaxed">{a.desc}</p>
               </div>
             ))}
           </div>
@@ -105,12 +105,12 @@ export default function VendeursPage() {
           {etapes.map((e, i) => (
             <div key={i} className="relative">
               {i < etapes.length - 1 && (
-                <div className="hidden lg:block absolute top-6 left-full w-full h-px bg-purple-900/30 z-0"></div>
+                <div className="hidden lg:block absolute top-6 left-full w-full h-px bg-[#f9f9f8] z-0"></div>
               )}
               <div className="card p-6 relative z-10">
-                <div className="w-12 h-12 rounded-full bg-purple-700 flex items-center justify-center text-white font-black text-lg mb-4">{e.n}</div>
-                <h3 className="text-white font-bold mb-2">{e.titre}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{e.desc}</p>
+                <div className="w-10 h-10 rounded-full bg-[#e46a33] text-white flex items-center justify-center font-bold text-lg mb-4">{e.n}</div>
+                <h3 className="font-semibold text-[#141313] mb-2">{e.titre}</h3>
+                <p className="text-[#8c8b8b] text-sm leading-relaxed">{e.desc}</p>
               </div>
             </div>
           ))}
@@ -123,7 +123,7 @@ export default function VendeursPage() {
       </section>
 
       {/* TÉMOIGNAGES */}
-      <section className="py-20 bg-gradient-to-b from-black via-purple-950/5 to-black">
+      <section className="py-20 bg-gradient-to-b from-[#f9f9f8] to-[#f9f9f8]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="section-title mb-4">Vendeurs qui nous font confiance</h2>
@@ -132,14 +132,14 @@ export default function VendeursPage() {
             {temoignages.map((t, i) => (
               <div key={i} className="card p-6">
                 <div className="flex mb-4 gap-1">
-                  {[...Array(t.note)].map((_, j) => <div key={j} className="w-2 h-2 rounded-full bg-purple-500 inline-block"></div>)}
+                  {[...Array(t.note)].map((_, j) => <svg key={j} className="w-4 h-4 text-[#e46a33] fill-current inline-block" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>)}
                 </div>
-                <p className="text-gray-400 text-sm leading-relaxed mb-6 italic">"{t.texte}"</p>
+                <p className="text-[#8c8b8b] text-sm leading-relaxed mb-6 italic">"{t.texte}"</p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-purple-900/30 border border-purple-700/40 flex items-center justify-center text-purple-400 font-bold text-sm">{t.nom[0]}</div>
+                  <div className="w-10 h-10 rounded-full bg-[#f9f9f8] border border-[#e9e9e9] flex items-center justify-center text-[#e46a33] font-bold text-sm">{t.nom[0]}</div>
                   <div>
-                    <p className="text-white text-sm font-semibold">{t.nom}</p>
-                    <p className="text-gray-600 text-xs">{t.poste} · {t.wilaya}</p>
+                    <p className="font-semibold text-[#141313] text-sm">{t.nom}</p>
+                    <p className="text-[#434042] text-xs">{t.poste} · {t.wilaya}</p>
                   </div>
                 </div>
               </div>
@@ -158,11 +158,11 @@ export default function VendeursPage() {
                 className="w-full text-left px-6 py-5 flex items-center justify-between"
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
               >
-                <span className="text-white font-medium pr-4">{f.q}</span>
-                <span className={`text-purple-400 text-xl transition-transform ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
+                <span className="font-medium text-[#141313] text-sm">{f.q}</span>
+                <span className={`text-[#e46a33] text-xl transition-transform ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
               </button>
               {openFaq === i && (
-                <div className="px-6 pb-5 text-gray-400 text-sm leading-relaxed border-t border-purple-900/20 pt-4">
+                <div className="px-6 pb-5 text-[#8c8b8b] text-sm leading-relaxed border-t border-[#e9e9e9] pt-4">
                   {f.r}
                 </div>
               )}
@@ -183,8 +183,8 @@ export default function VendeursPage() {
       {/* CTA FINAL */}
       <section className="py-20 max-w-4xl mx-auto px-6 text-center">
         <div className="card p-16">
-          <h2 className="text-4xl font-black text-white mb-4">Prêt à recevoir vos premiers leads ?</h2>
-          <p className="text-gray-400 text-lg mb-8">Rejoignez 500+ vendeurs qui développent leur business sur MachiNet.</p>
+          <h2 className="section-title mb-4">Prêt à recevoir vos premiers leads ?</h2>
+          <p className="text-[#8c8b8b] text-lg mb-8">Rejoignez 500+ vendeurs qui développent leur business sur MachiNet.</p>
           <Link href="/register?role=seller" className="btn-primary text-base px-12 py-4">
             Créer mon compte vendeur →
           </Link>

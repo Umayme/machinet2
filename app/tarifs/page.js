@@ -2,140 +2,250 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-const plans = {
-  acheteurs: [
-    { nom: 'Starter', prix: 0, prixAnnuel: 0, desc: 'Pour découvrir', badge: null, features: ['Accès catalogue complet', 'Recherche & filtres', 'Consultation prix du marché', '3 demandes de contact/mois', 'MachiBot (10 questions/mois)'] },
-    { nom: 'Premium', prix: 3000, prixAnnuel: 2400, desc: 'Pour les acheteurs actifs', badge: 'Populaire', features: ['Tout Starter', 'Contacts illimités', 'MachiBot illimité', 'Alertes nouvelles machines', 'Accès prix détaillés', 'Support prioritaire'] },
-    { nom: 'Entreprise', prix: null, prixAnnuel: null, desc: 'Pour les grands comptes', badge: null, features: ['Tout Premium', 'Compte multi-utilisateurs', 'API accès données', 'Consultant dédié', 'Rapports marché mensuels', 'SLA garanti'] },
-  ],
-  vendeurs: [
-    { nom: 'Starter', prix: 0, prixAnnuel: 0, desc: 'Pour démarrer', badge: null, features: ['3 annonces actives', 'Profil entreprise basique', 'Réception contacts acheteurs', 'Tableau de bord simple'] },
-    { nom: 'Pro', prix: 15000, prixAnnuel: 12000, desc: 'Pour les vendeurs sérieux', badge: 'Recommandé', features: ['Annonces illimitées', 'Badge Vérifié', 'Mise en avant catalogue', 'Analytics avancés', 'Leads qualifiés prioritaires', 'Support dédié'] },
-    { nom: 'Entreprise', prix: 45000, prixAnnuel: 36000, desc: 'Pour importateurs & grossistes', badge: null, features: ['Tout Pro', 'Page marque premium', 'Matching IA acheteurs', 'Intégration ERP/CRM', 'Account manager dédié', 'Rapport performance mensuel'] },
-  ],
-  consultants: [
-    { nom: 'Starter', prix: 0, prixAnnuel: 0, desc: 'Pour lancer votre activité', badge: null, features: ['Profil consultant public', '3 missions/mois', 'Accès aux demandes acheteurs', 'Tableau de bord basique', 'Badge consultant vérifié (sur approbation)'] },
-    { nom: 'Pro', prix: 12000, prixAnnuel: 9600, desc: 'Pour les consultants actifs', badge: 'Recommandé', features: ['Tout Starter', 'Missions illimitées', 'Mise en avant profil', 'Analytics & rapports', 'Accès leads prioritaires', 'Support dédié 7j/7'] },
-    { nom: 'Cabinet', prix: null, prixAnnuel: null, desc: 'Pour les cabinets industriels', badge: null, features: ['Tout Pro', 'Comptes équipe multi-consultants', 'Page cabinet premium', 'Intégration CRM', 'Account manager dédié', 'Contrats-cadres'] },
-  ],
-}
+const plans = [
+  {
+    nom: 'Starter',
+    prix: 0,
+    desc: 'Pour découvrir MachiNet',
+    badge: null,
+    color: '#8c8b8b',
+    features: [
+      '3 annonces actives',
+      'Profil entreprise basique',
+      'Accès catalogue complet',
+      '3 demandes de contact/mois',
+      'MachiBot (10 questions/mois)',
+      'Tableau de bord simple',
+    ],
+    cta: "S'inscrire gratuitement",
+    href: '/register',
+  },
+  {
+    nom: 'Bronze',
+    prix: 15000,
+    desc: 'Pour démarrer sérieusement',
+    badge: null,
+    color: '#cd7f32',
+    features: [
+      'Tout Starter',
+      '15 annonces actives',
+      'Badge Vérifié',
+      'Analytics basiques',
+      'Contacts acheteurs illimités',
+      'MachiBot illimité',
+      'Support email prioritaire',
+    ],
+    cta: "Choisir Bronze",
+    href: '/register?plan=bronze',
+  },
+  {
+    nom: 'Silver',
+    prix: 30000,
+    desc: 'Pour les vendeurs actifs',
+    badge: 'Recommandé',
+    color: '#e46a33',
+    features: [
+      'Tout Bronze',
+      'Annonces illimitées',
+      'Mise en avant catalogue',
+      'Analytics avancés',
+      'Leads qualifiés prioritaires',
+      'Accès prix du marché',
+      'Support dédié 7j/7',
+    ],
+    cta: "Choisir Silver",
+    href: '/register?plan=silver',
+  },
+  {
+    nom: 'Gold',
+    prix: 45000,
+    desc: 'Pour importateurs & grossistes',
+    badge: null,
+    color: '#141313',
+    features: [
+      'Tout Silver',
+      'Page marque premium',
+      'Matching IA acheteurs',
+      'Compte multi-utilisateurs',
+      'Intégration ERP/CRM',
+      'Account manager dédié',
+      'Rapport performance mensuel',
+    ],
+    cta: "Choisir Gold",
+    href: '/register?plan=gold',
+  },
+]
+
+const creditPacks = [
+  { nom: 'Pack Starter', credits: 50, prix: 2500 },
+  { nom: 'Pack Pro', credits: 150, prix: 6500, badge: 'Populaire' },
+  { nom: 'Pack Business', credits: 500, prix: 18000 },
+]
+
+const actionCosts = [
+  { action: 'Publier une annonce', credits: 5 },
+  { action: 'Contacter un vendeur', credits: 3 },
+  { action: 'Demande de devis', credits: 4 },
+  { action: 'Mise en avant annonce (7j)', credits: 10 },
+  { action: 'Accès fiche technique complète', credits: 2 },
+  { action: 'Export catalogue PDF', credits: 8 },
+  { action: 'Alerte machine personnalisée', credits: 5 },
+  { action: 'Demande de consultation expert', credits: 15 },
+]
+
+const faqs = [
+  { q: 'Puis-je changer de plan à tout moment ?', r: 'Oui, upgrade ou downgrade à tout moment sans pénalité. La facturation est ajustée au prorata.' },
+  { q: 'Y a-t-il une commission sur les ventes ?', r: 'Non. MachiNet ne prend aucune commission. Vous payez uniquement l\'abonnement mensuel.' },
+  { q: 'Comment payer en Algérie ?', r: 'Virement bancaire, CCP, ou paiement en agence. Facture officielle fournie.' },
+  { q: 'Les crédits expirent-ils ?', r: 'Les crédits sont valables 12 mois à partir de la date d\'achat. Ils se cumulent avec votre abonnement.' },
+]
 
 export default function TarifsPage() {
-  const [tab, setTab] = useState('vendeurs')
-  const [annuel, setAnnuel] = useState(false)
-  const currentPlans = plans[tab]
+  const [showActions, setShowActions] = useState(false)
 
   return (
-    <div className="min-h-screen pt-20">
-      <section className="py-16 max-w-7xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <h1 className="section-title text-5xl mb-4">Tarifs MachiNet</h1>
-          <p className="section-subtitle mb-8">Plans simples et transparents — tout en DZD</p>
+    <div className="min-h-screen pt-20 bg-white">
 
-          {/* Tabs */}
-          <div className="inline-flex bg-white/5 border border-purple-900/30 rounded-xl p-1 mb-8">
-            {[['vendeurs', 'Vendeurs'], ['acheteurs', 'Acheteurs'], ['consultants', 'Consultants']].map(([v, l]) => (
-              <button key={v} onClick={() => setTab(v)}
-                className={`px-6 py-2 rounded-lg text-sm font-medium transition-all ${tab === v ? 'bg-purple-700 text-white' : 'text-gray-400 hover:text-white'}`}>
-                {l}
-              </button>
-            ))}
-          </div>
+      {/* HERO */}
+      <section className="py-16 max-w-7xl mx-auto px-6 text-center">
+        <h1 className="section-title text-5xl mb-4">Tarifs MachiNet</h1>
+        <p className="section-subtitle mb-2">Plans simples et transparents — tout en DZD</p>
+        <p className="text-[#8c8b8b] text-sm">Sans commission · Facturation mensuelle · Résiliable à tout moment</p>
+      </section>
 
-          {/* Billing toggle */}
-          <div className="flex items-center justify-center gap-3">
-            <span className={`text-sm ${!annuel ? 'text-white' : 'text-gray-500'}`}>Mensuel</span>
-            <button onClick={() => setAnnuel(!annuel)}
-              className={`w-12 h-6 rounded-full transition-colors ${annuel ? 'bg-purple-600' : 'bg-white/20'}`}>
-              <span className={`block w-4 h-4 bg-white rounded-full mx-1 transition-transform ${annuel ? 'translate-x-6' : ''}`}></span>
-            </button>
-            <span className={`text-sm ${annuel ? 'text-white' : 'text-gray-500'}`}>Annuel</span>
-            {annuel && <span className="bg-green-900/30 text-green-400 text-xs px-2 py-0.5 rounded-full border border-green-800/40">-20%</span>}
-          </div>
-        </div>
-
-        {/* Plans */}
-        <div className="grid md:grid-cols-3 gap-6 mb-20">
-          {currentPlans.map((p, i) => (
-            <div key={i} className={`card p-8 relative ${p.badge ? 'border-purple-600/60' : ''}`}>
+      {/* PLANS */}
+      <section className="pb-16 max-w-7xl mx-auto px-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {plans.map((p, i) => (
+            <div key={i} className={`card p-6 relative flex flex-col ${p.badge ? 'border-[#e46a33] border-2' : ''}`}>
               {p.badge && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-700 text-white text-xs font-bold px-4 py-1 rounded-full">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#e46a33] text-white text-xs font-bold px-4 py-1 rounded-full">
                   {p.badge}
                 </span>
               )}
-              <h3 className="text-white font-black text-xl mb-1">{p.nom}</h3>
-              <p className="text-gray-500 text-sm mb-4">{p.desc}</p>
+              <div className="mb-4">
+                <h3 className="font-black text-2xl mb-1" style={{ fontFamily: 'Barlow Condensed, sans-serif', color: p.color }}>{p.nom}</h3>
+                <p className="text-[#8c8b8b] text-xs">{p.desc}</p>
+              </div>
               <div className="mb-6">
-                {p.prix === null ? (
-                  <p className="text-2xl font-black text-white">Sur devis</p>
-                ) : p.prix === 0 ? (
-                  <p className="text-4xl font-black text-purple-400">0 <span className="text-base text-purple-600 font-normal">DZD/mois</span></p>
+                {p.prix === 0 ? (
+                  <p className="text-4xl font-black text-[#141313]">Gratuit</p>
                 ) : (
                   <>
-                    <p className="text-4xl font-black text-purple-400">
-                      {(annuel ? p.prixAnnuel : p.prix).toLocaleString('fr-DZ')}
-                      <span className="text-base text-purple-600 font-normal"> DZD/mois</span>
+                    <p className="text-3xl font-black text-[#141313]">
+                      {p.prix.toLocaleString('fr-DZ')}
+                      <span className="text-base font-normal text-[#8c8b8b]"> DZD</span>
                     </p>
-                    {annuel && <p className="text-gray-500 text-xs mt-1">Facturé annuellement</p>}
+                    <p className="text-[#8c8b8b] text-xs mt-1">par mois</p>
                   </>
                 )}
               </div>
-              <ul className="space-y-2 mb-8">
+              <ul className="space-y-2 mb-8 flex-1">
                 {p.features.map((f, j) => (
-                  <li key={j} className="flex items-start gap-2 text-gray-400 text-sm">
-                    <span className="text-purple-400 mt-0.5 flex-shrink-0">•</span>
+                  <li key={j} className="flex items-start gap-2 text-[#434042] text-sm">
+                    <svg className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: p.badge ? '#e46a33' : '#8c8b8b' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
                     {f}
                   </li>
                 ))}
               </ul>
-              <Link href={p.prix === null ? '/contact' : tab === 'consultants' ? '/register?role=consultant' : tab === 'vendeurs' ? '/register?role=seller' : '/register'}
-                className={`w-full justify-center ${p.badge ? 'btn-primary' : 'btn-outline'}`}>
-                {p.prix === 0 ? "S'inscrire" : p.prix === null ? 'Nous contacter' : "S'abonner"}
+              <Link href={p.href}
+                className={`w-full text-center py-3 rounded-lg text-sm font-semibold transition-all ${p.badge ? 'bg-[#e46a33] text-white hover:bg-[#c85a25]' : 'border border-[#e9e9e9] text-[#141313] hover:border-[#141313]'}`}>
+                {p.cta}
               </Link>
             </div>
           ))}
         </div>
+      </section>
 
-        {/* Consulting */}
-        <div className="text-center mb-12">
-          <h2 className="section-title mb-4">Services de consulting</h2>
-          <p className="section-subtitle mb-8">Accompagnement expert pour vos projets industriels</p>
-          <div className="grid sm:grid-cols-3 gap-6">
-            {[
-              { nom: 'Audit & Sourcing', prix: '45 000 DZD', duree: '3-5 jours', desc: 'Analyse besoins + benchmark fournisseurs + rapport' },
-              { nom: 'Accompagnement Achat', prix: '75 000 DZD', duree: '1-2 semaines', desc: 'Sourcing + négociation + vérification + contrat', badge: 'Populaire' },
-              { nom: 'Projet Clé en Main', prix: 'Sur devis', duree: 'Variable', desc: 'De l\'étude de faisabilité à la mise en route complète' },
-            ].map((s, i) => (
-              <div key={i} className="card p-6 relative">
-                {s.badge && <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-700 text-white text-xs font-bold px-4 py-1 rounded-full">{s.badge}</span>}
-                <h3 className="text-white font-bold mb-2">{s.nom}</h3>
-                <p className="text-purple-400 font-black text-lg mb-1">{s.prix}</p>
-                <p className="text-gray-600 text-xs mb-3">{s.duree}</p>
-                <p className="text-gray-500 text-sm">{s.desc}</p>
+      {/* CREDIT PACKS */}
+      <section className="py-16 bg-[#f9f9f8]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-10">
+            <h2 className="section-title mb-3">Packs de crédits</h2>
+            <p className="text-[#8c8b8b]">Complétez votre abonnement avec des crédits pour des actions ponctuelles</p>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+            {creditPacks.map((c, i) => (
+              <div key={i} className={`card p-6 text-center relative ${c.badge ? 'border-[#e46a33] border-2' : ''}`}>
+                {c.badge && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#e46a33] text-white text-xs font-bold px-4 py-1 rounded-full">
+                    {c.badge}
+                  </span>
+                )}
+                <p className="text-3xl font-black text-[#e46a33] mb-1">{c.credits}</p>
+                <p className="text-[#8c8b8b] text-xs mb-3">crédits</p>
+                <p className="font-bold text-[#141313] mb-1">{c.nom}</p>
+                <p className="text-[#8c8b8b] text-sm mb-4">{c.prix.toLocaleString('fr-DZ')} DZD</p>
+                <Link href="/register" className="btn-primary w-full justify-center text-sm py-2">Acheter</Link>
               </div>
             ))}
           </div>
-          <div className="mt-8">
-            <Link href="/consulting" className="btn-primary">Demander un devis consulting →</Link>
-          </div>
         </div>
+      </section>
 
-        {/* FAQ */}
-        <div className="max-w-2xl mx-auto">
-          <h2 className="section-title text-center mb-8">Questions fréquentes</h2>
-          {[
-            { q: 'Puis-je changer de plan à tout moment ?', r: 'Oui, upgrade ou downgrade à tout moment sans pénalité.' },
-            { q: 'Y a-t-il une commission sur les ventes ?', r: 'Non. MachiNet ne prend aucune commission. Vous payez uniquement l\'abonnement mensuel.' },
-            { q: 'Comment payer en Algérie ?', r: 'Virement bancaire, CCP, ou paiement en agence. Facture officielle fournie.' },
-            { q: "Comment fonctionne le plan Starter ?", r: "Le plan Starter vous permet de démarrer avec des fonctionnalités de base. Pas de carte bancaire requise pour démarrer." },
-          ].map((f, i) => (
-            <div key={i} className="card p-5 mb-3">
-              <p className="text-white font-medium text-sm mb-2">{f.q}</p>
-              <p className="text-gray-500 text-sm">{f.r}</p>
+      {/* COÛT DES ACTIONS */}
+      <section className="py-16 max-w-7xl mx-auto px-6">
+        <button
+          onClick={() => setShowActions(!showActions)}
+          className="w-full flex items-center justify-between card p-5 mb-4 hover:border-[#141313] transition-colors"
+        >
+          <div>
+            <h2 className="section-title text-left text-xl mb-1">Coût des actions en crédits</h2>
+            <p className="text-[#8c8b8b] text-sm">Voir le détail de chaque action et son coût en crédits</p>
+          </div>
+          <span className={`text-[#e46a33] text-2xl transition-transform ${showActions ? 'rotate-45' : ''}`}>+</span>
+        </button>
+        {showActions && (
+          <div className="card overflow-hidden">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-[#e9e9e9] bg-[#f9f9f8]">
+                  <th className="text-left px-6 py-3 text-[#434042] font-semibold">Action</th>
+                  <th className="text-right px-6 py-3 text-[#434042] font-semibold">Crédits</th>
+                </tr>
+              </thead>
+              <tbody>
+                {actionCosts.map((a, i) => (
+                  <tr key={i} className={`border-b border-[#e9e9e9] ${i % 2 === 0 ? '' : 'bg-[#f9f9f8]/50'}`}>
+                    <td className="px-6 py-3 text-[#141313]">{a.action}</td>
+                    <td className="px-6 py-3 text-right font-bold text-[#e46a33]">{a.credits} cr.</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      {/* BONUS FIDÉLITÉ */}
+      <section className="max-w-7xl mx-auto px-6 pb-16">
+        <div className="rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6" style={{ background: '#141313' }}>
+          <div>
+            <p className="text-[#e46a33] text-sm font-semibold mb-1 uppercase tracking-wide">Programme fidélité</p>
+            <h3 className="text-white font-black text-2xl mb-2" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>Bonus fidélité MachiNet</h3>
+            <p className="text-[#8c8b8b] text-sm max-w-lg">Chaque mois d'abonnement actif vous rapporte des crédits bonus. Après 6 mois : +50 crédits. Après 12 mois : +150 crédits + badge Premium.</p>
+          </div>
+          <Link href="/register" className="flex-shrink-0 bg-[#e46a33] text-white px-8 py-3 rounded-lg font-semibold text-sm hover:bg-[#c85a25] transition-colors">
+            Commencer maintenant →
+          </Link>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-16 max-w-2xl mx-auto px-6">
+        <h2 className="section-title text-center mb-8">Questions fréquentes</h2>
+        <div className="space-y-3">
+          {faqs.map((f, i) => (
+            <div key={i} className="card p-5">
+              <p className="font-semibold text-[#141313] text-sm mb-2">{f.q}</p>
+              <p className="text-[#8c8b8b] text-sm leading-relaxed">{f.r}</p>
             </div>
           ))}
         </div>
       </section>
+
     </div>
   )
 }

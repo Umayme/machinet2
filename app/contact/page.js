@@ -53,29 +53,29 @@ export default function ContactPage() {
           <div className="space-y-6">
             <div className="card p-6 flex items-start gap-4">
               <div>
-                <h3 className="text-white font-semibold mb-1">Email</h3>
-                <a href="mailto:machinetdz@gmail.com" className="text-purple-400 text-sm font-medium hover:text-purple-300">machinetdz@gmail.com</a>
-                <p className="text-gray-600 text-xs mt-1">Réponse sous 24h</p>
+                <h3 className="font-semibold text-[#141313] mb-1">Email</h3>
+                <a href="mailto:machinetdz@gmail.com" className="text-[#e46a33] text-sm font-medium hover:text-[#e46a33]">machinetdz@gmail.com</a>
+                <p className="text-[#434042] text-xs mt-1">Réponse sous 24h</p>
               </div>
             </div>
             <div className="card p-6 flex items-start gap-4">
               <div>
-                <h3 className="text-white font-semibold mb-1">Téléphone</h3>
-                <a href="tel:+213659132072" className="text-purple-400 text-sm font-medium hover:text-purple-300">+213 659 132 072</a>
+                <h3 className="font-semibold text-[#141313] mb-1">Téléphone</h3>
+                <a href="tel:+213659132072" className="text-[#e46a33] text-sm font-medium hover:text-[#e46a33]">+213 659 132 072</a>
               </div>
             </div>
             <div className="card p-6 flex items-start gap-4">
               <div>
-                <h3 className="text-white font-semibold mb-1">Adresse</h3>
-                <p className="text-purple-400 text-sm font-medium">Alger, Algérie</p>
-                <p className="text-gray-600 text-xs mt-1">Siège social</p>
+                <h3 className="font-semibold text-[#141313] mb-1">Adresse</h3>
+                <p className="text-[#e46a33] text-sm font-medium">Alger, Algérie</p>
+                <p className="text-[#434042] text-xs mt-1">Siège social</p>
               </div>
             </div>
             <div className="card p-6 flex items-start gap-4">
               <div>
-                <h3 className="text-white font-semibold mb-1">WhatsApp</h3>
-                <a href="https://wa.me/213659132072" target="_blank" rel="noreferrer" className="text-purple-400 text-sm font-medium hover:text-purple-300">+213 659 132 072</a>
-                <p className="text-gray-600 text-xs mt-1">Réponse rapide</p>
+                <h3 className="font-semibold text-[#141313] mb-1">WhatsApp</h3>
+                <a href="https://wa.me/213659132072" target="_blank" rel="noreferrer" className="text-[#e46a33] text-sm font-medium hover:text-[#e46a33]">+213 659 132 072</a>
+                <p className="text-[#434042] text-xs mt-1">Réponse rapide</p>
               </div>
             </div>
           </div>
@@ -84,36 +84,36 @@ export default function ContactPage() {
           <div className="lg:col-span-2">
             {sent ? (
               <div className="card p-12 text-center">
-                <h2 className="text-2xl font-black text-white mb-4">Message envoyé !</h2>
-                <p className="text-gray-400 mb-8">Merci pour votre message. Notre équipe vous répondra dans les 24 heures.</p>
+                <h2 className="section-title mb-4">Message envoyé !</h2>
+                <p className="text-[#8c8b8b] mb-8">Merci pour votre message. Notre équipe vous répondra dans les 24 heures.</p>
                 <button onClick={() => { setSent(false); setForm({ nom: '', email: '', telephone: '', sujet: '', message: '' }) }} className="btn-primary">
                   Envoyer un autre message
                 </button>
               </div>
             ) : (
               <div className="card p-8">
-                <h2 className="text-white font-bold text-xl mb-6">Envoyez-nous un message</h2>
+                <h2 className="font-bold text-[#141313] text-xl mb-6">Envoyez-nous un message</h2>
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="text-gray-400 text-sm mb-2 block">Nom complet *</label>
+                      <label className="text-[#8c8b8b] text-sm mb-2 block">Nom complet *</label>
                       <input type="text" required placeholder="Votre nom et prénom" className="input-dark"
                         value={form.nom} onChange={(e) => setForm({ ...form, nom: e.target.value })} />
                     </div>
                     <div>
-                      <label className="text-gray-400 text-sm mb-2 block">Email *</label>
+                      <label className="text-[#8c8b8b] text-sm mb-2 block">Email *</label>
                       <input type="email" required placeholder="ahmed@entreprise.dz" className="input-dark"
                         value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
                     </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="text-gray-400 text-sm mb-2 block">Téléphone *</label>
+                      <label className="text-[#8c8b8b] text-sm mb-2 block">Téléphone *</label>
                       <input type="tel" required placeholder="+213 6XX XX XX XX" className="input-dark"
                         value={form.telephone} onChange={(e) => setForm({ ...form, telephone: e.target.value })} />
                     </div>
                     <div>
-                      <label className="text-gray-400 text-sm mb-2 block">Sujet *</label>
+                      <label className="text-[#8c8b8b] text-sm mb-2 block">Sujet *</label>
                       <select required className="input-dark" value={form.sujet} onChange={(e) => setForm({ ...form, sujet: e.target.value })}>
                         <option value="" className="bg-gray-900">Choisir un sujet</option>
                         <option value="Recherche machine" className="bg-gray-900">Recherche machine</option>
@@ -125,7 +125,7 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="text-gray-400 text-sm mb-2 block">Message *</label>
+                    <label className="text-[#8c8b8b] text-sm mb-2 block">Message *</label>
                     <textarea required rows={6} placeholder="Décrivez votre besoin en détail..." className="input-dark resize-none"
                       value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
                   </div>
@@ -133,7 +133,7 @@ export default function ContactPage() {
                   <button type="submit" disabled={loading} className="btn-primary w-full justify-center py-4 text-base disabled:opacity-50">
                     {loading ? 'Envoi en cours...' : 'Envoyer le message'}
                   </button>
-                  <p className="text-gray-600 text-xs text-center">
+                  <p className="text-[#434042] text-xs text-center">
                     En envoyant ce formulaire, vous acceptez notre politique de confidentialité.
                   </p>
                 </form>
@@ -151,8 +151,8 @@ export default function ContactPage() {
               { titre: 'Consulting expert', desc: 'Réservez une session de conseil de 1h avec notre équipe', btn: 'Réserver', href: '/consulting' },
             ].map((opt, i) => (
               <div key={i} className="card p-6 text-center">
-                <h3 className="text-white font-bold mb-2">{opt.titre}</h3>
-                <p className="text-gray-500 text-sm mb-6">{opt.desc}</p>
+                <h3 className="font-bold text-[#141313] mb-2">{opt.titre}</h3>
+                <p className="text-[#8c8b8b] text-sm mb-6">{opt.desc}</p>
                 <Link href={opt.href} className="btn-outline w-full text-center justify-center block py-2 text-sm">{opt.btn}</Link>
               </div>
             ))}

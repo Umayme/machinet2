@@ -84,20 +84,20 @@ export default function IABotsPage() {
 
   const formatText = (text) => {
     return text
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-purple-300">$1</strong>')
-      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-purple-400 hover:text-purple-300 underline">$1</a>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-[#e46a33]">$1</strong>')
+      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-[#e46a33] hover:text-[#e46a33] underline">$1</a>')
       .replace(/\n/g, '<br/>')
       .replace(/^• /gm, '&bull; ')
   }
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen bg-white pt-20">
 
       {/* HERO */}
       <section className="py-16 max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
-          <div className="mb-4 inline-block"><div className="w-16 h-16 rounded-xl bg-purple-700/30 border border-purple-600/40 flex items-center justify-center mx-auto"><span className="text-purple-300 font-black text-lg">AI</span></div></div>
-          <h1 className="section-title text-5xl mb-4">MachiBot — Votre IA industrielle</h1>
+          <h1 className="section-title text-5xl mb-4">MachiBot</h1>
+          <p className="text-[#8c8b8b] text-lg mb-2">Votre IA industrielle</p>
           <p className="section-subtitle max-w-2xl mx-auto">
             Posez vos questions sur les machines, prix et démarches en Algérie.
             Réponse instantanée, 24h/24.
@@ -108,20 +108,13 @@ export default function IABotsPage() {
         <div className="max-w-3xl mx-auto">
           <div className="card overflow-hidden">
             {/* Header */}
-            <div className="px-6 py-4 border-b border-purple-900/30 flex items-center gap-3"
-              style={{ background: 'linear-gradient(135deg, #0f0a1a, #1a0a2e)' }}>
-              <div className="relative">
-                <div className="w-10 h-10 rounded-xl bg-purple-700/30 border border-purple-600/40 flex items-center justify-center"><span className="text-purple-300 font-black text-sm">AI</span></div>
-                <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-black"></span>
+            <div className="px-6 py-4 border-b border-[#e9e9e9] flex items-center gap-3 bg-[#f9f9f8]">
+              <div className="w-10 h-10 rounded-xl bg-[#141313] flex items-center justify-center flex-shrink-0">
+                <span className="text-white font-bold text-xs">MB</span>
               </div>
               <div>
-                <p className="text-white font-bold">MachiBot</p>
-                <p className="text-green-400 text-xs">En ligne · Répond instantanément</p>
-              </div>
-              <div className="ml-auto flex gap-2">
-                <span className="w-3 h-3 bg-red-500 rounded-full"></span>
-                <span className="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                <span className="w-3 h-3 bg-green-500 rounded-full"></span>
+                <p className="text-[#141313] font-semibold text-sm">MachiBot</p>
+                <p className="text-green-600 text-xs flex items-center gap-1"><span className="w-1.5 h-1.5 bg-green-500 rounded-full inline-block"></span>En ligne · Répond instantanément</p>
               </div>
             </div>
 
@@ -130,25 +123,25 @@ export default function IABotsPage() {
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} gap-3`}>
                   {msg.role === 'bot' && (
-                    <div className="w-8 h-8 rounded-xl bg-purple-700/30 border border-purple-600/40 flex items-center justify-center flex-shrink-0 mt-1"><span className="text-purple-300 font-black text-xs">AI</span></div>
+                    <div className="w-8 h-8 rounded-xl bg-[#141313] flex items-center justify-center flex-shrink-0 mt-1"><span className="text-white font-black text-xs">MB</span></div>
                   )}
                   <div className={`max-w-[80%] ${msg.role === 'user'
-                    ? 'bg-purple-700 text-white rounded-2xl rounded-tr-sm'
-                    : 'bg-white/5 border border-purple-900/30 rounded-2xl rounded-tl-sm'} px-4 py-3`}>
+                    ? 'bg-[#e46a33] text-white rounded-2xl rounded-tr-sm'
+                    : 'bg-[#f9f9f8] border border-[#e9e9e9] rounded-2xl rounded-tl-sm text-[#141313]'} px-4 py-3`}>
                     <div className="text-sm leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: formatText(msg.text) }} />
-                    <p className="text-xs text-gray-500 mt-2">{msg.time}</p>
+                    <p className="text-xs text-[#8c8b8b] mt-2">{msg.time}</p>
                   </div>
                 </div>
               ))}
               {loading && (
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-purple-700/30 border border-purple-600/40 flex items-center justify-center flex-shrink-0"><span className="text-purple-300 font-black text-xs">AI</span></div>
-                  <div className="bg-white/5 border border-purple-900/30 rounded-2xl rounded-tl-sm px-4 py-3">
+                  <div className="w-8 h-8 rounded-xl bg-[#e46a33]/10 border border-[#e9e9e9] flex items-center justify-center flex-shrink-0"><span className="text-[#e46a33] font-black text-xs">AI</span></div>
+                  <div className="bg-[#f9f9f8] border border-[#e9e9e9] rounded-2xl rounded-tl-sm px-4 py-3">
                     <div className="flex gap-1">
-                      <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                      <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                      <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                      <span className="w-2 h-2 bg-[#e46a33] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                      <span className="w-2 h-2 bg-[#e46a33] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                      <span className="w-2 h-2 bg-[#e46a33] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
                     </div>
                   </div>
                 </div>
@@ -157,11 +150,11 @@ export default function IABotsPage() {
             </div>
 
             {/* Suggestions */}
-            <div className="px-6 py-3 border-t border-purple-900/20 overflow-x-auto">
+            <div className="px-6 py-3 border-t border-[#e9e9e9] overflow-x-auto">
               <div className="flex gap-2 flex-nowrap">
                 {suggestions.map((s, i) => (
                   <button key={i} onClick={() => sendMessage(s)}
-                    className="px-3 py-1.5 bg-purple-900/20 border border-purple-700/30 rounded-full text-purple-300 text-xs whitespace-nowrap hover:bg-purple-700/30 transition-all flex-shrink-0">
+                    className="px-3 py-1.5 bg-[#f9f9f8] border border-[#e46a33]/30 rounded-full text-[#e46a33] text-xs whitespace-nowrap hover:bg-[#e46a33]/10 transition-all flex-shrink-0">
                     {s}
                   </button>
                 ))}
@@ -169,7 +162,7 @@ export default function IABotsPage() {
             </div>
 
             {/* Input */}
-            <div className="px-6 py-4 border-t border-purple-900/30">
+            <div className="px-6 py-4 border-t border-[#e9e9e9]">
               <div className="flex gap-3">
                 <input
                   type="text"
@@ -188,14 +181,14 @@ export default function IABotsPage() {
               </div>
             </div>
           </div>
-          <p className="text-center text-gray-600 text-xs mt-3">
-            MachiBot est un assistant IA à titre indicatif. Pour des conseils personnalisés, consultez notre équipe d'<Link href="/consulting" className="text-purple-400 hover:underline">experts</Link>.
+          <p className="text-center text-[#434042] text-xs mt-3">
+            MachiBot est un assistant IA à titre indicatif. Pour des conseils personnalisés, consultez notre équipe d'<Link href="/experts" className="text-[#e46a33] hover:underline">experts</Link>.
           </p>
         </div>
       </section>
 
       {/* FONCTIONNALITÉS */}
-      <section className="py-20 bg-gradient-to-b from-black via-purple-950/5 to-black">
+      <section className="py-20 bg-gradient-to-b from-[#f9f9f8] to-[#f9f9f8]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="section-title mb-4">Ce que MachiBot peut faire pour vous</h2>
@@ -204,9 +197,9 @@ export default function IABotsPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {fonctionnalites.map((f, i) => (
               <div key={i} className="card p-6">
-                <div className="w-10 h-10 rounded-xl bg-purple-700/30 border border-purple-600/40 flex items-center justify-center mb-3"><span className="text-purple-300 font-black text-xs">{f.icon}</span></div>
-                <h3 className="text-white font-bold mb-2">{f.titre}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
+                <div className="w-10 h-10 rounded-xl bg-[#f9f9f8] border border-[#e9e9e9] flex items-center justify-center mb-3"><span className="text-[#434042] font-bold text-xs">{f.icon}</span></div>
+                <h3 className="text-[#141313] font-semibold text-sm mb-2">{f.titre}</h3>
+                <p className="text-[#8c8b8b] text-sm leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -216,10 +209,10 @@ export default function IABotsPage() {
       {/* CTA CONSULTING */}
       <section className="py-20 max-w-4xl mx-auto px-6 text-center">
         <div className="card p-12">
-          <h2 className="text-3xl font-black text-white mb-4">Besoin d'un expert humain ?</h2>
-          <p className="text-gray-400 mb-8">Pour des projets complexes, nos consultants industriels vous accompagnent de A à Z.</p>
+          <h2 className="section-title mb-4">Besoin d'un expert humain ?</h2>
+          <p className="text-[#8c8b8b] mb-8">Pour des projets complexes, nos consultants industriels vous accompagnent de A à Z.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/consulting" className="btn-primary">Consulter un expert</Link>
+            <Link href="/experts" className="btn-primary">Consulter un expert</Link>
             <Link href="/catalogue" className="btn-outline">Voir le catalogue</Link>
           </div>
         </div>

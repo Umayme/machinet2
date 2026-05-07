@@ -38,9 +38,9 @@ export default function FournisseursPage() {
 
                 {/* HERO */}
                 <div className="text-center mb-20">
-                    <div className="inline-flex items-center gap-2 bg-purple-900/20 border border-purple-800/40 rounded-full px-4 py-2 mb-8">
-                        <span className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></span>
-                        <span className="text-purple-300 text-sm font-medium">+500 fournisseurs nous font confiance</span>
+                    <div className="inline-flex items-center gap-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-full px-4 py-2 mb-8">
+                        <span className="w-2 h-2 bg-[#e46a33] rounded-full animate-pulse"></span>
+                        <span className="text-[#e46a33] text-sm font-medium">+500 fournisseurs nous font confiance</span>
                     </div>
                     <h1 className="section-title mb-6">
                         Développez votre business<br />avec MachiNet
@@ -67,8 +67,8 @@ export default function FournisseursPage() {
                         { val: '3x', label: 'Plus de visibilité' },
                     ].map((s, i) => (
                         <div key={i} className="card p-6 text-center">
-                            <p className="text-3xl font-black text-purple-400 mb-2">{s.val}</p>
-                            <p className="text-gray-500 text-sm">{s.label}</p>
+                            <p className="text-3xl font-black text-[#e46a33] mb-2">{s.val}</p>
+                            <p className="text-[#8c8b8b] text-sm">{s.label}</p>
                         </div>
                     ))}
                 </div>
@@ -89,8 +89,8 @@ export default function FournisseursPage() {
                             { titre: 'Gestion simplifiée', desc: 'Gérez votre catalogue, répondez aux leads et suivez vos stats depuis votre dashboard.' },
                         ].map((a, i) => (
                             <div key={i} className="card p-6">
-                                <h3 className="text-white font-bold mb-2">{a.titre}</h3>
-                                <p className="text-gray-500 text-sm leading-relaxed">{a.desc}</p>
+                                <h3 className="font-bold text-[#141313] mb-2">{a.titre}</h3>
+                                <p className="text-[#8c8b8b] text-sm leading-relaxed">{a.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -109,11 +109,11 @@ export default function FournisseursPage() {
                             { n: '3', titre: 'Recevez des leads', desc: 'Les acheteurs vous contactent directement. Vous gérez tout depuis votre dashboard.' },
                         ].map((step, i) => (
                             <div key={i} className="text-center">
-                                <div className="w-16 h-16 rounded-full bg-purple-700 flex items-center justify-center text-white font-black text-2xl mx-auto mb-6">
+                                <div className="w-16 h-16 rounded-full bg-[#e46a33] flex items-center justify-center text-white font-black text-2xl mx-auto mb-6">
                                     {step.n}
                                 </div>
-                                <h3 className="text-white font-bold text-lg mb-3">{step.titre}</h3>
-                                <p className="text-gray-500 text-sm leading-relaxed">{step.desc}</p>
+                                <h3 className="font-bold text-[#141313] text-lg mb-3">{step.titre}</h3>
+                                <p className="text-[#8c8b8b] text-sm leading-relaxed">{step.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -128,16 +128,16 @@ export default function FournisseursPage() {
                         {(dbFeedbacks.length > 0 ? dbFeedbacks.slice(0, 6) : temoignages).map((t, i) => (
                             <div key={i} className="card p-6">
                                 <div className="flex gap-1 mb-4">
-                                    {[...Array(t.note || 5)].map((_, j) => <span key={j} className="w-2 h-2 rounded-full bg-purple-500 inline-block"></span>)}
+                                    {[...Array(t.note || 5)].map((_, j) => <span key={j} className="w-2 h-2 rounded-full bg-[#e46a33] inline-block"></span>)}
                                 </div>
-                                <p className="text-gray-400 text-sm leading-relaxed mb-6 italic">"{t.texte || t.texte}"</p>
+                                <p className="text-[#8c8b8b] text-sm leading-relaxed mb-6 italic">"{t.texte || t.texte}"</p>
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-purple-900/30 border border-purple-700/40 flex items-center justify-center text-purple-400 font-bold">
+                                    <div className="w-10 h-10 rounded-full bg-[#f9f9f8] border border-[#e9e9e9] flex items-center justify-center text-[#e46a33] font-bold">
                                         {(t.nom || '?')[0]}
                                     </div>
                                     <div>
-                                        <p className="text-white text-sm font-semibold">{t.nom}</p>
-                                        <p className="text-gray-600 text-xs">{t.poste}{t.wilaya ? ` · ${t.wilaya}` : ''}</p>
+                                        <p className="font-semibold text-[#141313] text-sm">{t.nom}</p>
+                                        <p className="text-[#434042] text-xs">{t.poste}{t.wilaya ? ` · ${t.wilaya}` : ''}</p>
                                     </div>
                                 </div>
                             </div>
@@ -164,12 +164,12 @@ export default function FournisseursPage() {
                                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                                     className="w-full px-6 py-5 text-left flex items-center justify-between"
                                 >
-                                    <span className="text-white font-semibold text-sm">{faq.q}</span>
-                                    <span className={`text-purple-400 transition-transform ${openFaq === i ? 'rotate-180' : ''}`}>▼</span>
+                                    <span className="font-semibold text-[#141313] text-sm">{faq.q}</span>
+                                    <span className={`text-[#e46a33] transition-transform ${openFaq === i ? 'rotate-180' : ''}`}>▼</span>
                                 </button>
                                 {openFaq === i && (
-                                    <div className="px-6 pb-5 border-t border-purple-900/20">
-                                        <p className="text-gray-400 text-sm leading-relaxed pt-4">{faq.r}</p>
+                                    <div className="px-6 pb-5 border-t border-[#e9e9e9]">
+                                        <p className="text-[#8c8b8b] text-sm leading-relaxed pt-4">{faq.r}</p>
                                     </div>
                                 )}
                             </div>
@@ -178,12 +178,12 @@ export default function FournisseursPage() {
                 </div>
 
                 {/* CTA FINAL */}
-                <div className="relative rounded-2xl overflow-hidden border border-purple-800/30 p-12 text-center"
+                <div className="relative rounded-2xl overflow-hidden border border-[#e9e9e9] p-12 text-center"
                     style={{ background: 'linear-gradient(135deg, #0f0a1a, #1a0a2e, #0f0a1a)' }}>
-                    <h2 className="text-3xl font-black text-white mb-4">
+                    <h2 className="section-title mb-4">
                         Prêt à développer votre business ?
                     </h2>
-                    <p className="text-gray-400 mb-8 max-w-xl mx-auto">
+                    <p className="text-[#8c8b8b] mb-8 max-w-xl mx-auto">
                         Rejoignez 500+ fournisseurs qui font confiance à MachiNet pour trouver leurs clients.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -194,7 +194,7 @@ export default function FournisseursPage() {
                             Parler à un expert
                         </Link>
                     </div>
-                    <p className="text-gray-600 text-sm mt-6">
+                    <p className="text-[#434042] text-sm mt-6">
                         Approbation requise · Badge vérifié · Support en français
                     </p>
                 </div>

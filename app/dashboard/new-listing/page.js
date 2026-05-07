@@ -57,27 +57,27 @@ export default function NewListingPage() {
     <div className="min-h-screen pt-20">
       <div className="max-w-2xl mx-auto px-6 py-10">
         <div className="flex items-center gap-3 mb-8">
-          <Link href="/dashboard" className="text-gray-500 hover:text-white transition-colors">← Dashboard</Link>
+          <Link href="/dashboard" className="text-[#8c8b8b] hover:text-white transition-colors">← Dashboard</Link>
           <span className="text-gray-700">/</span>
-          <span className="text-white">Nouvelle annonce</span>
+          <span className="text-[#141313]">Nouvelle annonce</span>
         </div>
-        <h1 className="text-3xl font-black text-white mb-8">Publier une machine</h1>
+        <h1 className="section-title mb-8">Publier une machine</h1>
 
         <form onSubmit={handleSubmit} className="card p-8 space-y-5">
           <div>
-            <label className="block text-gray-400 text-sm mb-2">Nom de la machine *</label>
+            <label className="block text-[#8c8b8b] text-sm mb-2">Nom de la machine *</label>
             <input required className="input-dark h-12" placeholder="Ex: Pelle hydraulique Caterpillar 320" value={form.name} onChange={e => set('name', e.target.value)} />
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-400 text-sm mb-2">Catégorie / Secteur *</label>
+              <label className="block text-[#8c8b8b] text-sm mb-2">Catégorie / Secteur *</label>
               <select required className="input-dark h-12" value={form.category} onChange={e => set('category', e.target.value)}>
                 <option value="">Sélectionner...</option>
                 {categories.map(c => <option key={c}>{c}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-gray-400 text-sm mb-2">État *</label>
+              <label className="block text-[#8c8b8b] text-sm mb-2">État *</label>
               <select required className="input-dark h-12" value={form.condition} onChange={e => set('condition', e.target.value)}>
                 <option value="">Sélectionner...</option>
                 {conditions.map(c => <option key={c}>{c}</option>)}
@@ -86,11 +86,11 @@ export default function NewListingPage() {
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-400 text-sm mb-2">Prix (DZD) *</label>
+              <label className="block text-[#8c8b8b] text-sm mb-2">Prix (DZD) *</label>
               <input required type="number" className="input-dark h-12" placeholder="Ex: 4500000" value={form.price} onChange={e => set('price', e.target.value)} />
             </div>
             <div>
-              <label className="block text-gray-400 text-sm mb-2">Wilaya *</label>
+              <label className="block text-[#8c8b8b] text-sm mb-2">Wilaya *</label>
               <select required className="input-dark h-12" value={form.wilaya} onChange={e => set('wilaya', e.target.value)}>
                 <option value="">Sélectionner...</option>
                 {wilayas.map(w => <option key={w}>{w}</option>)}
@@ -98,31 +98,31 @@ export default function NewListingPage() {
             </div>
           </div>
           <div>
-            <label className="block text-gray-400 text-sm mb-2">Description</label>
+            <label className="block text-[#8c8b8b] text-sm mb-2">Description</label>
             <textarea rows={4} className="input-dark resize-none" placeholder="État, année, heures de service, historique d'entretien..." value={form.description} onChange={e => set('description', e.target.value)} />
           </div>
           <div>
-            <label className="block text-gray-400 text-sm mb-2">Spécifications techniques</label>
+            <label className="block text-[#8c8b8b] text-sm mb-2">Spécifications techniques</label>
             <textarea rows={3} className="input-dark resize-none" placeholder="Puissance: 120kW, Poids: 18T, ..." value={form.specs} onChange={e => set('specs', e.target.value)} />
           </div>
           <div>
-            <label className="block text-gray-400 text-sm mb-2">Photos (max 5)</label>
+            <label className="block text-[#8c8b8b] text-sm mb-2">Photos (max 5)</label>
             <div className="flex flex-wrap gap-3 mb-3">
               {photos.map((url, i) => (
-                <div key={i} className="relative w-20 h-20 rounded-lg overflow-hidden border border-purple-700/40">
+                <div key={i} className="relative w-20 h-20 rounded-lg overflow-hidden border border-[#e9e9e9]">
                   <img src={url} alt="" className="w-full h-full object-cover" />
                   <button type="button" onClick={() => setPhotos(p => p.filter((_, j) => j !== i))}
                     className="absolute top-0.5 right-0.5 w-5 h-5 bg-black/70 rounded-full text-white text-xs flex items-center justify-center hover:bg-red-900">×</button>
                 </div>
               ))}
               {photos.length < 5 && (
-                <label className="w-20 h-20 rounded-lg border-2 border-dashed border-purple-700/40 flex items-center justify-center cursor-pointer hover:border-purple-500 transition-colors">
-                  <span className="text-gray-500 text-2xl">{uploading ? '...' : '+'}</span>
+                <label className="w-20 h-20 rounded-lg border-2 border-dashed border-[#e9e9e9] flex items-center justify-center cursor-pointer hover:border-[#e46a33] transition-colors">
+                  <span className="text-[#8c8b8b] text-2xl">{uploading ? '...' : '+'}</span>
                   <input type="file" accept="image/*" multiple className="hidden" onChange={handlePhotoUpload} disabled={uploading} />
                 </label>
               )}
             </div>
-            <p className="text-gray-600 text-xs">JPG, PNG ou WebP — max 5 Mo par image</p>
+            <p className="text-[#434042] text-xs">JPG, PNG ou WebP — max 5 Mo par image</p>
           </div>
           {error && <p className="text-red-400 text-sm">{error}</p>}
           <button type="submit" disabled={loading || uploading} className="btn-primary w-full justify-center h-12 text-base disabled:opacity-50">

@@ -48,7 +48,7 @@ const staticPrixData = [
 const tendanceColor = {
     '↗': 'text-green-400',
     '↘': 'text-red-400',
-    '→': 'text-gray-400',
+    '→': 'text-[#8c8b8b]',
 }
 
 export default function PrixPage() {
@@ -79,7 +79,7 @@ export default function PrixPage() {
 
                 {/* HEADER */}
                 <div className="text-center mb-12">
-                    <div className="inline-flex items-center gap-2 bg-purple-900/20 border border-purple-800/40 rounded-full px-4 py-2 mb-6">
+                    <div className="inline-flex items-center gap-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-full px-4 py-2 mb-6">
                         <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                         <span className="text-green-300 text-sm font-medium">Mis à jour en continu</span>
                     </div>
@@ -100,7 +100,7 @@ export default function PrixPage() {
                     ].map((s, i) => (
                         <div key={i} className="card p-4 text-center">
                             <p className="stat-value">{s.val}</p>
-                            <p className="text-gray-500 text-xs mt-1">{s.label}</p>
+                            <p className="text-[#8c8b8b] text-xs mt-1">{s.label}</p>
                         </div>
                     ))}
                 </div>
@@ -122,8 +122,8 @@ export default function PrixPage() {
                                 key={s}
                                 onClick={() => setSelectedSecteur(s)}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border ${selectedSecteur === s
-                                        ? 'bg-purple-700/30 text-purple-300 border-purple-700/50'
-                                        : 'text-gray-500 border-gray-700 hover:border-purple-700/50 hover:text-white'
+                                        ? 'bg-[#e46a33]/10 text-[#e46a33] border-[#e46a33]'
+                                        : 'text-[#8c8b8b] border-gray-700 hover:border-[#e46a33] hover:text-white'
                                     }`}
                             >
                                 {s}
@@ -137,7 +137,7 @@ export default function PrixPage() {
                     {filtered.map((secteur, i) => (
                         <div key={i} className="card overflow-hidden">
                             {/* Header secteur */}
-                            <div className="px-6 py-4 border-b border-purple-900/20 flex items-center gap-3">
+                            <div className="px-6 py-4 border-b border-[#e9e9e9] flex items-center gap-3">
                                 <h2 className="text-white font-bold text-lg">{secteur.secteur}</h2>
                                 <span className="badge-verified ml-auto">{secteur.machines.length} machines</span>
                             </div>
@@ -146,26 +146,26 @@ export default function PrixPage() {
                             <div className="overflow-x-auto">
                                 <table className="w-full">
                                     <thead>
-                                        <tr className="border-b border-purple-900/10">
-                                            <th className="text-left px-6 py-3 text-gray-500 text-xs font-medium">Machine</th>
-                                            <th className="text-left px-6 py-3 text-gray-500 text-xs font-medium">Prix min</th>
-                                            <th className="text-left px-6 py-3 text-gray-500 text-xs font-medium">Prix max</th>
-                                            <th className="text-left px-6 py-3 text-gray-500 text-xs font-medium">Tendance</th>
-                                            <th className="text-left px-6 py-3 text-gray-500 text-xs font-medium">Mis à jour</th>
+                                        <tr className="border-b border-[#e9e9e9]">
+                                            <th className="text-left px-6 py-3 text-[#8c8b8b] text-xs font-medium">Machine</th>
+                                            <th className="text-left px-6 py-3 text-[#8c8b8b] text-xs font-medium">Prix min</th>
+                                            <th className="text-left px-6 py-3 text-[#8c8b8b] text-xs font-medium">Prix max</th>
+                                            <th className="text-left px-6 py-3 text-[#8c8b8b] text-xs font-medium">Tendance</th>
+                                            <th className="text-left px-6 py-3 text-[#8c8b8b] text-xs font-medium">Mis à jour</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {secteur.machines.map((m, j) => (
-                                            <tr key={j} className="border-b border-purple-900/10 hover:bg-purple-900/5 transition-colors">
+                                            <tr key={j} className="border-b border-[#e9e9e9] hover:bg-[#f9f9f8]/50 transition-colors">
                                                 <td className="px-6 py-4 text-white text-sm font-medium">{m.nom}</td>
-                                                <td className="px-6 py-4 text-purple-400 text-sm font-semibold">{m.min} DZD</td>
-                                                <td className="px-6 py-4 text-purple-300 text-sm">{m.max} DZD</td>
+                                                <td className="px-6 py-4 text-[#e46a33] text-sm font-semibold">{m.min} DZD</td>
+                                                <td className="px-6 py-4 text-[#e46a33] text-sm">{m.max} DZD</td>
                                                 <td className="px-6 py-4">
                                                     <span className={`text-sm font-semibold ${tendanceColor[m.tendance]}`}>
                                                         {m.tendance} {m.pct}
                                                     </span>
                                                 </td>
-                                                <td className="px-6 py-4 text-gray-600 text-xs">{m.update}</td>
+                                                <td className="px-6 py-4 text-[#434042] text-xs">{m.update}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -176,12 +176,12 @@ export default function PrixPage() {
                 </div>
 
                 {/* CTA PREMIUM */}
-                <div className="mt-16 relative rounded-2xl overflow-hidden border border-purple-800/30 p-10 text-center"
+                <div className="mt-16 relative rounded-2xl overflow-hidden border border-[#e9e9e9] p-10 text-center"
                     style={{ background: 'linear-gradient(135deg, #0f0a1a, #1a0a2e, #0f0a1a)' }}>
                     <h2 className="text-2xl font-black text-white mb-3">
                         Accès complet aux données de prix
                     </h2>
-                    <p className="text-gray-400 mb-6 max-w-xl mx-auto">
+                    <p className="text-[#8c8b8b] mb-6 max-w-xl mx-auto">
                         Obtenez les prix en temps réel, les alertes de variation et les rapports sectoriels complets avec le plan Premium.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
