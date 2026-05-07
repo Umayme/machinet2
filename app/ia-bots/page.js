@@ -54,11 +54,12 @@ export default function IABotsPage() {
   const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef(null)
 
+  const chatBoxRef = useRef(null)
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   useEffect(() => {
-    if (messages.length > 1) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messages.length > 1 && chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight
     }
   }, [messages])
 
@@ -119,7 +120,7 @@ export default function IABotsPage() {
             </div>
 
             {/* Messages */}
-            <div className="h-96 overflow-y-auto p-6 space-y-4">
+            <div ref={chatBoxRef} className="h-96 overflow-y-auto p-6 space-y-4">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} gap-3`}>
                   {msg.role === 'bot' && (
