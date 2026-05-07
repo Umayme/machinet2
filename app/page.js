@@ -399,11 +399,11 @@ export default function HomePage() {
           <p className="text-white/60 text-lg mb-8 max-w-2xl mx-auto">
             MachiBot analyse votre activité, votre budget et vos besoins pour vous recommander exactement la bonne machine.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/ia-bots" className="bg-[#e46a33] text-white px-10 py-4 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-base inline-flex items-center justify-center gap-2">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md mx-auto sm:max-w-none">
+            <Link href="/ia-bots" className="bg-[#e46a33] text-white px-10 py-4 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-base inline-flex items-center justify-center gap-2 w-full sm:w-auto">
               Parler à MachiBot
             </Link>
-            <Link href="/experts" className="text-base px-10 py-4 rounded-lg font-semibold border-2 border-white bg-white text-[#141313] hover:bg-transparent hover:text-white transition-all">
+            <Link href="/experts" className="text-base px-10 py-4 rounded-lg font-semibold border-2 border-white bg-white text-[#141313] hover:bg-transparent hover:text-white transition-all inline-flex items-center justify-center w-full sm:w-auto">
               Consulter un expert
             </Link>
           </div>
