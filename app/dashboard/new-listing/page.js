@@ -15,22 +15,26 @@ export default function NewListingPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const handlePhotoUpload = async (e) => {
+  const handlePhotoUpload = (e) => {
     const files = Array.from(e.target.files)
     if (!files.length) return
     setUploading(true)
-    const uploaded = []
-    for (const file of files.slice(0, 5 - photos.length)) {
-      const fd = new FormData()
-      fd.append('file', file)
-      try {
-        const res = await fetch('/api/upload', { method: 'POST', body: fd })
-        const data = await res.json()
-        if (data.url) uploaded.push(data.url)
-      } catch {}
-    }
-    setPhotos(p => [...p, ...uploaded])
-    setUploading(false)
+    const toRead = files.slice(0, 5 - photos.length)
+    let done = 0
+    const results = []
+    toRead.forEach((file, idx) => {
+      if (file.size > 5 * 1024 * 1024) { done++; if (done === toRead.length) { setPhotos(p => [...p, ...results]); setUploading(false) }; return }
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        results[idx] = ev.target.result
+        done++
+        if (done === toRead.length) {
+          setPhotos(p => [...p, ...results.filter(Boolean)])
+          setUploading(false)
+        }
+      }
+      reader.readAsDataURL(file)
+    })
   }
 
   const handleSubmit = async (e) => {
