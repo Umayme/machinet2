@@ -136,8 +136,10 @@ export default function Navbar() {
                     : 'bg-[#f9f9f8] border-[#e9e9e9] hover:border-[#8c8b8b] text-[#141313]'
                 }`}
               >
-                <div className="w-7 h-7 rounded-full bg-[#e46a33] flex items-center justify-center text-white font-bold text-xs">
-                  {(user.name || 'U')[0].toUpperCase()}
+                <div className="w-7 h-7 rounded-full bg-[#e46a33] flex items-center justify-center text-white font-bold text-xs overflow-hidden">
+                  {user.avatar
+                    ? <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+                    : (user.name || 'U')[0].toUpperCase()}
                 </div>
                 <span className="text-sm font-medium max-w-[100px] truncate">{user.name?.split(' ')[0]}</span>
                 <svg className="w-3 h-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
