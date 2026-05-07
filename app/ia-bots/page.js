@@ -52,14 +52,13 @@ export default function IABotsPage() {
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const messagesEndRef = useRef(null)
-
   const chatBoxRef = useRef(null)
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   useEffect(() => {
     if (messages.length > 1 && chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight
+      const box = chatBoxRef.current
+      box.scrollTop = box.scrollHeight
     }
   }, [messages])
 
@@ -147,7 +146,6 @@ export default function IABotsPage() {
                   </div>
                 </div>
               )}
-              <div ref={messagesEndRef} />
             </div>
 
             {/* Suggestions */}
@@ -171,10 +169,10 @@ export default function IABotsPage() {
                   className="input-dark flex-1 h-12"
                   value={input}
                   onChange={e => setInput(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && sendMessage()}
+                  onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); sendMessage() } }}
                 />
                 <button
-                  onClick={() => sendMessage()}
+                  onClick={e => { e.preventDefault(); sendMessage() }}
                   disabled={!input.trim() || loading}
                   className="btn-primary px-5 h-12 disabled:opacity-50 disabled:cursor-not-allowed">
                   Envoyer
