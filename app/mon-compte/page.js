@@ -65,18 +65,20 @@ export default function MonComptePage() {
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-black text-white mb-2">Mon compte</h1>
+          <h1 className="text-3xl md:text-4xl font-black text-[#141313] mb-2">Mon compte</h1>
           <p className="text-[#8c8b8b] text-sm">Gérez vos informations personnelles et votre accès</p>
         </div>
 
         {/* Profile card */}
         <div className="card p-8 mb-6">
           <div className="flex items-start gap-5 mb-6">
-            <div className="w-16 h-16 rounded-2xl bg-[#e46a33] flex items-center justify-center text-white font-black text-2xl shrink-0">
-              {(user.name || 'U')[0].toUpperCase()}
+            <div className="w-16 h-16 rounded-2xl bg-[#e46a33] flex items-center justify-center text-white font-black text-2xl shrink-0 overflow-hidden">
+              {user.avatar
+                ? <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+                : (user.name || 'U')[0].toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl font-bold text-white truncate">{user.name}</h2>
+              <h2 className="text-xl font-bold text-[#141313] truncate">{user.name}</h2>
               <p className="text-[#8c8b8b] text-sm truncate">{user.email}</p>
               <div className="flex items-center gap-2 mt-2 flex-wrap">
                 <span className={`text-xs px-2.5 py-1 rounded-full border ${roleColor}`}>{roleLabel}</span>

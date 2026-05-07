@@ -112,16 +112,17 @@ export default function SellerDashboard() {
   const activeMachines = machines.filter(m => m.active).length
   const verifiedMachines = machines.filter(m => m.verified).length
 
-  const handleAvatarUpload = async (e) => {
+  const handleAvatarUpload = (e) => {
     const file = e.target.files[0]
     if (!file) return
+    if (file.size > 5 * 1024 * 1024) { alert('Image trop grande (max 5 Mo)'); return }
     setAvatarUploading(true)
-    const fd = new FormData()
-    fd.append('file', file)
-    const res = await fetch('/api/upload', { method: 'POST', body: fd })
-    const data = await res.json()
-    setAvatarUploading(false)
-    if (data.url) setProfileForm(f => ({ ...f, avatar: data.url }))
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      setProfileForm(f => ({ ...f, avatar: ev.target.result }))
+      setAvatarUploading(false)
+    }
+    reader.readAsDataURL(file)
   }
 
   const handleProfileSave = async (e) => {
