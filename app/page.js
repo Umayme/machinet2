@@ -403,7 +403,7 @@ export default function HomePage() {
             <Link href="/ia-bots" className="bg-[#e46a33] text-white px-10 py-4 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-base inline-flex items-center justify-center gap-2">
               Parler à MachiBot
             </Link>
-            <Link href="/experts" className="btn-outline text-base px-10 py-4 border-white/30 text-white hover:bg-white hover:text-[#141313]">
+            <Link href="/experts" className="text-base px-10 py-4 rounded-lg font-semibold border-2 border-white bg-white text-[#141313] hover:bg-transparent hover:text-white transition-all">
               Consulter un expert
             </Link>
           </div>

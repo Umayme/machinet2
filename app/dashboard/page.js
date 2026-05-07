@@ -119,8 +119,21 @@ export default function SellerDashboard() {
     setAvatarUploading(true)
     const reader = new FileReader()
     reader.onload = (ev) => {
-      setProfileForm(f => ({ ...f, avatar: ev.target.result }))
-      setAvatarUploading(false)
+      // Compress to max 300x300 before saving
+      const img = new Image()
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        const MAX = 300
+        let w = img.width, h = img.height
+        if (w > h) { if (w > MAX) { h = h * MAX / w; w = MAX } }
+        else { if (h > MAX) { w = w * MAX / h; h = MAX } }
+        canvas.width = w; canvas.height = h
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h)
+        const compressed = canvas.toDataURL('image/jpeg', 0.8)
+        setProfileForm(f => ({ ...f, avatar: compressed }))
+        setAvatarUploading(false)
+      }
+      img.src = ev.target.result
     }
     reader.readAsDataURL(file)
   }
@@ -139,6 +152,8 @@ export default function SellerDashboard() {
     if (res.ok) {
       setUser(data.user)
       setProfileMsg('Profil mis à jour avec succès.')
+      // Reload after short delay so navbar picks up new avatar
+      setTimeout(() => window.location.reload(), 800)
     } else {
       setProfileMsg(data.error || 'Erreur lors de la mise à jour.')
     }
