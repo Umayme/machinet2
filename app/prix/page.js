@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const staticPrixData = [
     {
-        secteur: 'BTP',
+        secteur: 'Bâtiment & TP',
         machines: [
             { nom: 'Pelle hydraulique 13–20T', min: '8 500 000', max: '15 000 000', tendance: '↗', pct: '+8%', update: 'Avr 2026' },
             { nom: 'Pelle hydraulique 20–35T', min: '18 000 000', max: '35 000 000', tendance: '↗', pct: '+5%', update: 'Avr 2026' },
@@ -15,7 +15,7 @@ const staticPrixData = [
         ]
     },
     {
-        secteur: 'IAA',
+        secteur: 'Agroalimentaire',
         machines: [
             { nom: 'Pasteurisateur 500–1000L/h', min: '800 000', max: '1 500 000', tendance: '↗', pct: '+3%', update: 'Avr 2026' },
             { nom: 'Ligne conditionnement yaourt', min: '3 200 000', max: '6 800 000', tendance: '→', pct: 'stable', update: 'Avr 2026' },
@@ -74,14 +74,14 @@ export default function PrixPage() {
         .filter(s => s.machines.length > 0)
 
     return (
-        <div className="min-h-screen pt-24 pb-20">
+        <div className="min-h-screen pt-24 pb-20 bg-white">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* HEADER */}
                 <div className="text-center mb-12">
                     <div className="inline-flex items-center gap-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-full px-4 py-2 mb-6">
                         <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        <span className="text-green-300 text-sm font-medium">Mis à jour en continu</span>
+                        <span className="text-green-600 text-sm font-medium">Mis à jour en continu</span>
                     </div>
                     <h1 className="section-title mb-4">Prix du Marché Algérien</h1>
                     <p className="section-subtitle max-w-2xl mx-auto">
@@ -117,13 +117,13 @@ export default function PrixPage() {
                         />
                     </div>
                     <div className="flex gap-2 flex-wrap">
-                        {['Tous', 'BTP', 'IAA', 'Agricole', 'Textile'].map(s => (
+                        {['Tous', 'Bâtiment & TP', 'Agroalimentaire', 'Agricole', 'Textile'].map(s => (
                             <button
                                 key={s}
                                 onClick={() => setSelectedSecteur(s)}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border ${selectedSecteur === s
                                         ? 'bg-[#e46a33]/10 text-[#e46a33] border-[#e46a33]'
-                                        : 'text-[#8c8b8b] border-gray-700 hover:border-[#e46a33] hover:text-white'
+                                        : 'text-[#8c8b8b] border-[#e9e9e9] hover:border-[#e46a33] hover:text-[#e46a33]'
                                     }`}
                             >
                                 {s}
@@ -138,7 +138,7 @@ export default function PrixPage() {
                         <div key={i} className="card overflow-hidden">
                             {/* Header secteur */}
                             <div className="px-6 py-4 border-b border-[#e9e9e9] flex items-center gap-3">
-                                <h2 className="text-white font-bold text-lg">{secteur.secteur}</h2>
+                                <h2 className="font-bold text-[#141313] text-lg">{secteur.secteur}</h2>
                                 <span className="badge-verified ml-auto">{secteur.machines.length} machines</span>
                             </div>
 
@@ -157,7 +157,7 @@ export default function PrixPage() {
                                     <tbody>
                                         {secteur.machines.map((m, j) => (
                                             <tr key={j} className="border-b border-[#e9e9e9] hover:bg-[#f9f9f8]/50 transition-colors">
-                                                <td className="px-6 py-4 text-white text-sm font-medium">{m.nom}</td>
+                                                <td className="px-6 py-4 text-[#141313] text-sm font-medium">{m.nom}</td>
                                                 <td className="px-6 py-4 text-[#e46a33] text-sm font-semibold">{m.min} DZD</td>
                                                 <td className="px-6 py-4 text-[#e46a33] text-sm">{m.max} DZD</td>
                                                 <td className="px-6 py-4">
@@ -177,7 +177,7 @@ export default function PrixPage() {
 
                 {/* CTA PREMIUM */}
                 <div className="mt-16 relative rounded-2xl overflow-hidden border border-[#e9e9e9] p-10 text-center"
-                    style={{ background: 'linear-gradient(135deg, #0f0a1a, #1a0a2e, #0f0a1a)' }}>
+                    style={{ background: '#141313' }}>
                     <h2 className="text-2xl font-black text-white mb-3">
                         Accès complet aux données de prix
                     </h2>
