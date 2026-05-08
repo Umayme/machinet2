@@ -204,7 +204,7 @@ export default function FournisseursPage() {
                 </div>
 
             </div>
-            </div>{/* close max-w wrapper */}
+            </div>
         </div>
     )
 }

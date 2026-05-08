@@ -196,7 +196,7 @@ export default function PrixPage() {
                 </div>
 
             </div>
-            </div>{/* close max-w wrapper */}
+            </div>
         </div>
     )
 }

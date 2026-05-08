@@ -1110,4 +1110,5 @@ export default function SecretAdminPanel() {
         </div>
       </div>
     </div>
-  
+  )
+}

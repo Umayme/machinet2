@@ -163,4 +163,69 @@ export default function VendeursPage() {
           <div className="text-center mb-12">
             <h2 className="section-title mb-4">Vendeurs qui nous font confiance</h2>
           </div>
-          <div className="grid md:grid-col
+          <div className="grid md:grid-cols-3 gap-6">
+            {temoignages.map((t, i) => (
+              <div key={i} className="card p-6">
+                <div className="flex mb-4 gap-1">
+                  {[...Array(t.note)].map((_, j) => <svg key={j} className="w-4 h-4 text-[#e46a33] fill-current inline-block" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>)}
+                </div>
+                <p className="text-[#8c8b8b] text-sm leading-relaxed mb-6 italic">"{t.texte}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[#f9f9f8] border border-[#e9e9e9] flex items-center justify-center text-[#e46a33] font-bold text-sm">{t.nom[0]}</div>
+                  <div>
+                    <p className="font-semibold text-[#141313] text-sm">{t.nom}</p>
+                    <p className="text-[#434042] text-xs">{t.poste} · {t.wilaya}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-20 max-w-3xl mx-auto px-6">
+        <h2 className="section-title text-center mb-12">Questions fréquentes</h2>
+        <div className="space-y-3">
+          {faqs.map((f, i) => (
+            <div key={i} className="card overflow-hidden">
+              <button
+                className="w-full text-left px-6 py-5 flex items-center justify-between"
+                onClick={() => setOpenFaq(openFaq === i ? null : i)}
+              >
+                <span className="font-medium text-[#141313] text-sm">{f.q}</span>
+                <span className={`text-[#e46a33] text-xl transition-transform ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
+              </button>
+              {openFaq === i && (
+                <div className="px-6 pb-5 text-[#8c8b8b] text-sm leading-relaxed border-t border-[#e9e9e9] pt-4">
+                  {f.r}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FEEDBACK */}
+      <section className="py-20 max-w-2xl mx-auto px-6">
+        <div className="text-center mb-8">
+          <h2 className="section-title mb-3">Partagez votre expérience</h2>
+          <p className="section-subtitle">Votre avis aide d'autres vendeurs à rejoindre MachiNet</p>
+        </div>
+        <FeedbackForm />
+      </section>
+
+      {/* CTA FINAL */}
+      <section className="py-20 max-w-4xl mx-auto px-6 text-center">
+        <div className="card p-16">
+          <h2 className="section-title mb-4">Prêt à recevoir vos premiers leads ?</h2>
+          <p className="text-[#8c8b8b] text-lg mb-8">Rejoignez 500+ vendeurs qui développent leur business sur MachiNet.</p>
+          <Link href="/register?role=seller" className="btn-primary text-base px-12 py-4">
+            Créer mon compte vendeur →
+          </Link>
+        </div>
+      </section>
+
+    </div>
+  )
+}
