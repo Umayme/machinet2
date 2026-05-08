@@ -48,7 +48,17 @@ function normalizeMachine(m) {
 
 const SECTEURS_FILTER = ['Tous', 'Industrie Agroalimentaire', 'Bâtiment & Travaux Publics', 'Agricole', 'Pharma', 'Textile', 'Mining', 'Énergie', 'Bois']
 const TYPES_FILTER = ['Tous types', 'Vente neuf', 'Occasion']
-const WILAYAS_FILTER = ['Toutes wilayas', 'Alger', 'Oran', 'Constantine', 'Annaba', 'Blida', 'Sétif', 'Tlemcen']
+const WILAYAS_FILTER = [
+  'Toutes wilayas',
+  'Adrar', 'Chlef', 'Laghouat', 'Oum El Bouaghi', 'Batna', 'Béjaïa', 'Biskra', 'Béchar',
+  'Blida', 'Bouira', 'Tamanrasset', 'Tébessa', 'Tlemcen', 'Tiaret', 'Tizi Ouzou', 'Alger',
+  'Djelfa', 'Jijel', 'Sétif', 'Saïda', 'Skikda', 'Sidi Bel Abbès', 'Annaba', 'Guelma',
+  'Constantine', 'Médéa', 'Mostaganem', 'M\'Sila', 'Mascara', 'Ouargla', 'Oran', 'El Bayadh',
+  'Illizi', 'Bordj Bou Arréridj', 'Boumerdès', 'El Tarf', 'Tindouf', 'Tissemsilt', 'El Oued',
+  'Khenchela', 'Souk Ahras', 'Tipaza', 'Mila', 'Aïn Defla', 'Naâma', 'Aïn Témouchent',
+  'Ghardaïa', 'Relizane', 'Timimoun', 'Bordj Badji Mokhtar', 'Ouled Djellal', 'Béni Abbès',
+  'In Salah', 'In Guezzam', 'Touggourt', 'Djanet', 'El M\'Ghair', 'El Meniaa',
+]
 
 function StarRating({ note }) {
   return (
@@ -124,8 +134,8 @@ export default function HomePage() {
 
           {/* Headline */}
           <h1 className="hero-title mb-4">
-            <span className="text-white block">where the machines</span>
-            <span style={{color:'#e46a33'}} className="block">connect</span>
+            <span className="text-white block">Where Businesses</span>
+            <span style={{color:'#e46a33'}} className="block">Connect</span>
           </h1>
 
           {/* Subtitle */}
@@ -253,12 +263,18 @@ export default function HomePage() {
       {/* ── MACHINES EN VEDETTE ── */}
       <section className="py-16 bg-[#f9f9f8]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between mb-10">
+          <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="section-title mb-1">Machines en vedette</h2>
               <p className="section-subtitle">Sélectionnées par notre équipe</p>
             </div>
             <Link href="/catalogue" className="btn-outline text-sm">Voir tout →</Link>
+          </div>
+          <div className="mb-6 flex items-center gap-2 bg-white border border-[#e9e9e9] rounded-xl px-4 py-3 text-sm text-[#8c8b8b]">
+            <svg className="w-4 h-4 text-[#e46a33] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            <span>Astuce : Sélectionnez <strong className="text-[#141313]">2 à 3 machines</strong> pour les comparer côte à côte — prix, catégorie, fournisseur et plus.</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -455,34 +471,4 @@ export default function HomePage() {
             {temoignages.map((t, i) => (
               <div key={i} className="card p-6 bg-white">
                 <StarRating note={t.note} />
-                <p className="text-[#434042] text-sm leading-relaxed my-4 italic">"{t.texte}"</p>
-                <div className="flex items-center gap-3 pt-4 border-t border-[#e9e9e9]">
-                  <div className="w-9 h-9 rounded-full bg-[#141313] flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                    {t.nom[0]}
-                  </div>
-                  <div>
-                    <p className="text-[#141313] text-sm font-semibold">{t.nom}</p>
-                    <p className="text-[#8c8b8b] text-xs">{t.poste} · {t.wilaya}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA FINAL ── */}
-      <section className="py-20 max-w-4xl mx-auto px-6 text-center">
-        <h2 className="hero-title text-[#141313] mb-4">Rejoignez MachiNet</h2>
-        <p className="text-[#8c8b8b] text-lg mb-10 max-w-xl mx-auto">
-          La première plateforme B2B de machines industrielles en Algérie.<br/>Acheteurs, vendeurs, experts.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/catalogue" className="btn-primary text-base px-10 py-4">Parcourir le catalogue</Link>
-          <Link href="/register" className="btn-outline text-base px-10 py-4">Créer un compte</Link>
-        </div>
-      </section>
-
-    </div>
-  )
-}
+                <p className="text-[#434042] text-sm leading-relaxed my-4 italic

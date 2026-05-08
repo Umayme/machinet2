@@ -21,6 +21,13 @@ export default function ConsultantDashboard() {
   const [profileSaving, setProfileSaving] = useState(false)
   const [profileMsg, setProfileMsg] = useState('')
   const [avatarUploading, setAvatarUploading] = useState(false)
+  const [sideTab, setSideTab] = useState('overview')
+  const [services, setServices] = useState([
+    { id: 1, nom: 'Audit technique', desc: 'Évaluation complète de vos équipements industriels', prix: '25 000 DZD' },
+    { id: 2, nom: 'Conseil achat machine', desc: 'Recommandation personnalisée selon votre budget et secteur', prix: '15 000 DZD' },
+  ])
+  const [newService, setNewService] = useState({ nom: '', desc: '', prix: '' })
+  const [addingService, setAddingService] = useState(false)
 
   const handleAvatarUpload = async (e) => {
     const file = e.target.files[0]; if (!file) return
@@ -126,36 +133,244 @@ export default function ConsultantDashboard() {
   const confirmedBookings = bookings.filter(b => b.status === 'confirmed')
   const completedBookings = bookings.filter(b => b.status === 'completed')
   const cancelledBookings = bookings.filter(b => b.status === 'cancelled')
+  const satisfactionPct = completedBookings.length > 0 ? Math.round((completedBookings.length / bookings.length) * 100) : 0
+  const estimatedRevenue = completedBookings.length * 15000 // 15000 DZD per session estimate
 
+  const sidebarItems = [
+    { id: 'overview', label: 'Vue d\'ensemble', icon: <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg> },
+    { id: 'bookings', label: 'Consultations', icon: <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>, count: pendingBookings.length },
+    { id: 'services', label: 'Mes Services', icon: <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg> },
+    { id: 'profile', label: 'Mon Profil', icon: <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg> },
+  ]
   return (
-    <div className="min-h-screen pt-20">
-      <div className="max-w-7xl mx-auto px-6 py-10">
-        <div className="flex items-center justify-between mb-10">
-          <div>
-            <div className="flex items-center gap-3 mb-1">
-              <h1 className="text-3xl font-black text-[#141313]">Espace Expert</h1>
-              <span className="text-xs px-2 py-1 rounded-full bg-cyan-900/30 text-cyan-400 border border-cyan-800/30">Consultant approuvé</span>
+    <div className="min-h-screen pt-20 bg-[#f9f9f8] flex">
+
+      {/* Sidebar */}
+      <div className="fixed top-20 left-0 bottom-0 w-60 bg-white border-r border-[#e9e9e9] flex flex-col z-30 hidden md:flex">
+        {/* Profile summary */}
+        <div className="p-5 border-b border-[#e9e9e9]">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-xl bg-cyan-50 border-2 border-cyan-200 overflow-hidden flex items-center justify-center flex-shrink-0">
+              {profileForm?.avatar ? <img src={profileForm.avatar} alt="Avatar" className="w-full h-full object-cover" /> : <span className="text-cyan-600 font-black text-lg">{(user.name || 'C')[0]}</span>}
             </div>
-            <p className="text-[#8c8b8b] text-sm">Bienvenue, <span className="text-cyan-300">{user.name}</span> — Vos demandes de consultation</p>
+            <div className="min-w-0">
+              <p className="font-bold text-[#141313] text-sm truncate">{user.name}</p>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-cyan-100 text-cyan-700 font-semibold">Expert</span>
+            </div>
           </div>
-          <button onClick={() => setShowProfile(p => !p)} className="btn-outline text-sm py-2 px-4">
-            {showProfile ? 'Fermer profil' : 'Mon Profil'}
-          </button>
+        </div>
+        {/* Nav */}
+        <nav className="flex-1 p-3 space-y-1">
+          {sidebarItems.map(item => (
+            <button key={item.id} onClick={() => setSideTab(item.id)}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${sideTab === item.id ? 'bg-cyan-600 text-white shadow-sm' : 'text-[#8c8b8b] hover:bg-[#f9f9f8] hover:text-[#141313]'}`}>
+              {item.icon}
+              {item.label}
+              {item.count > 0 && <span className={`ml-auto text-xs px-1.5 py-0.5 rounded-full font-bold ${sideTab === item.id ? 'bg-white/30 text-white' : 'bg-cyan-100 text-cyan-700'}`}>{item.count}</span>}
+            </button>
+          ))}
+        </nav>
+        <div className="p-3 border-t border-[#e9e9e9]">
+          <Link href="/experts" className="block text-xs text-[#8c8b8b] hover:text-[#141313] px-3 py-2 text-center transition-colors">
+            Voir ma page publique →
+          </Link>
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="flex-1 md:ml-60 p-6 md:p-8">
+
+        {/* Mobile tabs fallback */}
+        <div className="md:hidden flex gap-1 mb-6 bg-white border border-[#e9e9e9] rounded-xl p-1.5 overflow-x-auto">
+          {sidebarItems.map(item => (
+            <button key={item.id} onClick={() => setSideTab(item.id)}
+              className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all ${sideTab === item.id ? 'bg-cyan-600 text-white' : 'text-[#8c8b8b]'}`}>
+              {item.label}
+            </button>
+          ))}
         </div>
 
-        {/* PROFILE SECTION */}
-        {showProfile && profileForm && (
-          <form onSubmit={handleProfileSave} className="max-w-xl mb-10">
-            <div className="card p-6 space-y-4">
-              <h2 className="font-bold text-[#141313] text-lg">Mon Profil</h2>
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-xl bg-cyan-900/30 border-2 border-cyan-700/40 overflow-hidden flex items-center justify-center flex-shrink-0">
-                  {profileForm.avatar ? <img src={profileForm.avatar} alt="Avatar" className="w-full h-full object-cover" /> : <span className="text-cyan-300 font-black text-2xl">{(profileForm.name || 'C')[0]}</span>}
+        {/* OVERVIEW TAB */}
+        {sideTab === 'overview' && (
+          <div>
+            <h1 className="text-2xl font-black text-[#141313] mb-6">Vue d'ensemble</h1>
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+              {[
+                { v: bookings.length, l: 'Consultations totales', color: 'text-[#141313]', bg: 'bg-white' },
+                { v: pendingBookings.length, l: 'En attente', color: 'text-yellow-600', bg: 'bg-yellow-50' },
+                { v: confirmedBookings.length, l: 'Confirmées', color: 'text-green-600', bg: 'bg-green-50' },
+                { v: completedBookings.length, l: 'Terminées', color: 'text-cyan-600', bg: 'bg-cyan-50' },
+                { v: `${satisfactionPct}%`, l: 'Taux de complétion', color: 'text-[#e46a33]', bg: 'bg-orange-50' },
+                { v: estimatedRevenue > 0 ? `${(estimatedRevenue/1000).toFixed(0)}K DZD` : '—', l: 'Revenus estimés', color: 'text-green-700', bg: 'bg-green-50' },
+              ].map((s, i) => (
+                <div key={i} className={`${s.bg} rounded-2xl border border-[#e9e9e9] p-5 text-center`}>
+                  <p className={`text-2xl font-black mb-1 ${s.color}`}>{s.v}</p>
+                  <p className="text-[#8c8b8b] text-xs">{s.l}</p>
                 </div>
-                <label className="btn-outline text-xs py-1.5 px-3 cursor-pointer">
-                  {avatarUploading ? 'Chargement...' : 'Changer la photo'}
+              ))}
+            </div>
+
+            {/* Chart */}
+            <div className="bg-white rounded-2xl border border-[#e9e9e9] p-6 mb-6">
+              <h3 className="font-bold text-[#141313] text-sm mb-5">Performance consultations (6 mois)</h3>
+              <div className="flex items-end gap-3 h-28">
+                {[
+                  { month: 'Nov', val: 1 }, { month: 'Dec', val: 2 }, { month: 'Jan', val: 0 },
+                  { month: 'Fév', val: 3 }, { month: 'Mar', val: 2 }, { month: 'Avr', val: completedBookings.length },
+                ].map((d, i, arr) => {
+                  const maxV = Math.max(...arr.map(x => x.val), 1)
+                  return (
+                    <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                      <span className="text-[#8c8b8b] text-xs">{d.val}</span>
+                      <div className="w-full rounded-t-lg" style={{ height: `${Math.round((d.val / maxV) * 80)}px`, background: i === arr.length - 1 ? '#06b6d4' : '#e0f7fa', minHeight: '4px' }}></div>
+                      <span className="text-[#8c8b8b] text-xs">{d.month}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Quick pending */}
+            {pendingBookings.length > 0 && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
+                  <h3 className="font-bold text-yellow-800 text-sm">{pendingBookings.length} consultation{pendingBookings.length > 1 ? 's' : ''} en attente de réponse</h3>
+                </div>
+                <button onClick={() => setSideTab('bookings')} className="text-sm text-yellow-700 hover:text-yellow-900 font-semibold transition-colors">
+                  Voir les demandes →
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* BOOKINGS TAB */}
+        {sideTab === 'bookings' && (
+          <div>
+            <h1 className="text-2xl font-black text-[#141313] mb-6">Mes Consultations</h1>
+            {bookings.length === 0 ? (
+              <div className="bg-white rounded-2xl border border-[#e9e9e9] p-16 text-center">
+                <div className="w-14 h-14 rounded-xl bg-cyan-50 border border-cyan-200 mx-auto mb-4 flex items-center justify-center">
+                  <svg className="w-7 h-7 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="font-bold text-[#141313] text-xl mb-2">Aucune consultation assignée</h3>
+                <p className="text-[#8c8b8b]">Les demandes de consultation vous seront assignées par l'administrateur.</p>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {pendingBookings.length > 0 && (
+                  <section>
+                    <h2 className="text-yellow-600 font-bold text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse inline-block"></span>
+                      En attente ({pendingBookings.length})
+                    </h2>
+                    {pendingBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
+                  </section>
+                )}
+                {confirmedBookings.length > 0 && (
+                  <section>
+                    <h2 className="text-green-600 font-bold text-sm uppercase tracking-wider mb-3">Confirmées ({confirmedBookings.length})</h2>
+                    {confirmedBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
+                  </section>
+                )}
+                {completedBookings.length > 0 && (
+                  <section>
+                    <h2 className="text-cyan-600 font-bold text-sm uppercase tracking-wider mb-3">Terminées ({completedBookings.length})</h2>
+                    {completedBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
+                  </section>
+                )}
+                {cancelledBookings.length > 0 && (
+                  <section>
+                    <h2 className="text-red-500 font-bold text-sm uppercase tracking-wider mb-3">Annulées ({cancelledBookings.length})</h2>
+                    {cancelledBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
+                  </section>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* SERVICES TAB */}
+        {sideTab === 'services' && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-2xl font-black text-[#141313]">Mes Services</h1>
+              <button onClick={() => setAddingService(true)} className="btn-primary text-sm py-2 px-5 flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+                Ajouter un service
+              </button>
+            </div>
+
+            {addingService && (
+              <div className="bg-white rounded-2xl border border-[#e9e9e9] p-6 mb-6">
+                <h3 className="font-bold text-[#141313] mb-4">Nouveau service</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-[#8c8b8b] text-sm mb-1 block">Nom du service *</label>
+                    <input className="input-dark" placeholder="Ex: Audit technique machines" value={newService.nom} onChange={e => setNewService(s => ({ ...s, nom: e.target.value }))} />
+                  </div>
+                  <div>
+                    <label className="text-[#8c8b8b] text-sm mb-1 block">Description *</label>
+                    <textarea className="input-dark resize-none" rows={3} placeholder="Décrivez ce service..." value={newService.desc} onChange={e => setNewService(s => ({ ...s, desc: e.target.value }))} />
+                  </div>
+                  <div>
+                    <label className="text-[#8c8b8b] text-sm mb-1 block">Prix</label>
+                    <input className="input-dark" placeholder="Ex: 25 000 DZD" value={newService.prix} onChange={e => setNewService(s => ({ ...s, prix: e.target.value }))} />
+                  </div>
+                  <div className="flex gap-3">
+                    <button onClick={() => {
+                      if (newService.nom && newService.desc) {
+                        setServices(prev => [...prev, { ...newService, id: Date.now() }])
+                        setNewService({ nom: '', desc: '', prix: '' })
+                        setAddingService(false)
+                      }
+                    }} className="btn-primary text-sm py-2 px-5">Ajouter</button>
+                    <button onClick={() => setAddingService(false)} className="btn-outline text-sm py-2 px-5">Annuler</button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              {services.map(svc => (
+                <div key={svc.id} className="bg-white rounded-2xl border border-[#e9e9e9] p-5 hover:border-cyan-400 transition-colors">
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <h3 className="font-bold text-[#141313]">{svc.nom}</h3>
+                    <button onClick={() => setServices(prev => prev.filter(s => s.id !== svc.id))} className="text-[#8c8b8b] hover:text-red-500 text-xs transition-colors flex-shrink-0">✕</button>
+                  </div>
+                  <p className="text-[#8c8b8b] text-sm mb-3">{svc.desc}</p>
+                  {svc.prix && <span className="text-[#e46a33] font-black text-lg">{svc.prix}</span>}
+                </div>
+              ))}
+              {services.length === 0 && !addingService && (
+                <div className="col-span-2 bg-white rounded-2xl border border-[#e9e9e9] p-12 text-center">
+                  <p className="text-[#8c8b8b] mb-4">Aucun service ajouté. Décrivez vos offres pour attirer des clients.</p>
+                  <button onClick={() => setAddingService(true)} className="btn-primary text-sm py-2 px-6">Ajouter mon premier service</button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* PROFILE TAB */}
+        {sideTab === 'profile' && profileForm && (
+          <form onSubmit={handleProfileSave} className="max-w-xl">
+            <div className="bg-white rounded-2xl border border-[#e9e9e9] p-6 space-y-4">
+              <h2 className="font-bold text-[#141313] text-lg">Mon Profil</h2>
+              <div className="flex flex-col items-center gap-3 p-5 bg-[#f9f9f8] rounded-xl border-2 border-dashed border-[#e9e9e9] hover:border-cyan-400 transition-colors">
+                <div className="w-20 h-20 rounded-2xl bg-white border-2 border-cyan-200 overflow-hidden flex items-center justify-center shadow-sm">
+                  {profileForm.avatar ? <img src={profileForm.avatar} alt="Avatar" className="w-full h-full object-cover" /> : <span className="text-cyan-500 font-black text-3xl">{(profileForm.name || 'C')[0]}</span>}
+                </div>
+                <label className="bg-cyan-600 text-white text-sm py-2 px-5 rounded-xl cursor-pointer font-semibold hover:bg-cyan-700 transition-colors inline-flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                  {avatarUploading ? 'Chargement...' : 'Choisir une photo'}
                   <input type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} disabled={avatarUploading} />
                 </label>
+                <p className="text-[#8c8b8b] text-xs">JPG, PNG · max 5 Mo</p>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div><label className="text-[#8c8b8b] text-sm mb-1 block">Nom *</label><input required className="input-dark" value={profileForm.name} onChange={e => setProfileForm(f => ({ ...f, name: e.target.value }))} /></div>
@@ -163,66 +378,12 @@ export default function ConsultantDashboard() {
               </div>
               <div><label className="text-[#8c8b8b] text-sm mb-1 block">Entreprise</label><input className="input-dark" value={profileForm.company} onChange={e => setProfileForm(f => ({ ...f, company: e.target.value }))} /></div>
               <div><label className="text-[#8c8b8b] text-sm mb-1 block">Wilaya</label><input className="input-dark" value={profileForm.wilaya} onChange={e => setProfileForm(f => ({ ...f, wilaya: e.target.value }))} /></div>
-              {profileMsg && <p className={`text-sm ${profileMsg.includes('jour') ? 'text-green-400' : 'text-red-400'}`}>{profileMsg}</p>}
-              <button type="submit" disabled={profileSaving} className="btn-primary w-full justify-center disabled:opacity-50">{profileSaving ? 'Enregistrement...' : 'Enregistrer'}</button>
+              {profileMsg && <p className={`text-sm font-medium px-4 py-2 rounded-lg ${profileMsg.includes('jour') ? 'text-green-700 bg-green-50' : 'text-red-600 bg-red-50'}`}>{profileMsg}</p>}
+              <button type="submit" disabled={profileSaving} className="btn-primary w-full justify-center py-3 disabled:opacity-50">{profileSaving ? 'Enregistrement...' : 'Enregistrer les modifications'}</button>
             </div>
           </form>
         )}
 
-
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-          {[
-            { v: bookings.length, l: 'Total consultations' },
-            { v: pendingBookings.length, l: 'En attente' },
-            { v: confirmedBookings.length, l: 'Confirmées' },
-            { v: completedBookings.length, l: 'Terminées' },
-          ].map((s, i) => (
-            <div key={i} className="card p-5 text-center">
-              <p className="stat-value">{s.v}</p>
-              <p className="text-[#8c8b8b] text-xs mt-1">{s.l}</p>
-            </div>
-          ))}
-        </div>
-
-        {bookings.length === 0 ? (
-          <div className="card p-16 text-center">
-            <div className="w-14 h-14 rounded-xl bg-cyan-900/20 border border-cyan-800/30 mx-auto mb-4 flex items-center justify-center">
-              <svg className="w-7 h-7 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <h3 className="font-bold text-[#141313] text-xl mb-2">Aucune consultation assignée</h3>
-            <p className="text-[#8c8b8b]">Les demandes de consultation vous seront assignées par l'administrateur.</p>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {pendingBookings.length > 0 && (
-              <section>
-                <h2 className="text-yellow-400 font-bold text-sm uppercase tracking-wider mb-3">En attente ({pendingBookings.length})</h2>
-                {pendingBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
-              </section>
-            )}
-            {confirmedBookings.length > 0 && (
-              <section>
-                <h2 className="text-green-400 font-bold text-sm uppercase tracking-wider mb-3">Confirmées ({confirmedBookings.length})</h2>
-                {confirmedBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
-              </section>
-            )}
-            {completedBookings.length > 0 && (
-              <section>
-                <h2 className="text-[#e46a33] font-bold text-sm uppercase tracking-wider mb-3">Terminées ({completedBookings.length})</h2>
-                {completedBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
-              </section>
-            )}
-            {cancelledBookings.length > 0 && (
-              <section>
-                <h2 className="text-red-400 font-bold text-sm uppercase tracking-wider mb-3">Annulées ({cancelledBookings.length})</h2>
-                {cancelledBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
-              </section>
-            )}
-          </div>
-        )}
       </div>
     </div>
   )

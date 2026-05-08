@@ -5,7 +5,7 @@ import Link from 'next/link'
 import MachineCard from '../../components/MachineCard'
 import { normalizeMachine as normalize } from '../../lib/normalize'
 
-const wilayas = ['Toutes', 'Adrar','Chlef','Laghouat','Oum El Bouaghi','Batna','Béjaïa','Biskra','Blida','Bouira','Tlemcen','Tiaret','Alger','Djelfa','Jijel','Sétif','Skikda','Annaba','Guelma','Constantine','Médéa','Oran','Boumerdès','Tipaza','Mila','Ghardaïa','Relizane','Ouargla']
+const wilayas = ['Toutes','Adrar','Chlef','Laghouat','Oum El Bouaghi','Batna','Béjaïa','Biskra','Béchar','Blida','Bouira','Tamanrasset','Tébessa','Tlemcen','Tiaret','Tizi Ouzou','Alger','Djelfa','Jijel','Sétif','Saïda','Skikda','Sidi Bel Abbès','Annaba','Guelma','Constantine','Médéa','Mostaganem',"M'Sila",'Mascara','Ouargla','Oran','El Bayadh','Illizi','Bordj Bou Arréridj','Boumerdès','El Tarf','Tindouf','Tissemsilt','El Oued','Khenchela','Souk Ahras','Tipaza','Mila','Aïn Defla','Naâma','Aïn Témouchent','Ghardaïa','Relizane','Timimoun','Bordj Badji Mokhtar','Ouled Djellal','Béni Abbès','In Salah','In Guezzam','Touggourt','Djanet',"El M'Ghair",'El Meniaa']
 const secteurs = ['Tous', 'Industrie Agroalimentaire', 'Bâtiment & Travaux Publics', 'Agricole', 'Textile', 'Pharma', 'Mining', 'Industrie', 'Énergie']
 const types = ['Tous', 'Vente neuf', 'Occasion']
 

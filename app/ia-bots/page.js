@@ -38,12 +38,12 @@ const suggestions = [
 ]
 
 const fonctionnalites = [
-  { icon: 'IA', titre: 'IA Recommandations', desc: 'Analyse votre activité et recommande les machines les mieux adaptées à votre budget.' },
-  { icon: 'Prix', titre: 'Estimation de prix', desc: 'Prix du marché algérien en temps réel. Évitez les surprises et négociez mieux.' },
-  { icon: 'Match', titre: 'Matching vendeurs', desc: 'Identifie les vendeurs les plus proches et les mieux adaptés à vos besoins.' },
-  { icon: 'Specs', titre: 'Specs techniques', desc: 'Explique les spécifications techniques pour vous aider à faire le bon choix.' },
-  { icon: 'Import', titre: 'Guide import', desc: 'Accompagne les démarches d\'importation de machines depuis l\'étranger.' },
-  { icon: 'ROI', titre: 'Analyse ROI', desc: 'Calcule le retour sur investissement estimé pour chaque machine envisagée.' },
+  { icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>, color: '#e46a33', titre: 'IA Recommandations', desc: 'Analyse votre activité et recommande les machines les mieux adaptées à votre budget.' },
+  { icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>, color: '#10b981', titre: 'Estimation de prix', desc: 'Prix du marché algérien en temps réel. Évitez les surprises et négociez mieux.' },
+  { icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>, color: '#6366f1', titre: 'Matching vendeurs', desc: 'Identifie les vendeurs les plus proches et les mieux adaptés à vos besoins.' },
+  { icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>, color: '#f59e0b', titre: 'Specs techniques', desc: 'Explique les spécifications techniques pour vous aider à faire le bon choix.' },
+  { icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>, color: '#ec4899', titre: 'Guide import', desc: "Accompagne les démarches d'importation de machines depuis l'étranger." },
+  { icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>, color: '#14b8a6', titre: 'Analyse ROI', desc: 'Calcule le retour sur investissement estimé pour chaque machine envisagée.' },
 ]
 
 export default function IABotsPage() {
@@ -91,21 +91,26 @@ export default function IABotsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white pt-20">
+    <div className="min-h-screen">
 
-      {/* HERO */}
-      <section className="py-16 max-w-7xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <h1 className="section-title text-5xl mb-4">MachiBot</h1>
-          <p className="text-[#8c8b8b] text-lg mb-2">Votre IA industrielle</p>
-          <p className="section-subtitle max-w-2xl mx-auto">
-            Posez vos questions sur les machines, prix et démarches en Algérie.
-            Réponse instantanée, 24h/24.
-          </p>
-        </div>
+      {/* HERO — dark band */}
+      <div className="bg-[#141313] pt-20 pb-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+              <span className="text-green-400 text-sm font-medium">En ligne · Répond instantanément</span>
+            </div>
+            <h1 className="hero-title text-white mb-3">Machi<span style={{color:'#e46a33'}}>Bot</span></h1>
+            <p className="text-[#8c8b8b] text-lg mb-1">Votre IA industrielle</p>
+            <p className="text-[#8c8b8b] max-w-2xl mx-auto">
+              Posez vos questions sur les machines, prix et démarches en Algérie.
+              Réponse instantanée, 24h/24.
+            </p>
+          </div>
 
-        {/* CHAT DEMO */}
-        <div className="max-w-3xl mx-auto">
+          {/* CHAT DEMO */}
+          <div className="max-w-3xl mx-auto">
           <div className="card overflow-hidden">
             {/* Header */}
             <div className="px-6 py-4 border-b border-[#e9e9e9] flex items-center gap-3 bg-[#f9f9f8]">
@@ -180,11 +185,12 @@ export default function IABotsPage() {
               </div>
             </div>
           </div>
-          <p className="text-center text-[#434042] text-xs mt-3">
+          <p className="text-center text-[#8c8b8b] text-xs mt-3">
             MachiBot est un assistant IA à titre indicatif. Pour des conseils personnalisés, consultez notre équipe d'<Link href="/experts" className="text-[#e46a33] hover:underline">experts</Link>.
           </p>
-        </div>
-      </section>
+          </div>{/* close max-w-3xl */}
+        </div>{/* close max-w-7xl */}
+      </div>{/* close dark hero band */}
 
       {/* FONCTIONNALITÉS */}
       <section className="py-20 bg-gradient-to-b from-[#f9f9f8] to-[#f9f9f8]">
@@ -195,8 +201,10 @@ export default function IABotsPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {fonctionnalites.map((f, i) => (
-              <div key={i} className="card p-6">
-                <div className="w-10 h-10 rounded-xl bg-[#f9f9f8] border border-[#e9e9e9] flex items-center justify-center mb-3"><span className="text-[#434042] font-bold text-xs">{f.icon}</span></div>
+              <div key={i} className="card p-6 hover:shadow-md transition-shadow">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 flex-shrink-0" style={{backgroundColor: f.color + '20', color: f.color}}>
+                  {f.icon}
+                </div>
                 <h3 className="text-[#141313] font-semibold text-sm mb-2">{f.titre}</h3>
                 <p className="text-[#8c8b8b] text-sm leading-relaxed">{f.desc}</p>
               </div>
@@ -206,13 +214,13 @@ export default function IABotsPage() {
       </section>
 
       {/* CTA CONSULTING */}
-      <section className="py-20 max-w-4xl mx-auto px-6 text-center">
-        <div className="card p-12">
-          <h2 className="section-title mb-4">Besoin d'un expert humain ?</h2>
-          <p className="text-[#8c8b8b] mb-8">Pour des projets complexes, nos consultants industriels vous accompagnent de A à Z.</p>
+      <section className="py-16 bg-[#141313]">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="hero-title text-white mb-4">Besoin d'un expert humain ?</h2>
+          <p className="text-[#8c8b8b] mb-8 text-lg">Pour des projets complexes, nos consultants industriels vous accompagnent de A à Z.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/experts" className="btn-primary">Consulter un expert</Link>
-            <Link href="/catalogue" className="btn-outline">Voir le catalogue</Link>
+            <Link href="/catalogue" className="px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 transition-all font-semibold">Voir le catalogue</Link>
           </div>
         </div>
       </section>

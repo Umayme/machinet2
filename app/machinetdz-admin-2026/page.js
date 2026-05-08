@@ -167,7 +167,7 @@ export default function SecretAdminPanel() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <h1 className="text-2xl font-black text-white">Espace Administrateur</h1>
+            <h1 className="text-2xl font-black text-[#141313]">Espace Administrateur</h1>
             <p className="text-[#434042] text-sm mt-1">MachiNet — Accès restreint</p>
           </div>
           <form onSubmit={handleLogin} className="card p-8 space-y-5">
@@ -317,7 +317,7 @@ export default function SecretAdminPanel() {
   const pendingConsultants = pending.filter(u => u.role === 'consultant')
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[#f9f9f8]">
       {/* Top bar */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 border-b border-[#e9e9e9] px-6 h-14 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -326,7 +326,7 @@ export default function SecretAdminPanel() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
-          <span className="text-white font-bold text-sm">MachiNet Admin</span>
+          <span className="text-[#141313] font-bold text-sm">MachiNet Admin</span>
           <span className="text-xs text-[#e46a33] bg-[#f9f9f8] border border-[#e9e9e9] px-2 py-0.5 rounded-full">Panneau secret</span>
         </div>
         <div className="flex items-center gap-4">
@@ -341,10 +341,13 @@ export default function SecretAdminPanel() {
 
       <div className="pt-14 flex">
         {/* Sidebar */}
-        <div className="fixed left-0 top-14 bottom-0 w-56 bg-white border-r border-[#e9e9e9] p-3 overflow-y-auto">
+        <div className="fixed left-0 top-14 bottom-0 w-56 bg-[#141313] p-3 overflow-y-auto">
+          <div className="px-3 py-2 mb-2">
+            <p className="text-white/30 text-xs uppercase tracking-wider font-semibold">Navigation</p>
+          </div>
           {tabs.map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
-              className={`w-full text-left px-3 py-2.5 rounded-lg text-sm mb-1 transition-all ${tab === t.id ? 'bg-[#f0f0f0] text-white' : 'text-[#8c8b8b] hover:text-white hover:bg-[#f9f9f8]'}`}>
+              className={`w-full text-left px-3 py-2.5 rounded-lg text-sm mb-1 transition-all ${tab === t.id ? 'bg-[#e46a33] text-white font-semibold' : 'text-white/60 hover:text-white hover:bg-white/10'}`}>
               {t.label}
             </button>
           ))}
@@ -359,20 +362,20 @@ export default function SecretAdminPanel() {
               {/* OVERVIEW TAB */}
               {tab === 'overview' && (
                 <div>
-                  <h1 className="text-2xl font-black text-white mb-2">Vue d'ensemble</h1>
+                  <h1 className="text-2xl font-black text-[#141313] mb-2">Vue d'ensemble</h1>
                   <p className="text-[#8c8b8b] text-sm mb-8">Tableau de bord MachiNet</p>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     {[
-                      { v: machines.length, l: 'Annonces totales', c: 'text-[#e46a33]' },
-                      { v: machines.filter(m => m.verified).length, l: 'Annonces vérifiées', c: 'text-green-400' },
-                      { v: users.length, l: 'Utilisateurs', c: 'text-blue-400' },
-                      { v: pending.length, l: 'En attente d\'approbation', c: 'text-yellow-400' },
-                      { v: approvedSellers.length, l: 'Vendeurs approuvés', c: 'text-[#e46a33]' },
-                      { v: approvedConsultants.length, l: 'Consultants approuvés', c: 'text-cyan-400' },
-                      { v: consultations.length, l: 'Consultations', c: 'text-orange-400' },
-                      { v: contacts.length, l: 'Contacts reçus', c: 'text-pink-400' },
+                      { v: machines.length, l: 'Annonces totales', c: 'text-[#e46a33]', bg: 'bg-orange-50 border-orange-200' },
+                      { v: machines.filter(m => m.verified).length, l: 'Annonces vérifiées', c: 'text-green-700', bg: 'bg-green-50 border-green-200' },
+                      { v: users.length, l: 'Utilisateurs', c: 'text-blue-700', bg: 'bg-blue-50 border-blue-200' },
+                      { v: pending.length, l: 'En attente', c: 'text-yellow-700', bg: 'bg-yellow-50 border-yellow-200' },
+                      { v: approvedSellers.length, l: 'Vendeurs', c: 'text-[#e46a33]', bg: 'bg-white border-[#e9e9e9]' },
+                      { v: approvedConsultants.length, l: 'Consultants', c: 'text-cyan-700', bg: 'bg-cyan-50 border-cyan-200' },
+                      { v: consultations.length, l: 'Consultations', c: 'text-orange-700', bg: 'bg-white border-[#e9e9e9]' },
+                      { v: contacts.length, l: 'Contacts', c: 'text-pink-700', bg: 'bg-pink-50 border-pink-200' },
                     ].map((s, i) => (
-                      <div key={i} className="card p-5 text-center">
+                      <div key={i} className={`rounded-2xl border p-5 text-center ${s.bg}`}>
                         <p className={`text-2xl font-black ${s.c}`}>{s.v}</p>
                         <p className="text-[#8c8b8b] text-xs mt-1">{s.l}</p>
                       </div>
@@ -383,7 +386,7 @@ export default function SecretAdminPanel() {
                     <div className="card p-6 border border-yellow-900/30 bg-yellow-900/5">
                       <div className="flex items-center gap-2 mb-4">
                         <div className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></div>
-                        <h3 className="text-white font-bold">{pending.length} demande{pending.length > 1 ? 's' : ''} en attente d'approbation</h3>
+                        <h3 className="text-[#141313] font-bold">{pending.length} demande{pending.length > 1 ? 's' : ''} en attente d'approbation</h3>
                       </div>
                       <p className="text-[#8c8b8b] text-sm mb-4">
                         {pendingSellers.length > 0 && `${pendingSellers.length} vendeur${pendingSellers.length > 1 ? 's' : ''}`}
@@ -401,12 +404,12 @@ export default function SecretAdminPanel() {
               {/* PENDING TAB */}
               {tab === 'pending' && (
                 <div>
-                  <h1 className="text-2xl font-black text-white mb-2">Demandes en attente</h1>
+                  <h1 className="text-2xl font-black text-[#141313] mb-2">Demandes en attente</h1>
                   <p className="text-[#8c8b8b] text-sm mb-8">Approuver ou rejeter les demandes de vendeurs et consultants</p>
 
                   {pending.length === 0 ? (
                     <div className="card p-16 text-center">
-                      <h3 className="text-white font-bold text-lg mb-2">Aucune demande en attente</h3>
+                      <h3 className="text-[#141313] font-bold text-lg mb-2">Aucune demande en attente</h3>
                       <p className="text-[#8c8b8b] text-sm">Toutes les demandes ont été traitées.</p>
                     </div>
                   ) : (
@@ -421,7 +424,7 @@ export default function SecretAdminPanel() {
                             <div key={u.id} className="card p-5 flex items-center justify-between mb-3">
                               <div className="flex-1">
                                 <div className="flex items-center gap-3 mb-1">
-                                  <p className="text-white font-bold">{u.name}</p>
+                                  <p className="text-[#141313] font-bold">{u.name}</p>
                                   <span className="text-xs px-2 py-0.5 rounded-full bg-[#f9f9f8] text-[#e46a33]">Vendeur</span>
                                 </div>
                                 <p className="text-[#8c8b8b] text-sm">{u.email}</p>
@@ -461,7 +464,7 @@ export default function SecretAdminPanel() {
                             <div key={u.id} className="card p-5 flex items-center justify-between mb-3">
                               <div className="flex-1">
                                 <div className="flex items-center gap-3 mb-1">
-                                  <p className="text-white font-bold">{u.name}</p>
+                                  <p className="text-[#141313] font-bold">{u.name}</p>
                                   <span className="text-xs px-2 py-0.5 rounded-full bg-cyan-900/30 text-cyan-400">Consultant</span>
                                 </div>
                                 <p className="text-[#8c8b8b] text-sm">{u.email}</p>
@@ -499,7 +502,7 @@ export default function SecretAdminPanel() {
               {/* MACHINES TAB */}
               {tab === 'machines' && (
                 <div>
-                  <h1 className="text-2xl font-black text-white mb-2">Annonces</h1>
+                  <h1 className="text-2xl font-black text-[#141313] mb-2">Annonces</h1>
                   <p className="text-[#8c8b8b] text-sm mb-8">Gérer toutes les annonces de machines</p>
                   <div className="card overflow-hidden">
                     <div className="overflow-x-auto">
@@ -519,7 +522,7 @@ export default function SecretAdminPanel() {
                             <tr><td colSpan={6} className="text-center py-10 text-[#434042]">Aucune annonce</td></tr>
                           ) : machines.map((m, i) => (
                             <tr key={i} className="border-b border-[#e9e9e9] hover:bg-[#f9f9f8]/50">
-                              <td className="px-4 py-3 text-white text-sm">{m.name}</td>
+                              <td className="px-4 py-3 text-[#141313] text-sm">{m.name}</td>
                               <td className="px-4 py-3 text-[#8c8b8b] text-xs">{m.seller?.name}<br /><span className="text-[#434042]">{m.seller?.email}</span></td>
                               <td className="px-4 py-3 text-right text-[#e46a33] text-sm">{m.price?.toLocaleString()} DZD</td>
                               <td className="px-4 py-3 text-center">
@@ -549,7 +552,7 @@ export default function SecretAdminPanel() {
               {/* USERS TAB */}
               {tab === 'users' && (
                 <div>
-                  <h1 className="text-2xl font-black text-white mb-2">Utilisateurs</h1>
+                  <h1 className="text-2xl font-black text-[#141313] mb-2">Utilisateurs</h1>
                   <p className="text-[#8c8b8b] text-sm mb-8">Tous les comptes enregistrés</p>
                   <div className="card overflow-hidden">
                     <div className="overflow-x-auto">
@@ -568,7 +571,7 @@ export default function SecretAdminPanel() {
                         <tbody>
                           {users.map((u, i) => (
                             <tr key={i} className="border-b border-[#e9e9e9] hover:bg-[#f9f9f8]/50">
-                              <td className="px-4 py-3 text-white text-sm">{u.name}</td>
+                              <td className="px-4 py-3 text-[#141313] text-sm">{u.name}</td>
                               <td className="px-4 py-3 text-[#8c8b8b] text-xs">{u.email}</td>
                               <td className="px-4 py-3">
                                 <span className={`text-xs px-2 py-0.5 rounded-full ${
@@ -598,11 +601,11 @@ export default function SecretAdminPanel() {
               {/* CONSULTATIONS TAB */}
               {tab === 'consultations' && (
                 <div>
-                  <h1 className="text-2xl font-black text-white mb-2">Consultations</h1>
+                  <h1 className="text-2xl font-black text-[#141313] mb-2">Consultations</h1>
                   <p className="text-[#8c8b8b] text-sm mb-8">Demandes de conseil — assigner un consultant et mettre à jour le statut</p>
                   {consultations.length === 0 ? (
                     <div className="card p-16 text-center">
-                      <h3 className="text-white font-bold text-lg mb-2">Aucune consultation</h3>
+                      <h3 className="text-[#141313] font-bold text-lg mb-2">Aucune consultation</h3>
                       <p className="text-[#8c8b8b] text-sm">Les demandes de consultation apparaîtront ici.</p>
                     </div>
                   ) : (
@@ -614,7 +617,7 @@ export default function SecretAdminPanel() {
                             <div className="flex items-start justify-between gap-6">
                               <div className="flex-1">
                                 <div className="flex items-center gap-3 mb-2">
-                                  <h3 className="text-white font-bold">{c.subject}</h3>
+                                  <h3 className="text-[#141313] font-bold">{c.subject}</h3>
                                   <span className={`text-xs px-2 py-0.5 rounded-full ${
                                     c.status === 'confirmed' ? 'bg-green-900/30 text-green-400' :
                                     c.status === 'completed' ? 'bg-[#f9f9f8] text-[#e46a33]' :
@@ -673,11 +676,11 @@ export default function SecretAdminPanel() {
               {/* FEEDBACKS TAB */}
               {tab === 'feedbacks' && (
                 <div>
-                  <h1 className="text-2xl font-black text-white mb-2">Avis & Témoignages</h1>
+                  <h1 className="text-2xl font-black text-[#141313] mb-2">Avis & Témoignages</h1>
                   <p className="text-[#8c8b8b] text-sm mb-8">Modérer les avis soumis par les utilisateurs</p>
                   {feedbacks.length === 0 ? (
                     <div className="card p-16 text-center">
-                      <h3 className="text-white font-bold text-lg mb-2">Aucun avis</h3>
+                      <h3 className="text-[#141313] font-bold text-lg mb-2">Aucun avis</h3>
                       <p className="text-[#8c8b8b] text-sm">Les témoignages soumis apparaîtront ici.</p>
                     </div>
                   ) : (
@@ -687,7 +690,7 @@ export default function SecretAdminPanel() {
                           <div className="flex items-start justify-between gap-4">
                             <div className="flex-1">
                               <div className="flex items-center gap-3 mb-1">
-                                <p className="text-white font-bold">{f.nom}</p>
+                                <p className="text-[#141313] font-bold">{f.nom}</p>
                                 {f.poste && <span className="text-[#8c8b8b] text-xs">{f.poste}</span>}
                                 {f.wilaya && <span className="text-[#434042] text-xs">{f.wilaya}</span>}
                                 <span className="text-[#e46a33] font-bold">{f.note}/5</span>
@@ -716,7 +719,7 @@ export default function SecretAdminPanel() {
               {/* NEWSLETTER TAB */}
               {tab === 'newsletter' && (
                 <div>
-                  <h1 className="text-2xl font-black text-white mb-2">Newsletter</h1>
+                  <h1 className="text-2xl font-black text-[#141313] mb-2">Newsletter</h1>
                   <p className="text-[#8c8b8b] text-sm mb-8">{newsletter.length} abonné{newsletter.length !== 1 ? 's' : ''}</p>
                   <div className="card overflow-hidden">
                     <div className="overflow-x-auto">
@@ -734,7 +737,7 @@ export default function SecretAdminPanel() {
                           ) : newsletter.map((s, i) => (
                             <tr key={i} className="border-b border-[#e9e9e9] hover:bg-[#f9f9f8]/50">
                               <td className="px-4 py-3 text-[#434042] text-xs">{s.id}</td>
-                              <td className="px-4 py-3 text-white text-sm">{s.email}</td>
+                              <td className="px-4 py-3 text-[#141313] text-sm">{s.email}</td>
                               <td className="px-4 py-3 text-right text-[#434042] text-xs">{new Date(s.createdAt).toLocaleDateString('fr-DZ')}</td>
                             </tr>
                           ))}
@@ -750,7 +753,7 @@ export default function SecretAdminPanel() {
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h1 className="text-2xl font-black text-white mb-1">Blog & Guides</h1>
+                      <h1 className="text-2xl font-black text-[#141313] mb-1">Blog & Guides</h1>
                       <p className="text-[#8c8b8b] text-sm">{blogs.length} article{blogs.length !== 1 ? 's' : ''}</p>
                     </div>
                     <button onClick={() => setBlogForm({ titre: '', categorie: 'BTP', desc: '', contenu: '', image: '', tags: '', temps: '5 min', published: false })}
@@ -758,7 +761,7 @@ export default function SecretAdminPanel() {
                   </div>
                   {blogForm ? (
                     <div className="card p-6 space-y-4">
-                      <h2 className="text-white font-bold">{blogForm.id ? 'Modifier l\'article' : 'Nouvel article'}</h2>
+                      <h2 className="text-[#141313] font-bold">{blogForm.id ? 'Modifier l\'article' : 'Nouvel article'}</h2>
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div><label className="text-[#8c8b8b] text-xs mb-1 block">Titre *</label><input className="input-dark text-sm" value={blogForm.titre} onChange={e => setBlogForm(f => ({ ...f, titre: e.target.value }))} /></div>
                         <div><label className="text-[#8c8b8b] text-xs mb-1 block">Catégorie</label>
@@ -787,7 +790,7 @@ export default function SecretAdminPanel() {
                         <div key={b.id} className="card p-4 flex items-center justify-between gap-4">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                              <p className="text-white font-semibold text-sm truncate">{b.titre}</p>
+                              <p className="text-[#141313] font-semibold text-sm truncate">{b.titre}</p>
                               <span className="text-xs px-2 py-0.5 rounded-full bg-[#f9f9f8] text-[#e46a33] flex-shrink-0">{b.categorie}</span>
                               <span className={`text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${b.published ? 'bg-green-900/30 text-green-400' : 'bg-gray-900/30 text-[#8c8b8b]'}`}>{b.published ? 'Publié' : 'Brouillon'}</span>
                             </div>
@@ -812,7 +815,7 @@ export default function SecretAdminPanel() {
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h1 className="text-2xl font-black text-white mb-1">FAQ</h1>
+                      <h1 className="text-2xl font-black text-[#141313] mb-1">FAQ</h1>
                       <p className="text-[#8c8b8b] text-sm">{faqs.length} question{faqs.length !== 1 ? 's' : ''}</p>
                     </div>
                     <button onClick={() => setFaqForm({ question: '', reponse: '', page: 'fournisseurs', ordre: faqs.length, active: true })}
@@ -820,7 +823,7 @@ export default function SecretAdminPanel() {
                   </div>
                   {faqForm ? (
                     <div className="card p-6 space-y-4">
-                      <h2 className="text-white font-bold">{faqForm.id ? 'Modifier la FAQ' : 'Nouvelle FAQ'}</h2>
+                      <h2 className="text-[#141313] font-bold">{faqForm.id ? 'Modifier la FAQ' : 'Nouvelle FAQ'}</h2>
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div><label className="text-[#8c8b8b] text-xs mb-1 block">Page</label>
                           <select className="input-dark text-sm" value={faqForm.page} onChange={e => setFaqForm(f => ({ ...f, page: e.target.value }))}>
@@ -849,7 +852,7 @@ export default function SecretAdminPanel() {
                               {pageFaqs.sort((a,b) => a.ordre - b.ordre).map(f => (
                                 <div key={f.id} className={`card p-4 flex items-start justify-between gap-4 ${!f.active ? 'opacity-50' : ''}`}>
                                   <div className="flex-1">
-                                    <p className="text-white text-sm font-medium mb-1">{f.question}</p>
+                                    <p className="text-[#141313] text-sm font-medium mb-1">{f.question}</p>
                                     <p className="text-[#8c8b8b] text-xs leading-relaxed">{f.reponse}</p>
                                   </div>
                                   <div className="flex gap-2 flex-shrink-0">
@@ -873,7 +876,7 @@ export default function SecretAdminPanel() {
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h1 className="text-2xl font-black text-white mb-1">Prix Marché</h1>
+                      <h1 className="text-2xl font-black text-[#141313] mb-1">Prix Marché</h1>
                       <p className="text-[#8c8b8b] text-sm">{prixItems.length} données · Affiché sur /prix</p>
                     </div>
                     <button onClick={() => setPrixForm({ secteur: 'BTP', nom: '', min: '', max: '', tendance: '→', pct: 'stable' })}
@@ -881,14 +884,14 @@ export default function SecretAdminPanel() {
                   </div>
                   {prixItems.length === 0 && !prixForm && (
                     <div className="card p-12 text-center">
-                      <h3 className="text-white font-bold mb-2">Aucune donnée</h3>
+                      <h3 className="text-[#141313] font-bold mb-2">Aucune donnée</h3>
                       <p className="text-[#8c8b8b] text-sm mb-4">Les données de prix du marché seront affichées sur la page /prix</p>
                       <p className="text-[#434042] text-xs">La page utilise des données statiques par défaut tant qu'aucune donnée n'est saisie ici.</p>
                     </div>
                   )}
                   {prixForm && (
                     <div className="card p-6 space-y-4 mb-6">
-                      <h2 className="text-white font-bold">{prixForm.id ? 'Modifier' : 'Nouveau prix'}</h2>
+                      <h2 className="text-[#141313] font-bold">{prixForm.id ? 'Modifier' : 'Nouveau prix'}</h2>
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div><label className="text-[#8c8b8b] text-xs mb-1 block">Secteur</label>
                           <select className="input-dark text-sm" value={prixForm.secteur} onChange={e => setPrixForm(f => ({ ...f, secteur: e.target.value }))}>
@@ -930,7 +933,7 @@ export default function SecretAdminPanel() {
                             {prixItems.map((p, i) => (
                               <tr key={i} className="border-b border-[#e9e9e9] hover:bg-[#f9f9f8]/50">
                                 <td className="px-4 py-3"><span className="text-xs px-2 py-0.5 rounded-full bg-[#f9f9f8] text-[#e46a33]">{p.secteur}</span></td>
-                                <td className="px-4 py-3 text-white text-sm">{p.nom}</td>
+                                <td className="px-4 py-3 text-[#141313] text-sm">{p.nom}</td>
                                 <td className="px-4 py-3 text-[#8c8b8b] text-xs">{p.min} — {p.max} DZD</td>
                                 <td className="px-4 py-3 text-center">
                                   <span className={`font-bold ${p.tendance === '↗' ? 'text-green-400' : p.tendance === '↘' ? 'text-red-400' : 'text-[#8c8b8b]'}`}>{p.tendance} {p.pct}</span>
@@ -954,7 +957,7 @@ export default function SecretAdminPanel() {
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h1 className="text-2xl font-black text-white mb-1">Équipe</h1>
+                      <h1 className="text-2xl font-black text-[#141313] mb-1">Équipe</h1>
                       <p className="text-[#8c8b8b] text-sm">{teamMembers.length} membre{teamMembers.length !== 1 ? 's' : ''} · Affiché sur /catalogue/about</p>
                     </div>
                     <button onClick={() => setTeamForm({ nom: '', titre: '', bio: '', wilaya: 'Alger', avatar: '', ordre: teamMembers.length, active: true })}
@@ -962,7 +965,7 @@ export default function SecretAdminPanel() {
                   </div>
                   {teamForm && (
                     <div className="card p-6 space-y-4 mb-6">
-                      <h2 className="text-white font-bold">{teamForm.id ? 'Modifier' : 'Nouveau membre'}</h2>
+                      <h2 className="text-[#141313] font-bold">{teamForm.id ? 'Modifier' : 'Nouveau membre'}</h2>
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div><label className="text-[#8c8b8b] text-xs mb-1 block">Nom *</label><input className="input-dark text-sm" value={teamForm.nom} onChange={e => setTeamForm(f => ({ ...f, nom: e.target.value }))} /></div>
                         <div><label className="text-[#8c8b8b] text-xs mb-1 block">Titre/Poste *</label><input className="input-dark text-sm" value={teamForm.titre} onChange={e => setTeamForm(f => ({ ...f, titre: e.target.value }))} /></div>
@@ -991,7 +994,7 @@ export default function SecretAdminPanel() {
                             {t.avatar ? <img src={t.avatar} alt={t.nom} className="w-full h-full object-cover" /> : <span className="text-[#e46a33] font-bold">{t.nom[0]}</span>}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-white text-sm font-semibold truncate">{t.nom}</p>
+                            <p className="text-[#141313] text-sm font-semibold truncate">{t.nom}</p>
                             <p className="text-[#e46a33] text-xs truncate">{t.titre}</p>
                           </div>
                         </div>
@@ -1011,7 +1014,7 @@ export default function SecretAdminPanel() {
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h1 className="text-2xl font-black text-white mb-1">Packages Consulting</h1>
+                      <h1 className="text-2xl font-black text-[#141313] mb-1">Packages Consulting</h1>
                       <p className="text-[#8c8b8b] text-sm">{packages.length} package{packages.length !== 1 ? 's' : ''} · Affichés sur /consulting et /tarifs</p>
                     </div>
                     <button onClick={() => setPackageForm({ titre: '', prix: '', duree: '', desc: '', inclus: '', badge: '', ordre: packages.length, active: true })}
@@ -1022,7 +1025,7 @@ export default function SecretAdminPanel() {
                   )}
                   {packageForm && (
                     <div className="card p-6 space-y-4 mb-6">
-                      <h2 className="text-white font-bold">{packageForm.id ? 'Modifier' : 'Nouveau package'}</h2>
+                      <h2 className="text-[#141313] font-bold">{packageForm.id ? 'Modifier' : 'Nouveau package'}</h2>
                       <div className="grid sm:grid-cols-3 gap-4">
                         <div><label className="text-[#8c8b8b] text-xs mb-1 block">Titre *</label><input className="input-dark text-sm" value={packageForm.titre} onChange={e => setPackageForm(f => ({ ...f, titre: e.target.value }))} /></div>
                         <div><label className="text-[#8c8b8b] text-xs mb-1 block">Prix *</label><input className="input-dark text-sm" placeholder="ex: 45 000 DZD" value={packageForm.prix} onChange={e => setPackageForm(f => ({ ...f, prix: e.target.value }))} /></div>
@@ -1044,7 +1047,7 @@ export default function SecretAdminPanel() {
                     {packages.map(pkg2 => (
                       <div key={pkg2.id} className="card p-5 relative">
                         {pkg2.badge && <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-[#e46a33] text-white text-xs font-bold px-3 py-0.5 rounded-full">{pkg2.badge}</span>}
-                        <h3 className="text-white font-bold mb-1">{pkg2.titre}</h3>
+                        <h3 className="text-[#141313] font-bold mb-1">{pkg2.titre}</h3>
                         <p className="text-[#e46a33] font-black text-lg mb-1">{pkg2.prix}</p>
                         <p className="text-[#434042] text-xs mb-2">{pkg2.duree}</p>
                         <p className="text-[#8c8b8b] text-xs mb-3">{pkg2.desc}</p>
@@ -1066,7 +1069,7 @@ export default function SecretAdminPanel() {
               {/* CONTACTS TAB */}
               {tab === 'contacts' && (
                 <div>
-                  <h1 className="text-2xl font-black text-white mb-2">Contacts</h1>
+                  <h1 className="text-2xl font-black text-[#141313] mb-2">Contacts</h1>
                   <p className="text-[#8c8b8b] text-sm mb-8">Messages reçus via le formulaire de contact</p>
                   <div className="card overflow-hidden">
                     <div className="overflow-x-auto">
@@ -1086,7 +1089,7 @@ export default function SecretAdminPanel() {
                             <tr><td colSpan={6} className="text-center py-10 text-[#434042]">Aucun contact</td></tr>
                           ) : contacts.map((c, i) => (
                             <tr key={i} className="border-b border-[#e9e9e9] hover:bg-[#f9f9f8]/50">
-                              <td className="px-4 py-3 text-white text-sm">{c.name}</td>
+                              <td className="px-4 py-3 text-[#141313] text-sm">{c.name}</td>
                               <td className="px-4 py-3 text-[#8c8b8b] text-xs">{c.email}</td>
                               <td className="px-4 py-3 text-[#8c8b8b] text-xs">{c.machine?.name || '—'}</td>
                               <td className="px-4 py-3 text-[#8c8b8b] text-xs max-w-xs truncate">{c.message}</td>
@@ -1107,5 +1110,4 @@ export default function SecretAdminPanel() {
         </div>
       </div>
     </div>
-  )
-}
+  

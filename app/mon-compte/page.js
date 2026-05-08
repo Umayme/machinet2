@@ -60,45 +60,47 @@ export default function MonComptePage() {
     '/catalogue'
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-6">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen">
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-black text-[#141313] mb-2">Mon compte</h1>
-          <p className="text-[#8c8b8b] text-sm">Gérez vos informations personnelles et votre accès</p>
-        </div>
-
-        {/* Profile card */}
-        <div className="card p-8 mb-6">
-          <div className="flex items-start gap-5 mb-6">
-            <div className="w-16 h-16 rounded-2xl bg-[#e46a33] flex items-center justify-center text-white font-black text-2xl shrink-0 overflow-hidden">
+      {/* HERO — dark band */}
+      <div className="bg-[#141313] pt-20 pb-10">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="flex items-center gap-5">
+            {/* Avatar */}
+            <div className="w-20 h-20 rounded-2xl bg-[#e46a33] flex items-center justify-center text-white font-black text-3xl shrink-0 overflow-hidden border-2 border-[#e46a33]/40">
               {user.avatar
                 ? <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
                 : (user.name || 'U')[0].toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl font-bold text-[#141313] truncate">{user.name}</h2>
+              <h1 className="hero-title text-white leading-none mb-1">{user.name}</h1>
               <p className="text-[#8c8b8b] text-sm truncate">{user.email}</p>
-              <div className="flex items-center gap-2 mt-2 flex-wrap">
-                <span className={`text-xs px-2.5 py-1 rounded-full border ${roleColor}`}>{roleLabel}</span>
+              <div className="flex items-center gap-2 mt-3 flex-wrap">
+                <span className="text-xs px-3 py-1 rounded-full bg-[#e46a33]/20 border border-[#e46a33]/40 text-[#e46a33] font-semibold">{roleLabel}</span>
                 {(user.role === 'seller' || user.role === 'consultant') && (
                   user.approved ? (
-                    <span className="text-xs px-2.5 py-1 rounded-full bg-green-900/30 text-green-400 border border-green-800/40">
-                      Approuvé
-                    </span>
+                    <span className="text-xs px-3 py-1 rounded-full bg-green-900/30 text-green-400 border border-green-800/40">✓ Approuvé</span>
                   ) : (
-                    <span className="text-xs px-2.5 py-1 rounded-full bg-yellow-900/30 text-yellow-400 border border-yellow-800/40">
-                      En attente d'approbation
-                    </span>
+                    <span className="text-xs px-3 py-1 rounded-full bg-yellow-900/30 text-yellow-400 border border-yellow-800/40">⏳ En attente</span>
                   )
                 )}
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-6 py-10">
+
+        {/* Profile card */}
+        <div className="card p-8 mb-6">
+          <h2 className="font-bold text-[#141313] text-sm uppercase tracking-wide mb-5">Informations personnelles</h2>
+          <div className="flex items-start gap-5 mb-6">
+            <div className="flex-1 min-w-0"></div>
+          </div>
 
           {/* Info grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-[#e9e9e9]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <InfoField label="Nom complet" value={user.name} />
             <InfoField label="Email" value={user.email} />
             <InfoField label="Entreprise" value={user.company} />
@@ -145,7 +147,7 @@ export default function MonComptePage() {
           </div>
         </div>
 
-      </div>
+      </div>{/* close max-w */}
     </div>
   )
 }

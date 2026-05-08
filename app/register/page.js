@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-const wilayas = ['Alger','Oran','Constantine','Blida','Sétif','Annaba','Tlemcen','Batna','Béjaïa','Skikda','Tiaret','Chlef','Médéa','Tipaza','Boumerdès','Jijel','Guelma','Mila','Biskra','Ouargla','Autre']
+const wilayas = ['Adrar','Chlef','Laghouat','Oum El Bouaghi','Batna','Béjaïa','Biskra','Béchar','Blida','Bouira','Tamanrasset','Tébessa','Tlemcen','Tiaret','Tizi Ouzou','Alger','Djelfa','Jijel','Sétif','Saïda','Skikda','Sidi Bel Abbès','Annaba','Guelma','Constantine','Médéa','Mostaganem',"M'Sila",'Mascara','Ouargla','Oran','El Bayadh','Illizi','Bordj Bou Arréridj','Boumerdès','El Tarf','Tindouf','Tissemsilt','El Oued','Khenchela','Souk Ahras','Tipaza','Mila','Aïn Defla','Naâma','Aïn Témouchent','Ghardaïa','Relizane','Timimoun','Bordj Badji Mokhtar','Ouled Djellal','Béni Abbès','In Salah','In Guezzam','Touggourt','Djanet',"El M'Ghair",'El Meniaa']
 const secteurs = ['Industrie Agroalimentaire','Bâtiment & Travaux Publics','Agriculture','Textile','Industrie générale','Pharma','Mining','Énergie','Import/Export','Autre']
 const roleOptions = [
   { v: 'buyer', label: 'Acheteur', icon: 'A', desc: 'Je cherche des machines' },
@@ -42,13 +42,50 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f9f9f8] pt-16 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen flex">
+      {/* Left — dark brand panel */}
+      <div className="hidden lg:flex lg:w-2/5 bg-[#141313] flex-col justify-between p-12">
+        <div>
+          <span className="text-white font-bold text-xl font-['Barlow_Condensed'] tracking-wide">Machi<span style={{color:'#e46a33'}}>Net</span></span>
+        </div>
+        <div>
+          <h2 className="text-4xl font-bold text-white font-['Barlow_Condensed'] mb-4 leading-tight">
+            Rejoignez le réseau<br/>des industriels<br/><span style={{color:'#e46a33'}}>algériens</span>
+          </h2>
+          <p className="text-[#8c8b8b] text-sm mb-8">Des milliers d'acheteurs, vendeurs et experts connectés sur une seule plateforme.</p>
+          <div className="space-y-3">
+            {[
+              { icon: 'A', label: 'Acheteur', desc: 'Trouvez la machine idéale au meilleur prix', color: '#e46a33' },
+              { icon: 'V', label: 'Vendeur', desc: 'Publiez vos annonces et trouvez des acheteurs', color: '#10b981' },
+              { icon: 'E', label: 'Expert', desc: 'Proposez vos services de consulting industriel', color: '#6366f1' },
+            ].map((r, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <span className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold text-xs flex-shrink-0" style={{backgroundColor: r.color + '30', border: `1px solid ${r.color}40`}}>
+                  <span style={{color: r.color}}>{r.icon}</span>
+                </span>
+                <div>
+                  <span className="text-white text-sm font-semibold">{r.label}</span>
+                  <span className="text-[#8c8b8b] text-xs"> — {r.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <p className="text-[#8c8b8b] text-xs">© 2026 MachiNet · Imama, Tlemcen — Algérie</p>
+      </div>
+
+      {/* Right — form */}
+      <div className="w-full lg:w-3/5 flex items-center justify-center px-6 py-12 bg-[#f9f9f8]">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
+        {/* Mobile logo */}
+        <div className="lg:hidden text-center mb-8">
+          <span className="text-[#141313] font-bold text-2xl font-['Barlow_Condensed']">Machi<span style={{color:'#e46a33'}}>Net</span></span>
+        </div>
+        <div className="mb-8">
           {step < 3 && (
             <>
-              <h1 className="section-title mb-3">Créer un compte</h1>
-              <div className="flex justify-center gap-2 mt-4">
+              <h1 className="text-3xl font-bold text-[#141313] font-['Barlow_Condensed'] mb-3">Créer un compte</h1>
+              <div className="flex gap-2">
                 {[1,2].map(n => (
                   <div key={n} className={`h-1 w-14 rounded-full transition-all ${step >= n ? 'bg-[#e46a33]' : 'bg-[#e9e9e9]'}`}></div>
                 ))}
@@ -179,6 +216,7 @@ export default function RegisterPage() {
           </p>
         )}
       </div>
+      </div>{/* close right panel */}
     </div>
   )
 }

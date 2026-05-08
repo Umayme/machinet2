@@ -115,32 +115,34 @@ export default function CouverturePage() {
   const totalVendeurs = wilayas.reduce((sum, w) => sum + w.vendeurs, 0)
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen">
 
-      {/* HERO */}
-      <section className="py-16 max-w-7xl mx-auto px-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-full px-4 py-2 mb-6">
-          <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-          <span className="text-green-300 text-sm font-medium">Couverture nationale complète</span>
+      {/* HERO — dark band */}
+      <div className="bg-[#141313] pt-20 pb-16">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6">
+            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            <span className="text-green-400 text-sm font-medium">Couverture nationale complète</span>
+          </div>
+          <h1 className="hero-title text-white mb-4">MachiNet couvre les<br/><span style={{color:'#e46a33'}}>58 wilayas</span></h1>
+          <p className="text-[#8c8b8b] text-lg max-w-xl mx-auto mb-10">
+            De Tamanrasset à Annaba, des vendeurs et acheteurs partout en Algérie.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+            {[
+              { v: '58', l: 'Wilayas couvertes' },
+              { v: totalVendeurs + '+', l: 'Vendeurs référencés' },
+              { v: '100%', l: 'Territoire national' },
+              { v: '3 200+', l: 'Machines disponibles' },
+            ].map((s, i) => (
+              <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+                <p className="text-3xl font-bold text-white font-['Barlow_Condensed']">{s.v}</p>
+                <p className="text-[#8c8b8b] text-xs mt-1">{s.l}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <h1 className="section-title text-5xl mb-4">MachiNet couvre les 69 wilayas</h1>
-        <p className="section-subtitle max-w-xl mx-auto mb-10">
-          De Tamanrasset à Annaba, des vendeurs et acheteurs partout en Algérie.
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-16">
-          {[
-            { v: '69', l: 'Wilayas couvertes' },
-            { v: totalVendeurs + '+', l: 'Vendeurs référencés' },
-            { v: '100%', l: 'Territoire national' },
-            { v: '3 200+', l: 'Machines disponibles' },
-          ].map((s, i) => (
-            <div key={i} className="card p-5 text-center">
-              <p className="stat-value">{s.v}</p>
-              <p className="text-[#8c8b8b] text-xs mt-1">{s.l}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      </div>
 
       {/* LÉGENDE */}
       <section className="max-w-7xl mx-auto px-6 mb-6">

@@ -65,39 +65,43 @@ export default function MarchePage() {
     : secteursPrix.filter(s => s.secteur.toLowerCase().includes(secteurActif))
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen">
 
-      {/* HERO */}
-      <section className="py-16 max-w-7xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-full px-4 py-2 mb-6">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-            <span className="text-green-300 text-sm font-medium">Données mises à jour en continu</span>
-          </div>
-          <h1 className="section-title text-5xl mb-4">Marché des machines industrielles</h1>
-          <p className="section-subtitle max-w-2xl mx-auto">
-            Prix indicatifs du marché algérien · Tendances · Analyses sectorielles
-          </p>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          {[
-            { v: '200+', l: 'Types de machines suivis' },
-            { v: '69', l: 'Wilayas couvertes' },
-            { v: '500+', l: 'Vendeurs référencés' },
-            { v: 'Mensuel', l: 'Fréquence de mise à jour' },
-          ].map((s, i) => (
-            <div key={i} className="card p-5 text-center">
-              <p className="stat-value">{s.v}</p>
-              <p className="text-[#8c8b8b] text-xs mt-1">{s.l}</p>
+      {/* HERO — dark band */}
+      <div className="bg-[#141313] pt-20 pb-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+              <span className="text-green-400 text-sm font-medium">Données mises à jour en continu</span>
             </div>
-          ))}
+            <h1 className="hero-title text-white mb-4">Marché des machines<br/><span style={{color:'#e46a33'}}>industrielles</span></h1>
+            <p className="text-[#8c8b8b] text-lg max-w-2xl mx-auto">
+              Prix indicatifs du marché algérien · Tendances · Analyses sectorielles
+            </p>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { v: '200+', l: 'Types de machines suivis' },
+              { v: '58', l: 'Wilayas couvertes' },
+              { v: '500+', l: 'Vendeurs référencés' },
+              { v: 'Mensuel', l: 'Fréquence de mise à jour' },
+            ].map((s, i) => (
+              <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+                <p className="text-3xl font-bold text-white font-['Barlow_Condensed']">{s.v}</p>
+                <p className="text-[#8c8b8b] text-xs mt-1">{s.l}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </section>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 pt-10">
 
       {/* TENDANCES */}
-      <section className="py-8 max-w-7xl mx-auto px-6">
+      <section className="py-8">
         <h2 className="text-2xl font-bold text-[#141313] mb-6">Tendances du mois — Avril 2026</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
           {tendances.map((t, i) => (
@@ -111,7 +115,7 @@ export default function MarchePage() {
       </section>
 
       {/* FILTRES */}
-      <section className="max-w-7xl mx-auto px-6 mb-8">
+      <section className="mb-8">
         <div className="flex gap-2 flex-wrap">
           {[
             { v: 'all', l: 'Tous les secteurs' },
@@ -130,7 +134,7 @@ export default function MarchePage() {
       </section>
 
       {/* TABLES DE PRIX */}
-      <section className="max-w-7xl mx-auto px-6 pb-20 space-y-10">
+      <section className="pb-20 space-y-10">
         {filteredSecteurs.map((s, i) => (
           <div key={i}>
             <h2 className={`text-xl font-bold mb-4 ${s.color}`}>{s.secteur}</h2>
@@ -166,14 +170,16 @@ export default function MarchePage() {
         ))}
       </section>
 
+      </div>{/* close max-w wrapper */}
+
       {/* CTA */}
-      <section className="py-16 max-w-4xl mx-auto px-6 text-center">
-        <div className="card p-12">
-          <h2 className="section-title mb-4">Vous vendez une machine ?</h2>
-          <p className="text-[#8c8b8b] mb-8">Publiez votre annonce et touchez des acheteurs dans toute l'Algérie.</p>
+      <section className="py-16 bg-[#141313]">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="hero-title text-white mb-4">Vous vendez une machine ?</h2>
+          <p className="text-[#8c8b8b] mb-8 text-lg">Publiez votre annonce et touchez des acheteurs dans toute l'Algérie.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/register" className="btn-primary">Publier une annonce</Link>
-            <Link href="/catalogue" className="btn-outline">Voir le catalogue</Link>
+            <Link href="/catalogue" className="px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 transition-all font-semibold">Voir le catalogue</Link>
           </div>
         </div>
       </section>

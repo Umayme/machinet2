@@ -126,21 +126,24 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
     }
 
     return (
-        <div className="min-h-screen pt-16 flex flex-col">
-            <div className="max-w-4xl mx-auto w-full px-6 flex flex-col flex-1 py-8">
+        <div className="min-h-screen flex flex-col">
 
-                {/* HEADER */}
-                <div className="text-center mb-8">
-                    <div className="inline-flex items-center gap-3 bg-[#f9f9f8] border border-[#e9e9e9] rounded-2xl px-6 py-3 mb-4">
-                        <div className="w-10 h-10 rounded-xl bg-[#e46a33]/40 border border-[#e9e9e9] flex items-center justify-center"><span className="text-[#e46a33] font-black text-xs">AI</span></div>
-                        <div className="text-left">
-                            <p className="text-white font-bold">IA Advisor MachiNet</p>
-                            <p className="text-green-400 text-xs">● En ligne — Répond en quelques secondes</p>
-                        </div>
+            {/* HERO — dark band */}
+            <div className="bg-[#141313] pt-20 pb-10">
+              <div className="max-w-4xl mx-auto w-full px-6 text-center">
+                <div className="inline-flex items-center gap-3 bg-white/10 border border-white/20 rounded-2xl px-6 py-3 mb-5">
+                    <div className="w-8 h-8 rounded-xl bg-[#e46a33] flex items-center justify-center"><span className="text-white font-black text-xs">AI</span></div>
+                    <div className="text-left">
+                        <p className="text-white font-bold text-sm">IA Advisor MachiNet</p>
+                        <p className="text-green-400 text-xs">● En ligne — Répond en quelques secondes</p>
                     </div>
-                    <h1 className="section-title mb-2">Votre conseiller machines IA</h1>
-                    <p className="section-subtitle">Spécialisé dans le marché algérien · Sans inscription</p>
                 </div>
+                <h1 className="hero-title text-white mb-2">Votre conseiller<br/><span style={{color:'#e46a33'}}>machines IA</span></h1>
+                <p className="text-[#8c8b8b] text-lg">Spécialisé dans le marché algérien · Sans inscription</p>
+              </div>
+            </div>
+
+            <div className="max-w-4xl mx-auto w-full px-6 flex flex-col flex-1 py-8">
 
                 {/* CHAT BOX */}
                 <div className="card flex flex-col flex-1" style={{ minHeight: '500px' }}>
@@ -221,7 +224,7 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
                                 Envoyer →
                             </button>
                         </div>
-                        <p className="text-gray-700 text-xs mt-2 text-center">
+                        <p className="text-[#8c8b8b] text-xs mt-2 text-center">
                             IA basée sur les données du marché algérien · Pour un conseil expert:{' '}
                             <Link href="/contact" className="text-[#e46a33] hover:text-[#e46a33]">contactez notre équipe</Link>
                         </p>

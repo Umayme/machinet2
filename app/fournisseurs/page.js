@@ -33,45 +33,49 @@ export default function FournisseursPage() {
     }, [])
 
     return (
-        <div className="min-h-screen pt-24 pb-20">
-            <div className="max-w-7xl mx-auto px-6">
-
-                {/* HERO */}
-                <div className="text-center mb-20">
-                    <div className="inline-flex items-center gap-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-full px-4 py-2 mb-8">
+        <div className="min-h-screen">
+            {/* HERO — dark band */}
+            <div className="bg-[#141313] pt-20 pb-16">
+              <div className="max-w-7xl mx-auto px-6">
+                <div className="text-center">
+                    <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-8">
                         <span className="w-2 h-2 bg-[#e46a33] rounded-full animate-pulse"></span>
                         <span className="text-[#e46a33] text-sm font-medium">+500 fournisseurs nous font confiance</span>
                     </div>
-                    <h1 className="section-title mb-6">
-                        Développez votre business<br />avec MachiNet
+                    <h1 className="hero-title text-white mb-4">
+                        Développez votre business<br /><span style={{color:'#e46a33'}}>avec MachiNet</span>
                     </h1>
-                    <p className="section-subtitle max-w-2xl mx-auto mb-10">
-                        Rejoignez la 1ère plateforme B2B machines en Algérie. Publiez votre catalogue, recevez des leads qualifiés et boostez votre visibilité dans les 69 wilayas.
+                    <p className="text-[#8c8b8b] text-lg max-w-2xl mx-auto mb-10">
+                        Rejoignez la 1ère plateforme B2B machines en Algérie. Publiez votre catalogue, recevez des leads qualifiés et boostez votre visibilité dans les 58 wilayas.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                         <Link href="/register?role=seller" className="btn-primary text-base px-10 py-4">
                             Créer mon profil fournisseur
                         </Link>
-                        <Link href="/tarifs" className="btn-outline text-base px-10 py-4">
+                        <Link href="/tarifs" className="px-10 py-4 rounded-xl border border-white/20 text-white hover:bg-white/10 transition-all font-semibold text-base">
                             Voir les tarifs →
                         </Link>
                     </div>
-                </div>
 
-                {/* STATS */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-                    {[
-                        { val: '10 000+', label: 'Acheteurs actifs' },
-                        { val: '45', label: 'Leads/mois en moyenne' },
-                        { val: '69', label: 'Wilayas couvertes' },
-                        { val: '3x', label: 'Plus de visibilité' },
-                    ].map((s, i) => (
-                        <div key={i} className="card p-6 text-center">
-                            <p className="text-3xl font-black text-[#e46a33] mb-2">{s.val}</p>
-                            <p className="text-[#8c8b8b] text-sm">{s.label}</p>
-                        </div>
-                    ))}
+                    {/* STATS inside dark band */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {[
+                            { val: '10 000+', label: 'Acheteurs actifs' },
+                            { val: '45', label: 'Leads/mois en moyenne' },
+                            { val: '58', label: 'Wilayas couvertes' },
+                            { val: '3x', label: 'Plus de visibilité' },
+                        ].map((s, i) => (
+                            <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+                                <p className="text-3xl font-bold text-[#e46a33] font-['Barlow_Condensed'] mb-1">{s.val}</p>
+                                <p className="text-[#8c8b8b] text-sm">{s.label}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
+              </div>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-6 pb-20 pt-16">
 
                 {/* AVANTAGES */}
                 <div className="mb-20">
@@ -81,7 +85,7 @@ export default function FournisseursPage() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {[
-                            { titre: 'Visibilité nationale', desc: 'Votre catalogue visible par 10 000+ acheteurs industriels dans les 69 wilayas d\'Algérie.' },
+                            { titre: 'Visibilité nationale', desc: 'Votre catalogue visible par 10 000+ acheteurs industriels dans les 58 wilayas d\'Algérie.' },
                             { titre: 'Leads qualifiés', desc: 'Recevez uniquement des prospects avec budget défini, secteur précis et vraie intention d\'achat.' },
                             { titre: 'Badge vérifié', desc: 'Le badge de vérification booste votre crédibilité et multiplie par 3 votre taux de conversion.' },
                             { titre: 'Dashboard analytics', desc: 'Suivez vos vues, clics, leads et performances en temps réel. Optimisez votre catalogue.' },
@@ -200,6 +204,7 @@ export default function FournisseursPage() {
                 </div>
 
             </div>
+            </div>{/* close max-w wrapper */}
         </div>
     )
 }

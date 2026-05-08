@@ -74,36 +74,40 @@ export default function PrixPage() {
         .filter(s => s.machines.length > 0)
 
     return (
-        <div className="min-h-screen pt-24 pb-20 bg-white">
-            <div className="max-w-7xl mx-auto px-6">
-
-                {/* HEADER */}
-                <div className="text-center mb-12">
-                    <div className="inline-flex items-center gap-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-full px-4 py-2 mb-6">
+        <div className="min-h-screen">
+            {/* HERO — dark band */}
+            <div className="bg-[#141313] pt-20 pb-16">
+              <div className="max-w-7xl mx-auto px-6">
+                <div className="text-center mb-10">
+                    <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6">
                         <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        <span className="text-green-600 text-sm font-medium">Mis à jour en continu</span>
+                        <span className="text-green-400 text-sm font-medium">Mis à jour en continu</span>
                     </div>
-                    <h1 className="section-title mb-4">Prix du Marché Algérien</h1>
-                    <p className="section-subtitle max-w-2xl mx-auto">
+                    <h1 className="hero-title text-white mb-4">Prix du Marché<br/><span style={{color:'#e46a33'}}>Algérien</span></h1>
+                    <p className="text-[#8c8b8b] text-lg max-w-2xl mx-auto">
                         Fourchettes de prix réelles basées sur les transactions du marché algérien.
-                        <br />Données collectées auprès de 500+ fournisseurs vérifiés.
+                        Données collectées auprès de 500+ fournisseurs vérifiés.
                     </p>
                 </div>
 
                 {/* STATS */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {[
                         { val: '150+', label: 'Types de machines' },
                         { val: '500+', label: 'Fournisseurs sources' },
-                        { val: '69', label: 'Wilayas couvertes' },
+                        { val: '58', label: 'Wilayas couvertes' },
                         { val: 'Mensuel', label: 'Fréquence mise à jour' },
                     ].map((s, i) => (
-                        <div key={i} className="card p-4 text-center">
-                            <p className="stat-value">{s.val}</p>
+                        <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-4 text-center">
+                            <p className="text-3xl font-bold text-white font-['Barlow_Condensed']">{s.val}</p>
                             <p className="text-[#8c8b8b] text-xs mt-1">{s.label}</p>
                         </div>
                     ))}
                 </div>
+              </div>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-6 pb-20 pt-10">
 
                 {/* SEARCH + FILTRES */}
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -192,6 +196,7 @@ export default function PrixPage() {
                 </div>
 
             </div>
+            </div>{/* close max-w wrapper */}
         </div>
     )
 }

@@ -4,12 +4,42 @@ import Link from 'next/link'
 import FeedbackForm from '../../components/FeedbackForm'
 
 const avantages = [
-  { titre: 'Visibilité nationale', desc: 'Votre catalogue visible par des acheteurs dans les 69 wilayas d\'Algérie.' },
-  { titre: 'Leads qualifiés', desc: 'Recevez uniquement des demandes d\'acheteurs avec une vraie intention d\'achat.' },
-  { titre: 'Badge vérifié', desc: 'Gagnez la confiance des acheteurs avec notre badge de vendeur vérifié MachiNet.' },
-  { titre: 'Dashboard analytics', desc: 'Suivez vos vues, contacts, et performances. Optimisez vos annonces.' },
-  { titre: 'IA au service de vos ventes', desc: 'Notre IA recommande vos machines aux acheteurs les plus pertinents automatiquement.' },
-  { titre: 'Support dédié', desc: 'Un responsable compte vous accompagne de l\'inscription au premier lead.' },
+  {
+    titre: 'Visibilité nationale',
+    desc: 'Votre catalogue visible par des acheteurs dans les 58 wilayas d\'Algérie.',
+    color: '#e46a33',
+    icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+  },
+  {
+    titre: 'Leads qualifiés',
+    desc: 'Recevez uniquement des demandes d\'acheteurs avec une vraie intention d\'achat.',
+    color: '#10b981',
+    icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
+  },
+  {
+    titre: 'Badge vérifié',
+    desc: 'Gagnez la confiance des acheteurs avec notre badge de vendeur vérifié MachiNet.',
+    color: '#3b82f6',
+    icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>,
+  },
+  {
+    titre: 'Dashboard analytics',
+    desc: 'Suivez vos vues, contacts, et performances. Optimisez vos annonces.',
+    color: '#8b5cf6',
+    icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>,
+  },
+  {
+    titre: 'IA au service de vos ventes',
+    desc: 'Notre IA recommande vos machines aux acheteurs les plus pertinents automatiquement.',
+    color: '#f59e0b',
+    icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
+  },
+  {
+    titre: 'Support dédié',
+    desc: 'Un responsable compte vous accompagne de l\'inscription au premier lead.',
+    color: '#ec4899',
+    icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" /></svg>,
+  },
 ]
 
 const etapes = [
@@ -65,7 +95,7 @@ export default function VendeursPage() {
             {[
               { v: '10 000+', l: 'Acheteurs actifs' },
               { v: '45', l: 'Leads/mois en moyenne' },
-              { v: '69', l: 'Wilayas couvertes' },
+              { v: '58', l: 'Wilayas couvertes' },
               { v: '3x', l: 'Plus de visibilité' },
             ].map((s, i) => (
               <div key={i} className="card p-6 text-center">
@@ -86,9 +116,14 @@ export default function VendeursPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {avantages.map((a, i) => (
-              <div key={i} className="card p-6">
-                <h3 className="font-semibold text-[#141313] mb-2">{a.titre}</h3>
-                <p className="text-[#8c8b8b] text-sm leading-relaxed">{a.desc}</p>
+              <div key={i} className="card p-6 flex gap-4" style={{ borderLeft: `4px solid ${a.color}` }}>
+                <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${a.color}18`, color: a.color }}>
+                  {a.icon}
+                </div>
+                <div>
+                  <h3 className="font-semibold text-[#141313] mb-1.5">{a.titre}</h3>
+                  <p className="text-[#8c8b8b] text-sm leading-relaxed">{a.desc}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -105,7 +140,7 @@ export default function VendeursPage() {
           {etapes.map((e, i) => (
             <div key={i} className="relative">
               {i < etapes.length - 1 && (
-                <div className="hidden lg:block absolute top-6 left-full w-full h-px bg-[#f9f9f8] z-0"></div>
+                <div className="hidden lg:block absolute top-6 left-full w-full h-0.5 bg-[#e9e9e9] z-0" style={{background: 'linear-gradient(90deg, #e46a33 0%, #e9e9e9 100%)'}}></div>
               )}
               <div className="card p-6 relative z-10">
                 <div className="w-10 h-10 rounded-full bg-[#e46a33] text-white flex items-center justify-center font-bold text-lg mb-4">{e.n}</div>
@@ -128,69 +163,4 @@ export default function VendeursPage() {
           <div className="text-center mb-12">
             <h2 className="section-title mb-4">Vendeurs qui nous font confiance</h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {temoignages.map((t, i) => (
-              <div key={i} className="card p-6">
-                <div className="flex mb-4 gap-1">
-                  {[...Array(t.note)].map((_, j) => <svg key={j} className="w-4 h-4 text-[#e46a33] fill-current inline-block" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>)}
-                </div>
-                <p className="text-[#8c8b8b] text-sm leading-relaxed mb-6 italic">"{t.texte}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#f9f9f8] border border-[#e9e9e9] flex items-center justify-center text-[#e46a33] font-bold text-sm">{t.nom[0]}</div>
-                  <div>
-                    <p className="font-semibold text-[#141313] text-sm">{t.nom}</p>
-                    <p className="text-[#434042] text-xs">{t.poste} · {t.wilaya}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-20 max-w-3xl mx-auto px-6">
-        <h2 className="section-title text-center mb-12">Questions fréquentes</h2>
-        <div className="space-y-3">
-          {faqs.map((f, i) => (
-            <div key={i} className="card overflow-hidden">
-              <button
-                className="w-full text-left px-6 py-5 flex items-center justify-between"
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-              >
-                <span className="font-medium text-[#141313] text-sm">{f.q}</span>
-                <span className={`text-[#e46a33] text-xl transition-transform ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
-              </button>
-              {openFaq === i && (
-                <div className="px-6 pb-5 text-[#8c8b8b] text-sm leading-relaxed border-t border-[#e9e9e9] pt-4">
-                  {f.r}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* FEEDBACK */}
-      <section className="py-20 max-w-2xl mx-auto px-6">
-        <div className="text-center mb-8">
-          <h2 className="section-title mb-3">Partagez votre expérience</h2>
-          <p className="section-subtitle">Votre avis aide d'autres vendeurs à rejoindre MachiNet</p>
-        </div>
-        <FeedbackForm />
-      </section>
-
-      {/* CTA FINAL */}
-      <section className="py-20 max-w-4xl mx-auto px-6 text-center">
-        <div className="card p-16">
-          <h2 className="section-title mb-4">Prêt à recevoir vos premiers leads ?</h2>
-          <p className="text-[#8c8b8b] text-lg mb-8">Rejoignez 500+ vendeurs qui développent leur business sur MachiNet.</p>
-          <Link href="/register?role=seller" className="btn-primary text-base px-12 py-4">
-            Créer mon compte vendeur →
-          </Link>
-        </div>
-      </section>
-
-    </div>
-  )
-}
+          <div className="grid md:grid-col
