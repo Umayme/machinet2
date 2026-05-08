@@ -382,42 +382,4 @@ export default function ExpertsPage() {
 
       {/* EXPERTISES */}
       <section className="py-20 max-w-7xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <h2 className="section-title mb-3">Domaines d'expertise</h2>
-          <p className="section-subtitle">Des experts spécialisés dans tous les secteurs industriels algériens</p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            { secteur: 'Industrie Agroalimentaire', desc: 'Lignes de production, équipements laitiers, boulangerie, conserveries' },
-            { secteur: 'Bâtiment & Travaux Publics', desc: 'Engins de chantier, centrales à béton, équipements de terrassement' },
-            { secteur: 'Agriculture', desc: 'Tracteurs, équipements d\'irrigation, serres, stockage frigorifique' },
-            { secteur: 'Industrie générale', desc: 'Compresseurs, tours CNC, soudure, manutention' },
-            { secteur: 'Énergie & Utilities', desc: 'Groupes électrogènes, panneaux solaires, stations de pompage' },
-            { secteur: 'Import & Douanes', desc: 'Accompagnement import, classification douanière, domiciliation' },
-          ].map((ex, i) => (
-            <div key={i} className="card p-6">
-              <h3 className="font-semibold text-[#141313] mb-2">{ex.secteur}</h3>
-              <p className="text-[#8c8b8b] text-sm leading-relaxed">{ex.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* MODALS */}
-      {showServicesModal && selectedExpert && (
-        <ServicesModal
-          expert={selectedExpert}
-          onClose={() => setShowServicesModal(false)}
-          onRequest={handleRequest}
-        />
-      )}
-      {showRequest && (
-        <RequestModal
-          expert={requestExpert}
-          onClose={() => { setShowRequest(false); setRequestExpert(null) }}
-        />
-      )}
-
-    </div>
-  )
-}
+        <div className="text-center mb-1

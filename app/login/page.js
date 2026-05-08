@@ -66,45 +66,4 @@ export default function LoginPage() {
             La plateforme B2B<br/>des machines<br/><span style={{color:'#e46a33'}}>industrielles</span><br/>algériennes
           </h2>
           <p className="text-[#8c8b8b] text-sm mb-8">Acheteurs, vendeurs et experts — connectés en un seul endroit.</p>
-          <div className="space-y-3">
-            {[
-              'Annonces de machines vérifiées',
-              'Experts industriels certifiés',
-              'Prix du marché en temps réel',
-              'Vendeurs dans toutes les wilayas',
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <span className="w-5 h-5 rounded-full bg-[#e46a33]/20 border border-[#e46a33]/40 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-3 h-3 text-[#e46a33]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-                </span>
-                <span className="text-[#8c8b8b] text-sm">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <p className="text-[#8c8b8b] text-xs">© 2026 MachiNet · Tlemcen, Algérie</p>
-      </div>
-
-      {/* Right — form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-20 bg-[#f9f9f8]">
-        <div className="w-full max-w-md">
-          {/* Mobile logo */}
-          <div className="lg:hidden text-center mb-8">
-            <span className="text-[#141313] font-bold text-2xl font-['Barlow_Condensed']">Machi<span style={{color:'#e46a33'}}>Net</span></span>
-          </div>
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-[#141313] font-['Barlow_Condensed'] mb-1">Connexion</h1>
-            <p className="text-[#8c8b8b]">Accédez à votre espace MachiNet</p>
-          </div>
-          <Suspense fallback={<div className="card p-8 text-center text-[#8c8b8b]">Chargement...</div>}>
-            <LoginForm />
-          </Suspense>
-          <p className="text-center text-[#8c8b8b] text-sm mt-6">
-            Pas encore de compte ?{' '}
-            <Link href="/register" className="text-[#141313] font-semibold hover:text-[#e46a33] transition-colors">Créer un compte</Link>
-          </p>
-        </div>
-      </div>
-    </div>
-  )
-}
+          <div className="spa

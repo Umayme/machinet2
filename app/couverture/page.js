@@ -228,11 +228,4 @@ export default function CouverturePage() {
         <h2 className="section-title mb-4">Vous êtes vendeur dans une wilaya peu couverte ?</h2>
         <p className="text-[#8c8b8b] mb-8">C'est l'occasion idéale. Moins de concurrence, plus de visibilité pour vos annonces.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/register?role=seller" className="btn-primary">Publier mes machines →</Link>
-          <Link href="/catalogue" className="btn-outline">Voir le catalogue</Link>
-        </div>
-      </section>
-
-    </div>
-  )
-}
+      

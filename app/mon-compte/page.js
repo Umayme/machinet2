@@ -156,7 +156,4 @@ function InfoField({ label, value }) {
   return (
     <div>
       <p className="text-[#434042] text-xs uppercase tracking-wider font-semibold mb-1">{label}</p>
-      <p className="text-[#141313] text-sm">{value || <span className="text-[#8c8b8b]">Non renseigné</span>}</p>
-    </div>
-  )
-}
+      <p class
