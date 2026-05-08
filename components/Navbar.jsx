@@ -73,11 +73,11 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-1.5 group">
+        <Link href="/" className="flex items-center gap-2 group">
           <img
-            src="/images/logo.png"
+            src={isDark ? "/images/logowo.png" : "/images/logobo.png"}
             alt="MachiNet"
-            className={`h-7 w-auto transition-opacity group-hover:opacity-80 ${isDark ? 'brightness-0 invert' : ''}`}
+            className="h-9 w-auto transition-opacity group-hover:opacity-80"
           />
           <span className="logo-text text-xl tracking-widest">
             <span className={isDark ? 'text-white' : 'text-[#141313]'}>MACHI</span><span style={{color:'#e46a33'}}>NET</span>

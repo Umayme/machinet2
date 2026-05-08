@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="mb-4 flex items-center gap-2">
-              <img src="/images/logo.png" alt="MachiNet" className="h-8 w-auto" />
+              <img src="/images/logobo.png" alt="MachiNet" className="h-10 w-auto" />
               <span className="logo-text text-xl">
                 <span className="text-[#141313]">MACHI</span><span style={{color:'#e46a33'}}>NET</span>
               </span>
