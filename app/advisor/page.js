@@ -228,3 +228,10 @@ Voulez-vous que je vous aide à affiner votre recherche ?`
                             IA basée sur les données du marché algérien · Pour un conseil expert:{' '}
                             <Link href="/contact" className="text-[#e46a33] hover:text-[#e46a33]">contactez notre équipe</Link>
                         </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    )
+}

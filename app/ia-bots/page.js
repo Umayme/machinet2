@@ -174,4 +174,57 @@ export default function IABotsPage() {
                   className="input-dark flex-1 h-12"
                   value={input}
                   onChange={e => setInput(e.target.value)}
-                  onKeyDown={e => { if (e.key === 'Enter') { e.preven
+                  onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); sendMessage() } }}
+                />
+                <button
+                  onClick={e => { e.preventDefault(); sendMessage() }}
+                  disabled={!input.trim() || loading}
+                  className="btn-primary px-5 h-12 disabled:opacity-50 disabled:cursor-not-allowed">
+                  Envoyer
+                </button>
+              </div>
+            </div>
+          </div>
+          <p className="text-center text-[#8c8b8b] text-xs mt-3">
+            MachiBot est un assistant IA à titre indicatif. Pour des conseils personnalisés, consultez notre équipe d'<Link href="/experts" className="text-[#e46a33] hover:underline">experts</Link>.
+          </p>
+          </div>{/* close max-w-3xl */}
+        </div>{/* close max-w-7xl */}
+      </div>{/* close dark hero band */}
+
+      {/* FONCTIONNALITÉS */}
+      <section className="py-20 bg-gradient-to-b from-[#f9f9f8] to-[#f9f9f8]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="section-title mb-4">Ce que MachiBot peut faire pour vous</h2>
+            <p className="section-subtitle">Un expert industriel disponible 24h/24</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {fonctionnalites.map((f, i) => (
+              <div key={i} className="card p-6 hover:shadow-md transition-shadow">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 flex-shrink-0" style={{backgroundColor: f.color + '20', color: f.color}}>
+                  {f.icon}
+                </div>
+                <h3 className="text-[#141313] font-semibold text-sm mb-2">{f.titre}</h3>
+                <p className="text-[#8c8b8b] text-sm leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA CONSULTING */}
+      <section className="py-16 bg-[#141313]">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="hero-title text-white mb-4">Besoin d'un expert humain ?</h2>
+          <p className="text-[#8c8b8b] mb-8 text-lg">Pour des projets complexes, nos consultants industriels vous accompagnent de A à Z.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/experts" className="btn-primary">Consulter un expert</Link>
+            <Link href="/catalogue" className="px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 transition-all font-semibold">Voir le catalogue</Link>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  )
+}
