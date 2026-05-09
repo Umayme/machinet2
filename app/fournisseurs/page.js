@@ -204,7 +204,6 @@ export default function FournisseursPage() {
                 </div>
 
             </div>
-            </div>
         </div>
     )
-}
+}                   

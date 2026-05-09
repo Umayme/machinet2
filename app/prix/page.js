@@ -196,7 +196,6 @@ export default function PrixPage() {
                 </div>
 
             </div>
-            </div>
         </div>
     )
-}
+}                   
