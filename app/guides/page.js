@@ -153,4 +153,84 @@ export default function GuidesPage() {
                 <p className="text-[#8c8b8b] text-xs leading-relaxed mb-3 line-clamp-2">{article.desc}</p>
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {(article.tags || []).map(tag => (
-           
+                    <span key={tag} className="px-2 py-0.5 bg-[#f9f9f8] border border-[#e9e9e9] rounded text-[#434042] text-xs">#{tag}</span>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between pt-3 border-t border-[#e9e9e9]">
+                  <span className="text-[#8c8b8b] text-xs">{formatDate(article.createdAt)}</span>
+                  <span className="text-[#e46a33] text-xs font-semibold group-hover:underline">Lire l'article →</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* VENDEUR SHARE SECTION */}
+        <div className="bg-[#f9f9f8] rounded-2xl border border-[#e9e9e9] p-8 mb-12">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
+            <div>
+              <h2 className="font-black text-[#141313] text-xl mb-1">Vous êtes vendeur ou expert ?</h2>
+              <p className="text-[#8c8b8b] text-sm">Partagez un article ou guide technique avec notre communauté d'acheteurs.</p>
+            </div>
+            <button onClick={() => setShowShareForm(v => !v)} className="btn-primary flex-shrink-0">
+              {showShareForm ? 'Annuler' : '+ Partager un article'}
+            </button>
+          </div>
+
+          {showShareForm && !shareSent && (
+            <form onSubmit={e => { e.preventDefault(); setShareSent(true) }} className="bg-white rounded-xl border border-[#e9e9e9] p-6 space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[#8c8b8b] text-sm mb-1 block">Titre de l'article *</label>
+                  <input required className="input-dark" placeholder="Ex: Guide maintenance tracteur 80CV" value={shareForm.titre} onChange={e => setShareForm(f => ({...f, titre: e.target.value}))} />
+                </div>
+                <div>
+                  <label className="text-[#8c8b8b] text-sm mb-1 block">Catégorie</label>
+                  <select className="input-dark" value={shareForm.categorie} onChange={e => setShareForm(f => ({...f, categorie: e.target.value}))}>
+                    {['BTP','IAA','Agricole','Import','Finance','Conseil'].map(c => <option key={c}>{c}</option>)}
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="text-[#8c8b8b] text-sm mb-1 block">Résumé *</label>
+                <textarea required rows={3} className="input-dark resize-none" placeholder="Décrivez brièvement le contenu de votre article..." value={shareForm.desc} onChange={e => setShareForm(f => ({...f, desc: e.target.value}))} />
+              </div>
+              {/* Photo placeholder */}
+              <div>
+                <label className="text-[#8c8b8b] text-sm mb-1 block">Photo de couverture</label>
+                <div className="border-2 border-dashed border-[#e9e9e9] rounded-xl h-32 flex flex-col items-center justify-center hover:border-[#e46a33] transition-colors cursor-pointer">
+                  <svg className="w-8 h-8 text-[#8c8b8b] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                  <p className="text-[#8c8b8b] text-sm">Cliquer pour ajouter une image</p>
+                  <p className="text-[#8c8b8b] text-xs mt-1">JPG, PNG — max 5 Mo</p>
+                </div>
+              </div>
+              <div>
+                <label className="text-[#8c8b8b] text-sm mb-1 block">Votre nom / entreprise</label>
+                <input className="input-dark" placeholder="Ex: Société AlgérieMachines" value={shareForm.nom} onChange={e => setShareForm(f => ({...f, nom: e.target.value}))} />
+              </div>
+              <button type="submit" className="btn-primary w-full justify-center">Soumettre l'article →</button>
+              <p className="text-[#8c8b8b] text-xs text-center">L'article sera relu par notre équipe avant publication.</p>
+            </form>
+          )}
+          {shareSent && (
+            <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
+              <p className="text-green-700 font-semibold mb-1">Article soumis avec succès !</p>
+              <p className="text-green-600 text-sm">Notre équipe le validera sous 48h.</p>
+            </div>
+          )}
+        </div>
+
+        {/* CTA CONSULTING */}
+        <div className="rounded-2xl p-10 text-center bg-[#141313]">
+          <h2 className="font-black text-white text-2xl mb-3">Besoin d'un conseil personnalisé ?</h2>
+          <p className="text-white/60 mb-6">Nos consultants industriels vous accompagnent dans vos projets d'investissement.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/experts" className="btn-primary">Demander un conseil</Link>
+            <Link href="/ia-bots" className="bg-white text-[#141313] px-8 py-3 rounded-lg font-semibold text-sm hover:bg-white/90 transition-colors inline-flex items-center gap-2">Parler à MachiBot</Link>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  )
+}

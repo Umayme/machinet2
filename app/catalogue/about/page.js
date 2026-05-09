@@ -159,4 +159,10 @@ export default function AboutPage() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/register" className="btn-primary">Rejoindre MachiNet →</Link>
-          <Link href="/contact" className=
+          <Link href="/contact" className="btn-outline">Nous contacter</Link>
+        </div>
+      </section>
+
+    </div>
+  )
+}

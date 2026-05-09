@@ -266,4 +266,192 @@ export default function ConsultantDashboard() {
                   <section>
                     <h2 className="text-yellow-600 font-bold text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse inline-block"></span>
-                      En attente ({pendingBooking
+                      En attente ({pendingBookings.length})
+                    </h2>
+                    {pendingBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
+                  </section>
+                )}
+                {confirmedBookings.length > 0 && (
+                  <section>
+                    <h2 className="text-green-600 font-bold text-sm uppercase tracking-wider mb-3">Confirmées ({confirmedBookings.length})</h2>
+                    {confirmedBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
+                  </section>
+                )}
+                {completedBookings.length > 0 && (
+                  <section>
+                    <h2 className="text-cyan-600 font-bold text-sm uppercase tracking-wider mb-3">Terminées ({completedBookings.length})</h2>
+                    {completedBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
+                  </section>
+                )}
+                {cancelledBookings.length > 0 && (
+                  <section>
+                    <h2 className="text-red-500 font-bold text-sm uppercase tracking-wider mb-3">Annulées ({cancelledBookings.length})</h2>
+                    {cancelledBookings.map(b => <BookingCard key={b.id} booking={b} onUpdate={updateBooking} />)}
+                  </section>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* SERVICES TAB */}
+        {sideTab === 'services' && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-2xl font-black text-[#141313]">Mes Services</h1>
+              <button onClick={() => setAddingService(true)} className="btn-primary text-sm py-2 px-5 flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+                Ajouter un service
+              </button>
+            </div>
+
+            {addingService && (
+              <div className="bg-white rounded-2xl border border-[#e9e9e9] p-6 mb-6">
+                <h3 className="font-bold text-[#141313] mb-4">Nouveau service</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-[#8c8b8b] text-sm mb-1 block">Nom du service *</label>
+                    <input className="input-dark" placeholder="Ex: Audit technique machines" value={newService.nom} onChange={e => setNewService(s => ({ ...s, nom: e.target.value }))} />
+                  </div>
+                  <div>
+                    <label className="text-[#8c8b8b] text-sm mb-1 block">Description *</label>
+                    <textarea className="input-dark resize-none" rows={3} placeholder="Décrivez ce service..." value={newService.desc} onChange={e => setNewService(s => ({ ...s, desc: e.target.value }))} />
+                  </div>
+                  <div>
+                    <label className="text-[#8c8b8b] text-sm mb-1 block">Prix</label>
+                    <input className="input-dark" placeholder="Ex: 25 000 DZD" value={newService.prix} onChange={e => setNewService(s => ({ ...s, prix: e.target.value }))} />
+                  </div>
+                  <div className="flex gap-3">
+                    <button onClick={() => {
+                      if (newService.nom && newService.desc) {
+                        setServices(prev => [...prev, { ...newService, id: Date.now() }])
+                        setNewService({ nom: '', desc: '', prix: '' })
+                        setAddingService(false)
+                      }
+                    }} className="btn-primary text-sm py-2 px-5">Ajouter</button>
+                    <button onClick={() => setAddingService(false)} className="btn-outline text-sm py-2 px-5">Annuler</button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              {services.map(svc => (
+                <div key={svc.id} className="bg-white rounded-2xl border border-[#e9e9e9] p-5 hover:border-cyan-400 transition-colors">
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <h3 className="font-bold text-[#141313]">{svc.nom}</h3>
+                    <button onClick={() => setServices(prev => prev.filter(s => s.id !== svc.id))} className="text-[#8c8b8b] hover:text-red-500 text-xs transition-colors flex-shrink-0">✕</button>
+                  </div>
+                  <p className="text-[#8c8b8b] text-sm mb-3">{svc.desc}</p>
+                  {svc.prix && <span className="text-[#e46a33] font-black text-lg">{svc.prix}</span>}
+                </div>
+              ))}
+              {services.length === 0 && !addingService && (
+                <div className="col-span-2 bg-white rounded-2xl border border-[#e9e9e9] p-12 text-center">
+                  <p className="text-[#8c8b8b] mb-4">Aucun service ajouté. Décrivez vos offres pour attirer des clients.</p>
+                  <button onClick={() => setAddingService(true)} className="btn-primary text-sm py-2 px-6">Ajouter mon premier service</button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* PROFILE TAB */}
+        {sideTab === 'profile' && profileForm && (
+          <form onSubmit={handleProfileSave} className="max-w-xl">
+            <div className="bg-white rounded-2xl border border-[#e9e9e9] p-6 space-y-4">
+              <h2 className="font-bold text-[#141313] text-lg">Mon Profil</h2>
+              <div className="flex flex-col items-center gap-3 p-5 bg-[#f9f9f8] rounded-xl border-2 border-dashed border-[#e9e9e9] hover:border-cyan-400 transition-colors">
+                <div className="w-20 h-20 rounded-2xl bg-white border-2 border-cyan-200 overflow-hidden flex items-center justify-center shadow-sm">
+                  {profileForm.avatar ? <img src={profileForm.avatar} alt="Avatar" className="w-full h-full object-cover" /> : <span className="text-cyan-500 font-black text-3xl">{(profileForm.name || 'C')[0]}</span>}
+                </div>
+                <label className="bg-cyan-600 text-white text-sm py-2 px-5 rounded-xl cursor-pointer font-semibold hover:bg-cyan-700 transition-colors inline-flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                  {avatarUploading ? 'Chargement...' : 'Choisir une photo'}
+                  <input type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} disabled={avatarUploading} />
+                </label>
+                <p className="text-[#8c8b8b] text-xs">JPG, PNG · max 5 Mo</p>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div><label className="text-[#8c8b8b] text-sm mb-1 block">Nom *</label><input required className="input-dark" value={profileForm.name} onChange={e => setProfileForm(f => ({ ...f, name: e.target.value }))} /></div>
+                <div><label className="text-[#8c8b8b] text-sm mb-1 block">Téléphone</label><input className="input-dark" value={profileForm.phone} onChange={e => setProfileForm(f => ({ ...f, phone: e.target.value }))} /></div>
+              </div>
+              <div><label className="text-[#8c8b8b] text-sm mb-1 block">Entreprise</label><input className="input-dark" value={profileForm.company} onChange={e => setProfileForm(f => ({ ...f, company: e.target.value }))} /></div>
+              <div><label className="text-[#8c8b8b] text-sm mb-1 block">Wilaya</label><input className="input-dark" value={profileForm.wilaya} onChange={e => setProfileForm(f => ({ ...f, wilaya: e.target.value }))} /></div>
+              {profileMsg && <p className={`text-sm font-medium px-4 py-2 rounded-lg ${profileMsg.includes('jour') ? 'text-green-700 bg-green-50' : 'text-red-600 bg-red-50'}`}>{profileMsg}</p>}
+              <button type="submit" disabled={profileSaving} className="btn-primary w-full justify-center py-3 disabled:opacity-50">{profileSaving ? 'Enregistrement...' : 'Enregistrer les modifications'}</button>
+            </div>
+          </form>
+        )}
+
+      </div>
+    </div>
+  )
+}
+
+function BookingCard({ booking, onUpdate }) {
+  const [updating, setUpdating] = useState(false)
+  const s = statusLabels[booking.status] || { label: booking.status, color: 'bg-gray-900/30 text-[#8c8b8b]' }
+
+  const handleUpdate = async (status) => {
+    setUpdating(true)
+    await onUpdate(booking.id, status)
+    setUpdating(false)
+  }
+
+  return (
+    <div className="card p-5 mb-3">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex-1">
+          <div className="flex items-center gap-3 mb-2">
+            <h3 className="font-bold text-[#141313]">{booking.subject}</h3>
+            <span className={`text-xs px-2 py-0.5 rounded-full ${s.color}`}>{s.label}</span>
+          </div>
+          <div className="flex flex-wrap gap-4 text-sm text-[#8c8b8b] mb-2">
+            <span>{booking.clientName}</span>
+            <span>{booking.clientEmail}</span>
+            {booking.clientPhone && <span>{booking.clientPhone}</span>}
+          </div>
+          {booking.message && (
+            <p className="text-[#434042] text-sm bg-white/5 rounded-lg px-3 py-2 mt-2">{booking.message}</p>
+          )}
+          {booking.scheduledAt && (
+            <p className="text-cyan-400 text-xs mt-2">Planifié le {new Date(booking.scheduledAt).toLocaleDateString('fr-DZ', { dateStyle: 'long' })}</p>
+          )}
+          {booking.notes && (
+            <p className="text-[#8c8b8b] text-xs mt-2 italic">Note: {booking.notes}</p>
+          )}
+        </div>
+        <div className="flex flex-col items-end gap-2 min-w-fit">
+          <p className="text-[#434042] text-xs">{new Date(booking.createdAt).toLocaleDateString('fr-DZ')}</p>
+          {/* Action buttons based on current status */}
+          {!updating && (
+            <div className="flex flex-col gap-1.5 mt-1">
+              {booking.status === 'pending' && (
+                <>
+                  <button onClick={() => handleUpdate('confirmed')} className="text-xs px-3 py-1.5 bg-green-900/30 text-green-400 border border-green-800/40 rounded-lg hover:bg-green-900/50 transition-all whitespace-nowrap">
+                    Confirmer
+                  </button>
+                  <button onClick={() => handleUpdate('cancelled')} className="text-xs px-3 py-1.5 bg-red-900/20 text-red-500 border border-red-900/30 rounded-lg hover:bg-red-900/40 transition-all whitespace-nowrap">
+                    Annuler
+                  </button>
+                </>
+              )}
+              {booking.status === 'confirmed' && (
+                <>
+                  <button onClick={() => handleUpdate('completed')} className="text-xs px-3 py-1.5 bg-[#f9f9f8] text-[#e46a33] border border-[#e9e9e9] rounded-lg hover:bg-[#f9f9f8]/500 transition-all whitespace-nowrap">
+                    Marquer terminé
+                  </button>
+                  <button onClick={() => handleUpdate('cancelled')} className="text-xs px-3 py-1.5 bg-red-900/20 text-red-500 border border-red-900/30 rounded-lg hover:bg-red-900/40 transition-all whitespace-nowrap">
+                    Annuler
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+          {updating && <span className="text-xs text-[#8c8b8b]">Mise à jour...</span>}
+        </div>
+      </div>
+    </div>
+  )
+}

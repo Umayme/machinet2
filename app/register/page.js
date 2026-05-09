@@ -165,4 +165,58 @@ export default function RegisterPage() {
               </div>
               <div>
                 <label className="block text-[#434042] text-sm mb-1.5 font-medium">Secteur</label>
-                <select cl
+                <select className="input-dark h-11 text-sm" value={form.sector} onChange={e => set('sector', e.target.value)}>
+                  <option value="">Sélectionner...</option>
+                  {secteurs.map(s => <option key={s}>{s}</option>)}
+                </select>
+              </div>
+            </div>
+            <div>
+              <label className="block text-[#434042] text-sm mb-1.5 font-medium">Mot de passe *</label>
+              <input required type="password" className="input-dark h-11 text-sm" placeholder="8 caractères minimum"
+                minLength={8} value={form.password} onChange={e => set('password', e.target.value)} />
+            </div>
+            {error && <p className="text-red-500 text-sm bg-red-50 rounded-lg px-3 py-2">{error}</p>}
+            <div className="flex gap-3">
+              <button type="button" onClick={() => setStep(1)} className="btn-outline h-12 px-5">←</button>
+              <button type="submit" disabled={loading} className="btn-primary flex-1 justify-center h-12 disabled:opacity-50">
+                {loading ? 'Création...' : 'Créer mon compte →'}
+              </button>
+            </div>
+          </form>
+        )}
+
+        {step === 3 && (
+          <div className="card p-12 text-center">
+            <div className="w-14 h-14 rounded-full bg-green-50 border border-green-200 mx-auto mb-5 flex items-center justify-center">
+              <svg className="w-7 h-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="section-title mb-2">
+              {role === 'buyer' ? 'Compte créé !' : 'Demande envoyée !'}
+            </h2>
+            <p className="text-[#8c8b8b] mb-6 text-sm">
+              {role === 'buyer'
+                ? `Bienvenue sur MachiNet, ${userName}.`
+                : `Merci ${userName}. Notre équipe examinera votre demande dans les 24-48h.`}
+            </p>
+            <div className="flex gap-3 justify-center">
+              <Link href={role === 'buyer' ? '/catalogue' : '/login'} className="btn-primary text-sm">
+                {role === 'buyer' ? 'Explorer le catalogue →' : 'Se connecter'}
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {step < 3 && (
+          <p className="text-center text-[#8c8b8b] text-sm mt-5">
+            Déjà un compte ?{' '}
+            <Link href="/login" className="text-[#141313] font-semibold hover:text-[#e46a33] transition-colors">Se connecter</Link>
+          </p>
+        )}
+      </div>
+      </div>{/* close right panel */}
+    </div>
+  )
+}

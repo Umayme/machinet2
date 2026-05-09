@@ -119,4 +119,92 @@ export default function AcheteursPage() {
               <option value="prix-desc">Prix décroissant</option>
             </select>
           </div>
-          <div className="fl
+          <div className="flex flex-wrap gap-2 mt-3 items-center">
+            <span className="text-[#8c8b8b] text-xs font-medium">Secteur :</span>
+            {secteurs.map(s => (
+              <button key={s} onClick={() => setSecteur(s)}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all border ${secteur === s ? 'bg-[#141313] text-white border-[#141313]' : 'bg-white text-[#8c8b8b] border-[#e9e9e9] hover:border-[#141313]'}`}>
+                {s}
+              </button>
+            ))}
+            <span className="text-[#8c8b8b] text-xs font-medium ml-2">Type :</span>
+            {conditions.map(c => (
+              <button key={c} onClick={() => setCondition(c)}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all border ${condition === c ? 'bg-[#e46a33] text-white border-[#e46a33]' : 'bg-white text-[#8c8b8b] border-[#e9e9e9] hover:border-[#e46a33]'}`}>
+                {c}
+              </button>
+            ))}
+            <select className="input-dark h-8 text-xs w-36 ml-1" value={wilaya} onChange={e => setWilaya(e.target.value)}>
+              {wilayas.map(w => <option key={w}>{w}</option>)}
+            </select>
+            <label className="flex items-center gap-1.5 cursor-pointer ml-1">
+              <input type="checkbox" checked={verifiedOnly} onChange={e => setVerifiedOnly(e.target.checked)} className="w-3.5 h-3.5 accent-[#e46a33]" />
+              <span className="text-[#8c8b8b] text-xs">Vérifiés</span>
+            </label>
+            <button onClick={() => { setSearch(''); setSecteur('Tous'); setCondition('Tous'); setWilaya('Toutes'); setVerifiedOnly(false) }}
+              className="ml-auto text-[#e46a33] text-xs hover:underline">Réinitialiser</button>
+          </div>
+        </div>
+      </div>
+
+      {/* RESULTS */}
+      <section className="py-10 max-w-7xl mx-auto px-6">
+        <div className="flex items-center justify-between mb-6">
+          <p className="text-[#8c8b8b] text-sm font-medium">
+            {loading ? 'Chargement...' : <><span className="text-[#141313] font-bold">{filtered.length}</span> machine{filtered.length !== 1 ? 's' : ''} trouvée{filtered.length !== 1 ? 's' : ''}</>}
+          </p>
+        </div>
+
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => <div key={i} className="card h-72 skeleton"></div>)}
+          </div>
+        ) : filtered.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.map(m => <MachineCard key={m.id} machine={m} />)}
+          </div>
+        ) : (
+          <div className="card p-16 text-center">
+            <svg className="w-16 h-16 text-[#e9e9e9] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <p className="text-xl font-bold text-[#141313] mb-2">Aucune machine trouvée</p>
+            <p className="text-[#8c8b8b] text-sm mb-6">Essayez d'autres filtres ou demandez à MachiBot.</p>
+            <Link href="/ia-bots" className="btn-primary">Consulter MachiBot</Link>
+          </div>
+        )}
+      </section>
+
+      {/* AVANTAGES */}
+      <section className="py-16 bg-[#f9f9f8]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="section-title mb-3">Pourquoi acheter via MachiNet ?</h2>
+            <p className="section-subtitle">La plateforme qui simplifie votre sourcing industriel</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {avantages.map((f, i) => (
+              <div key={i} className="bg-white rounded-2xl p-6 border border-[#e9e9e9] hover:shadow-md transition-all group">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors" style={{ background: f.color + '15', color: f.color }}>
+                  {f.icon}
+                </div>
+                <h3 className="font-bold text-[#141313] mb-2">{f.titre}</h3>
+                <p className="text-[#8c8b8b] text-sm leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-16 max-w-4xl mx-auto px-6 text-center">
+        <div className="bg-[#141313] rounded-2xl p-12">
+          <h2 className="hero-title text-white mb-3">Pas sûr de votre choix ?</h2>
+          <p className="text-white/60 mb-8">MachiBot analyse votre besoin et vous recommande la machine idéale pour votre activité et votre budget.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/ia-bots" className="bg-[#e46a33] text-white px-10 py-3 rounded-xl font-bold hover:bg-orange-600 transition-colors">Parler à MachiBot →</Link>
+            <Link href="/experts" className="bg-white/10 text-white border border-white/20 px-10 py-3 rounded-xl font-bold hover:bg-white/20 transition-colors">Consulter un expert</Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}

@@ -254,4 +254,78 @@ export default function MachinePage() {
               ) : (
                 <div className="bg-green-800/30 border border-green-700/40 rounded-xl p-4 text-center">
                   <p className="text-green-400 font-semibold text-sm">✓ Message envoyé !</p>
-     
+                  <p className="text-white/50 text-xs mt-1">Réponse attendue sous 24h.</p>
+                </div>
+              )}
+              <div className="flex items-center gap-2 mt-4 justify-center text-white/30 text-xs">
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                Vos données sont protégées
+              </div>
+            </div>
+
+            {/* Formulaire contact */}
+            {showContact && !sent && (
+              <div className="card p-5">
+                <h3 className="font-bold text-[#141313] mb-4">Demande de devis</h3>
+                <form onSubmit={handleContact} className="space-y-3">
+                  <input required placeholder="Votre nom *" className="input-dark h-10 text-sm" value={form.nom} onChange={e => setForm({ ...form, nom: e.target.value })} />
+                  <input required type="email" placeholder="Email *" className="input-dark h-10 text-sm" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
+                  <input required type="tel" placeholder="Téléphone *" className="input-dark h-10 text-sm" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
+                  <textarea rows={4} className="input-dark text-sm resize-none" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} />
+                  <button type="submit" disabled={sending} className="btn-primary w-full justify-center h-10 text-sm disabled:opacity-50">
+                    {sending ? 'Envoi...' : 'Envoyer la demande →'}
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {/* Vendeur */}
+            <div className="card p-5">
+              <h3 className="font-bold text-[#141313] mb-4 text-sm uppercase tracking-wide">À propos du vendeur</h3>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-full overflow-hidden bg-[#f9f9f8] border-2 border-[#e9e9e9] flex items-center justify-center text-[#e46a33] font-black text-lg flex-shrink-0">
+                  {machine.seller?.avatar
+                    ? <img src={machine.seller.avatar} alt="" className="w-full h-full object-cover" />
+                    : (machine.seller?.name || 'V')[0]}
+                </div>
+                <div>
+                  <p className="font-semibold text-[#141313] text-sm">{machine.seller?.name || 'Vendeur'}</p>
+                  {machine.seller?.company && <p className="text-[#8c8b8b] text-xs">{machine.seller.company}</p>}
+                  {verifie && <span className="badge-verified text-xs mt-1 inline-block">Vérifié MachiNet</span>}
+                </div>
+              </div>
+              <div className="space-y-1.5 text-sm">
+                <div className="flex items-center gap-2 text-[#8c8b8b]">
+                  <svg className="w-4 h-4 text-[#e46a33]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  {machine.seller?.wilaya || machine.wilaya}
+                </div>
+              </div>
+            </div>
+
+            {/* IA Advisor */}
+            <div className="rounded-xl p-5 text-center bg-gradient-to-br from-[#141313] to-[#2a1a3e]">
+              <div className="w-10 h-10 rounded-xl bg-[#e46a33]/20 border border-[#e46a33]/30 mx-auto mb-2 flex items-center justify-center">
+                <span className="text-[#e46a33] font-black text-sm">AI</span>
+              </div>
+              <h3 className="font-semibold text-white mb-1 text-sm">Pas sûr de votre choix ?</h3>
+              <p className="text-white/50 text-xs mb-3">MachiBot compare et conseille en temps réel.</p>
+              <Link href="/ia-bots" className="block bg-white/10 hover:bg-white/20 text-white border border-white/20 py-2 rounded-lg text-xs font-medium transition-colors">Parler à MachiBot →</Link>
+            </div>
+
+            {/* Expert */}
+            <div className="card p-5 border-l-4 border-[#e46a33]">
+              <h3 className="font-bold text-[#141313] mb-1 text-sm">Besoin d'un expert {secteur} ?</h3>
+              <p className="text-[#8c8b8b] text-xs mb-3 leading-relaxed">
+                Inspection, sourcing, négociation — nos consultants vous accompagnent de A à Z.
+              </p>
+              <Link href="/consulting" className="btn-primary w-full justify-center text-xs py-2">
+                Consulter un expert →
+              </Link>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

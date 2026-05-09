@@ -279,4 +279,17 @@ function CatalogueInner() {
                     ['Livraison', () => '—'],
                     ['Service après-vente', () => '—'],
                   ].map(([label, fn]) => (
-                    <tr key={label} className="border-t border-[#f9f9f8
+                    <tr key={label} className="border-t border-[#f9f9f8]">
+                      <td className="py-3 pr-4 text-[#8c8b8b] text-xs font-medium">{label}</td>
+                      {compareList.map(m => <td key={m.id} className="py-3 px-3 text-[#141313] text-sm">{fn(m)}</td>)}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
