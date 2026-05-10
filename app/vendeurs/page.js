@@ -87,11 +87,11 @@ export default function VendeursPage() {
               <Link href="/register?role=seller" className="btn-primary text-base px-8 py-4">
                 Créer un compte vendeur →
               </Link>
-              <Link href="/tarifs" className="btn-outline text-base px-8 py-4">
+              <Link href="/tarifs" className="btn-primary text-base px-8 py-4" style={{backgroundColor:'#e46a33'}}>
                 Voir les tarifs
               </Link>
             </div>
-            <p className="text-[#434042] text-sm mt-4">Profil actif sous 24h</p>
+            <p className="text-white/70 text-sm mt-4">Profil actif sous 24h</p>
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
