@@ -37,7 +37,7 @@ export default function NewListingPage() {
         const res = await fetch('https://api.cloudinary.com/v1_1/dwkok9ccl/image/upload', { method: 'POST', body: fd })
         const data = await res.json()
         if (data.secure_url) urls.push(data.secure_url)
-      } catch {}
+      } catch (err) { console.error('Upload error:', err) }
     }
     setPhotos(p => [...p, ...urls])
     setUploading(false)
@@ -187,4 +187,4 @@ export default function NewListingPage() {
           {error && <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-sm">{error}</div>}
 
           <button type="submit" disabled={loading || uploading} className="btn-primary w-full justify-center h-13 text-base disabled:opacity-50 rounded-xl py-4">
-            {loading ? 'Publication en cours...' : '✓ Publier mon anno
+            {loading ? 'Publi
