@@ -141,7 +141,7 @@ export default function IABotsPage() {
               ))}
               {loading && (
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-[#e46a33]/10 border border-[#e9e9e9] flex items-center justify-center flex-shrink-0"><span className="text-[#e46a33] font-black text-xs">AI</span></div>
+                  <div className="w-8 h-8 rounded-xl bg-[#141313] flex items-center justify-center flex-shrink-0 overflow-hidden"><img src="/images/machibot.png" alt="MachiBot" className="w-full h-full object-cover rounded-full" /></div>
                   <div className="bg-[#f9f9f8] border border-[#e9e9e9] rounded-2xl rounded-tl-sm px-4 py-3">
                     <div className="flex gap-1">
                       <span className="w-2 h-2 bg-[#e46a33] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
@@ -229,3 +229,5 @@ export default function IABotsPage() {
     </div>
   )
 }
+perts" className="btn-primary" style={{ backgroundColor:'#e46a33' }}>Consulter un expert →</Link>
+            <Link href="/ia-bots" className=
