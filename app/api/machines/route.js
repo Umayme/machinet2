@@ -39,10 +39,10 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const session = await getSession()
-    if (!session) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    if (!session) return NextResponse.json({ error: 'Non autorise' }, { status: 401 })
     if (session.role !== 'seller' && session.role !== 'admin') return NextResponse.json({ error: 'Compte vendeur requis' }, { status: 403 })
     const user = await prisma.user.findUnique({ where: { id: session.id }, select: { approved: true } })
-    if (!user?.approved) return NextResponse.json({ error: "Votre compte vendeur n'est pas encore approuvé" }, { status: 403 })
+    if (!user?.approved) return NextResponse.json({ error: 'Compte non approuve' }, { status: 403 })
     const { name, category, price, condition, wilaya, description, specs, photos } = await request.json()
     if (!name || !category || !price || !condition || !wilaya) return NextResponse.json({ error: 'Champs requis manquants' }, { status: 400 })
     const priceInt = parseInt(price)
@@ -53,4 +53,6 @@ export async function POST(request) {
     return NextResponse.json({ success: true, machine }, { status: 201 })
   } catch (error) {
     console.error('Machine POST error:', error)
-    return NextResponse.json({ error: 'Erreur serveur
+    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
+  }
+}
