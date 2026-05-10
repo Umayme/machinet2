@@ -487,15 +487,29 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── GUIDES CTA ── */}
+      <section className="py-10 max-w-7xl mx-auto px-6">
+        <div className="card p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="font-bold text-[#141313] text-xl mb-1">Conseils & Guides</h3>
+            <p className="text-[#8c8b8b] text-sm">Tous les conseils d'experts pour acheter vos machines industrielles</p>
+          </div>
+          <Link href="/guides" className="btn-primary flex-shrink-0">Voir les guides →</Link>
+        </div>
+      </section>
+
       {/* ── CTA FINAL ── */}
-      <section className="py-20 max-w-4xl mx-auto px-6 text-center">
-        <h2 className="hero-title text-[#141313] mb-4">Rejoignez MachiNet</h2>
-        <p className="text-[#8c8b8b] text-lg mb-10 max-w-xl mx-auto">
-          La première plateforme B2B de machines industrielles en Algérie.<br/>Acheteurs, vendeurs, experts.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/catalogue" className="btn-primary text-base px-10 py-4">Parcourir le catalogue</Link>
-          <Link href="/register" className="btn-outline text-base px-10 py-4">Créer un compte</Link>
+      <section className="py-20 px-6 text-center relative" style={{ backgroundImage: "url('/images/heroconseil.png')", backgroundSize:'cover', backgroundPosition:'center' }}>
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <h2 className="hero-title text-white mb-4">Rejoignez MachiNet</h2>
+          <p className="text-white/70 text-lg mb-10 max-w-xl mx-auto">
+            La première plateforme B2B de machines industrielles en Algérie.<br/>Acheteurs, vendeurs, experts.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/catalogue" className="btn-primary text-base px-10 py-4">Parcourir le catalogue</Link>
+            <Link href="/register" className="bg-white text-[#141313] text-base px-10 py-4 rounded-lg font-semibold hover:bg-white/90 transition-colors inline-flex items-center justify-center">Créer un compte</Link>
+          </div>
         </div>
       </section>
 

@@ -10,7 +10,7 @@ const plans = [
     badge: null,
     color: '#8c8b8b',
     cta: "S'inscrire gratuitement",
-    href: '/register',
+    href: '/register?role=seller',
   },
   {
     nom: 'Bronze',
@@ -19,7 +19,7 @@ const plans = [
     badge: null,
     color: '#cd7f32',
     cta: "Choisir Bronze",
-    href: '/register?plan=bronze',
+    href: '/register?role=seller',
   },
   {
     nom: 'Silver',
@@ -28,7 +28,7 @@ const plans = [
     badge: 'Recommandé',
     color: '#e46a33',
     cta: "Choisir Silver",
-    href: '/register?plan=silver',
+    href: '/register?role=seller',
   },
   {
     nom: 'Gold',
@@ -37,30 +37,28 @@ const plans = [
     badge: 'Premium',
     color: '#141313',
     cta: "Choisir Gold",
-    href: '/register?plan=gold',
+    href: '/register?role=seller',
   },
 ]
 
 const comparisonFeatures = [
-  { label: 'Annonces actives', values: ['3', '15', 'Illimité', 'Illimité'] },
-  { label: 'Contacts acheteurs/mois', values: ['3', 'Illimité', 'Illimité', 'Illimité'] },
+  { label: 'Crédits mensuels', values: ['20', '100', '1000', 'Illimité'] },
+  { label: 'Annonces actives', values: ['20', '50', 'Illimité', 'Illimité'] },
   { label: 'Badge Vérifié', values: [false, true, true, true] },
   { label: 'Analytics', values: [false, 'Basique', 'Avancé', 'Avancé+'] },
   { label: 'Leads qualifiés', values: [false, false, true, true] },
-  { label: 'MachiBot', values: ['10 questions', 'Illimité', 'Illimité', 'Illimité'] },
-  { label: 'Mise en avant catalogue', values: [false, false, true, true] },
+  { label: 'Boost interne "en vedette" (par crédits)', values: [true, true, true, true] },
+  { label: 'Boost externe (réseaux sociaux)', values: [false, '1 réseau', '2 réseaux', 'Insta, FB, TikTok'] },
   { label: 'Accès prix du marché', values: [false, false, true, true] },
-  { label: 'Page marque premium', values: [false, false, false, true] },
-  { label: 'Matching IA', values: [false, false, false, true] },
+  { label: 'Priorité de boost (tie-breaker)', values: ['Faible', 'Standard', 'Élevé', 'Maximum'] },
+  { label: 'Recommandation MachiBot (par crédits)', values: [false, true, true, true] },
   { label: 'Multi-utilisateurs', values: [false, false, false, true] },
-  { label: 'Account manager', values: [false, false, false, true] },
-  { label: 'Support', values: ['FAQ', 'Email', '7j/7', 'Dédié'] },
 ]
 
 const creditPacks = [
   { nom: 'Pack Starter', credits: 50, prix: 2500 },
-  { nom: 'Pack Pro', credits: 150, prix: 6500, badge: 'Populaire' },
-  { nom: 'Pack Business', credits: 500, prix: 18000 },
+  { nom: 'Pack Pro', credits: 150, prix: 6000, badge: 'Populaire' },
+  { nom: 'Pack Business', credits: 500, prix: 10000 },
 ]
 
 const actionCosts = [

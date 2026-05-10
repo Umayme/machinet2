@@ -114,8 +114,8 @@ export default function IABotsPage() {
           <div className="card overflow-hidden">
             {/* Header */}
             <div className="px-6 py-4 border-b border-[#e9e9e9] flex items-center gap-3 bg-[#f9f9f8]">
-              <div className="w-10 h-10 rounded-xl bg-[#141313] flex items-center justify-center flex-shrink-0">
-                <span className="text-white font-bold text-xs">MB</span>
+              <div className="w-10 h-10 rounded-xl bg-[#141313] flex items-center justify-center flex-shrink-0 overflow-hidden">
+                <img src="/images/machibot.png" alt="MachiBot" className="w-full h-full object-cover rounded-full" />
               </div>
               <div>
                 <p className="text-[#141313] font-semibold text-sm">MachiBot</p>
@@ -128,7 +128,7 @@ export default function IABotsPage() {
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} gap-3`}>
                   {msg.role === 'bot' && (
-                    <div className="w-8 h-8 rounded-xl bg-[#141313] flex items-center justify-center flex-shrink-0 mt-1"><span className="text-white font-black text-xs">MB</span></div>
+                    <div className="w-8 h-8 rounded-xl bg-[#141313] flex items-center justify-center flex-shrink-0 mt-1 overflow-hidden"><img src="/images/machibot.png" alt="MachiBot" className="w-full h-full object-cover rounded-full" /></div>
                   )}
                   <div className={`max-w-[80%] ${msg.role === 'user'
                     ? 'bg-[#e46a33] text-white rounded-2xl rounded-tr-sm'
@@ -214,14 +214,31 @@ export default function IABotsPage() {
       </section>
 
       {/* CTA CONSULTING */}
-      <section className="py-16 bg-[#141313]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <section className="py-16 relative" style={{ backgroundImage:"url('/images/heromarche.png')", backgroundSize:'cover', backgroundPosition:'center' }}>
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
           <h2 className="hero-title text-white mb-4">Besoin d'un expert humain ?</h2>
-          <p className="text-[#8c8b8b] mb-8 text-lg">Pour des projets complexes, nos consultants industriels vous accompagnent de A à Z.</p>
+          <p className="text-white/70 mb-8 text-lg">Pour des projets complexes, nos consultants industriels vous accompagnent de A à Z.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/experts" className="btn-primary">Consulter un expert</Link>
+            <Link href="/experts" className="px-8 py-3 rounded-xl font-semibold text-white transition-colors" style={{ backgroundColor:'#e46a33', color:'white' }}>Consulter un expert</Link>
             <Link href="/catalogue" className="px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 transition-all font-semibold">Voir le catalogue</Link>
           </div>
+        </div>
+      </section>
+
+    </div>
+  )
+}
+perts" className="btn-primary" style={{ backgroundColor:'#e46a33' }}>Consulter un expert →</Link>
+            <Link href="/ia-bots" className="px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 transition-all font-semibold">Essayer MachiBot gratuitement</Link>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  )
+}
+v>
         </div>
       </section>
 

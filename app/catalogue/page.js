@@ -99,7 +99,8 @@ function CatalogueInner() {
               {types.map(t => <option key={t}>{t}</option>)}
             </select>
             <button className="btn-primary h-11 px-6 text-sm rounded-lg flex-shrink-0">
-              Rechercher
+              <span className="sm:hidden"><svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0" /></svg></span>
+              <span className="hidden sm:inline">Rechercher</span>
             </button>
             <button onClick={() => setFiltersOpen(!filtersOpen)}
               className={`h-11 px-4 text-sm font-medium border rounded-lg flex items-center gap-1.5 transition-all flex-shrink-0 ${filtersOpen ? 'bg-[#141313] text-white border-[#141313]' : 'border-[#e9e9e9] text-[#434042] hover:border-[#141313]'}`}>
@@ -226,10 +227,13 @@ function CatalogueInner() {
         )}
 
         {/* Fournisseur CTA */}
-        <div className="mt-16 bg-[#f9f9f8] border border-[#e9e9e9] rounded-xl p-10 text-center">
-          <h2 className="section-title mb-3">Vous êtes fournisseur ?</h2>
-          <p className="text-[#8c8b8b] mb-6">Publiez vos machines et recevez des leads qualifiés chaque jour</p>
-          <Link href="/vendeurs" className="btn-primary">Publier mes machines →</Link>
+        <div className="mt-16 rounded-xl p-10 text-center relative overflow-hidden" style={{ backgroundImage:"url('/images/heromarche.png')", backgroundSize:'cover', backgroundPosition:'center' }}>
+          <div className="absolute inset-0 bg-black/65" />
+          <div className="relative z-10">
+            <h2 className="section-title mb-3 text-white">Vous êtes fournisseur ?</h2>
+            <p className="text-white/70 mb-6">Publiez vos machines et recevez des leads qualifiés chaque jour</p>
+            <Link href="/vendeurs" className="btn-primary">Publier mes machines →</Link>
+          </div>
         </div>
       </div>
 

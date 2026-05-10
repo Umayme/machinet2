@@ -195,15 +195,14 @@ export default function SellerDashboard() {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
           {[
-            { v: machines.length, l: 'Annonces', icon: '📦', color: 'bg-white' },
-            { v: activeMachines, l: 'Actives', icon: '✅', color: 'bg-white' },
-            { v: verifiedMachines, l: 'Vérifiées', icon: '🏅', color: 'bg-white' },
-            { v: totalContacts, l: 'Contacts', icon: '💬', color: 'bg-white' },
-            { v: totalViews > 0 ? totalViews : '—', l: 'Vues totales', icon: '👁', color: 'bg-white' },
-            { v: `${credits} cr.`, l: 'Crédits', icon: '💎', color: 'bg-[#e46a33]/10 border-[#e46a33]/30' },
+            { v: machines.length, l: 'Annonces', icon: null, color: 'bg-white' },
+            { v: activeMachines, l: 'Actives', icon: null, color: 'bg-white' },
+            { v: verifiedMachines, l: 'Vérifiées', icon: null, color: 'bg-white' },
+            { v: totalContacts, l: 'Contacts', icon: null, color: 'bg-white' },
+            { v: totalViews > 0 ? totalViews : '—', l: 'Vues totales', icon: null, color: 'bg-white' },
+            { v: `${credits} cr.`, l: 'Crédits', icon: null, color: 'bg-[#e46a33]/10 border-[#e46a33]/30' },
           ].map((s, i) => (
             <div key={i} className={`rounded-xl p-4 border border-[#e9e9e9] text-center ${s.color}`}>
-              <div className="text-xl mb-1">{s.icon}</div>
               <p className="text-xl font-black text-[#141313]">{s.v}</p>
               <p className="text-[#8c8b8b] text-xs mt-0.5">{s.l}</p>
             </div>
@@ -240,14 +239,13 @@ export default function SellerDashboard() {
         {/* Tabs */}
         <div className="flex gap-1 mb-6 bg-white border border-[#e9e9e9] rounded-xl p-1.5 w-fit">
           {[
-            { id: 'listings', label: 'Mes annonces', count: machines.length, icon: '📋' },
-            { id: 'contacts', label: 'Contacts', count: totalContacts, icon: '💬' },
-            { id: 'boost', label: 'Boost', count: null, icon: '🚀' },
-            { id: 'profile', label: 'Profil', count: null, icon: '👤' },
+            { id: 'listings', label: 'Mes annonces', count: machines.length, icon: null },
+            { id: 'contacts', label: 'Contacts', count: totalContacts, icon: null },
+            { id: 'boost', label: 'Boost', count: null, icon: null },
+            { id: 'profile', label: 'Profil', count: null, icon: null },
           ].map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${tab === t.id ? 'bg-[#141313] text-white shadow-sm' : 'text-[#8c8b8b] hover:text-[#141313]'}`}>
-              <span>{t.icon}</span>
               {t.label}
               {t.count !== null && t.count > 0 && (
                 <span className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${tab === t.id ? 'bg-[#e46a33] text-white' : 'bg-[#e9e9e9] text-[#8c8b8b]'}`}>{t.count}</span>
@@ -377,7 +375,7 @@ export default function SellerDashboard() {
                 {[
                   { titre: 'Mise en avant 7 jours', desc: 'Votre annonce apparaît en tête des résultats de recherche', credits: 10, icon: '⭐' },
                   { titre: 'Badge Urgence', desc: 'Affiche un badge "Disponible immédiatement" sur votre annonce', credits: 5, icon: '⚡' },
-                  { titre: 'Email aux acheteurs', desc: 'Envoi de votre annonce par email à 500+ acheteurs ciblés', credits: 20, icon: '📧' },
+                  { titre: 'Email aux acheteurs', desc: 'Envoi de votre annonce par email à 500+ acheteurs ciblés', credits: 20, icon: 'email' },
                 ].map((boost, i) => (
                   <div key={i} className="border border-[#e9e9e9] rounded-xl p-5 hover:border-[#e46a33] transition-colors">
                     <div className="text-3xl mb-3">{boost.icon}</div>
@@ -465,3 +463,4 @@ export default function SellerDashboard() {
     </div>
   )
 }
+                                                                                                                  

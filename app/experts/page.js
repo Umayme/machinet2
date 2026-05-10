@@ -2,8 +2,15 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
-const secteurOptions = ['Tous', 'IAA · Agroalimentaire', 'Bâtiment & TP', 'Agriculture', 'Industrie générale', 'Énergie', 'Import & Douanes']
+const secteurOptions = ['Tous', 'IAA · Agroalimentaire', 'Bâtiment & TP', 'Agriculture', 'Industrie générale', 'Énergie', 'Pharma & Santé']
 const serviceTypes = ['Audit & Sourcing', 'Accompagnement Achat', 'Inspection technique', 'Étude de faisabilité', 'Import / Dédouanement', 'Formation opérateurs', 'Maintenance préventive', 'Autre']
+
+const expertPhotos = {
+  'Mehdi Tounsi': '/images/mehdi.png',
+  'Amina Khelil': '/images/amina.png',
+  'Salim Benali': '/images/salim.png',
+  'Farid Mekki': '/images/farid.png',
+}
 
 const staticExperts = [
   {
@@ -84,8 +91,8 @@ function ExpertCard({ expert, onViewServices }) {
     <div className="card flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
       {/* Photo area */}
       <div className="relative">
-        {expert.avatar ? (
-          <img src={expert.avatar} alt={expert.nom} className="w-full h-44 object-cover" />
+        {(expert.avatar || expertPhotos[expert.nom]) ? (
+          <img src={expert.avatar || expertPhotos[expert.nom]} alt={expert.nom} className="w-full h-44 object-cover" />
         ) : (
           <div className="w-full h-44 bg-gradient-to-br from-[#141313] to-[#2a1520] flex flex-col items-center justify-center gap-2">
             <div className="w-16 h-16 rounded-full bg-[#e46a33]/20 border-2 border-[#e46a33]/40 flex items-center justify-center text-white font-black text-2xl">
@@ -310,8 +317,9 @@ export default function ExpertsPage() {
     <div className="min-h-screen">
 
       {/* HERO DARK */}
-      <div className="bg-[#141313] pt-20 pb-16">
-        <div className="max-w-7xl mx-auto px-6">
+      <div className="pt-20 pb-16 relative" style={{ backgroundImage:"url('/images/expert.png')", backgroundSize:'cover', backgroundPosition:'center', position:'relative' }}>
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6">
@@ -388,14 +396,15 @@ export default function ExpertsPage() {
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { secteur: 'Industrie Agroalimentaire', desc: 'Lignes de production, équipements laitiers, boulangerie, conserveries' },
-            { secteur: 'Bâtiment & Travaux Publics', desc: 'Engins de chantier, centrales à béton, équipements de terrassement' },
-            { secteur: 'Agriculture', desc: 'Tracteurs, équipements d\'irrigation, serres, stockage frigorifique' },
-            { secteur: 'Industrie générale', desc: 'Compresseurs, tours CNC, soudure, manutention' },
-            { secteur: 'Énergie & Utilities', desc: 'Groupes électrogènes, panneaux solaires, stations de pompage' },
-            { secteur: 'Import & Douanes', desc: 'Accompagnement import, classification douanière, domiciliation' },
+            { secteur: 'Industrie Agroalimentaire', desc: 'Lignes de production, équipements laitiers, boulangerie, conserveries', img: '/images/iaa.png' },
+            { secteur: 'Bâtiment & Travaux Publics', desc: 'Engins de chantier, centrales à béton, équipements de terrassement', img: '/images/btp.png' },
+            { secteur: 'Agriculture', desc: 'Tracteurs, équipements d\'irrigation, serres, stockage frigorifique', img: '/images/agricole.png' },
+            { secteur: 'Industrie générale', desc: 'Compresseurs, tours CNC, soudure, manutention', img: '/images/bois.png' },
+            { secteur: 'Énergie & Utilities', desc: 'Groupes électrogènes, panneaux solaires, stations de pompage', img: '/images/energie.png' },
+            { secteur: 'Pharma & Santé', desc: 'Équipements pharmaceutiques, laboratoires, stérilisation, conditionnement', img: '/images/pharma.png' },
           ].map((ex, i) => (
             <div key={i} className="card p-6">
+              {ex.img && <img src={ex.img} className="w-12 h-12 object-cover rounded mb-3" alt={ex.secteur} />}
               <h3 className="font-semibold text-[#141313] mb-2">{ex.secteur}</h3>
               <p className="text-[#8c8b8b] text-sm leading-relaxed">{ex.desc}</p>
             </div>
@@ -418,6 +427,19 @@ export default function ExpertsPage() {
         />
       )}
 
+    </div>
+  )
+}
+full h-32 object-cover rounded-lg mb-4" />}
+              <h3 className="font-bold text-[#141313] text-sm mb-1">{ex.secteur}</h3>
+              <p className="text-[#8c8b8b] text-xs leading-relaxed">{ex.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {showServicesModal && <ServicesModal expert={selectedExpert} onClose={() => setShowServicesModal(false)} onRequest={handleRequest} />}
+      {showRequest && <RequestModal expert={requestExpert} onClose={() => setShowRequest(false)} />}
     </div>
   )
 }

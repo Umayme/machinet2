@@ -43,14 +43,20 @@ export default function NewListingPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); setLoading(true); setError('')
-    const res = await fetch('/api/machines', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, photos }),
-    })
-    const data = await res.json(); setLoading(false)
-    if (res.ok) router.push('/dashboard')
-    else setError(data.error || "Erreur lors de la publication")
+    try {
+      const res = await fetch('/api/machines', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, photos }),
+      })
+      const data = await res.json()
+      if (res.ok) router.push('/dashboard')
+      else setError(data.error || "Erreur lors de la publication")
+    } catch (err) {
+      setError("Erreur réseau — vérifiez votre connexion et réessayez.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))

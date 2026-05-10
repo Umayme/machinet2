@@ -51,10 +51,10 @@ const secteursPrix = [
 ]
 
 const tendances = [
-  { titre: 'Engins BTP en hausse', desc: 'La reprise des chantiers publics pousse les prix des pelles et grues à la hausse.', color: 'text-green-400', pct: '+6% moy.' },
-  { titre: 'Tracteurs stables', desc: 'Le marché agricole est calme malgré la saison. Bonne période pour acheter.', color: 'text-[#8c8b8b]', pct: 'Stable' },
-  { titre: 'IAA en croissance', desc: "L'industrie agroalimentaire continue de se développer, les lignes d'emballage s'apprécient.", color: 'text-green-400', pct: '+5% moy.' },
-  { titre: 'Textile sous pression', desc: "Les importations de machines textiles ont légèrement diminué, les prix locaux tiennent.", color: 'text-[#8c8b8b]', pct: 'Stable' },
+  { titre: 'Engins BTP en hausse', desc: 'La reprise des chantiers publics pousse les prix des pelles et grues à la hausse.', color: 'text-green-400', pct: '+6% moy.', bg: '/images/btpmarche.png' },
+  { titre: 'Tracteurs stables', desc: 'Le marché agricole est calme malgré la saison. Bonne période pour acheter.', color: 'text-green-300', pct: 'Stable', bg: '/images/tracteurmarche.png' },
+  { titre: 'IAA en croissance', desc: "L'industrie agroalimentaire continue de se développer, les lignes d'emballage s'apprécient.", color: 'text-green-400', pct: '+5% moy.', bg: '/images/iaamarche.png' },
+  { titre: 'Textile sous pression', desc: "Les importations de machines textiles ont légèrement diminué, les prix locaux tiennent.", color: 'text-green-300', pct: 'Stable', bg: '/images/textilemarche.png' },
 ]
 
 export default function MarchePage() {
@@ -68,8 +68,9 @@ export default function MarchePage() {
     <div className="min-h-screen">
 
       {/* HERO — dark band */}
-      <div className="bg-[#141313] pt-20 pb-16">
-        <div className="max-w-7xl mx-auto px-6">
+      <div className="pt-20 pb-16 relative" style={{ backgroundImage: "url('/images/heromarche.png')", backgroundSize:'cover', backgroundPosition:'center', position:'relative' }}>
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
@@ -85,7 +86,7 @@ export default function MarchePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { v: '200+', l: 'Types de machines suivis' },
-              { v: '58', l: 'Wilayas couvertes' },
+              { v: '69', l: 'Wilayas couvertes' },
               { v: '500+', l: 'Vendeurs référencés' },
               { v: 'Mensuel', l: 'Fréquence de mise à jour' },
             ].map((s, i) => (
@@ -105,10 +106,13 @@ export default function MarchePage() {
         <h2 className="text-2xl font-bold text-[#141313] mb-6">Tendances du mois — Avril 2026</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
           {tendances.map((t, i) => (
-            <div key={i} className="card p-5">
-              <p className={`text-sm font-bold mb-1 ${t.color}`}>{t.pct}</p>
-              <h3 className="text-[#141313] font-semibold text-sm mb-2">{t.titre}</h3>
-              <p className="text-[#8c8b8b] text-xs leading-relaxed">{t.desc}</p>
+            <div key={i} className="rounded-xl overflow-hidden relative" style={{ backgroundImage:`url('${t.bg}')`, backgroundSize:'cover', backgroundPosition:'center' }}>
+              <div className="absolute inset-0 bg-black/65" />
+              <div className="relative z-10 p-5">
+                <p className={`text-sm font-bold mb-1 ${t.color}`}>{t.pct}</p>
+                <h3 className="text-white font-semibold text-sm mb-2">{t.titre}</h3>
+                <p className="text-white/70 text-xs leading-relaxed">{t.desc}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -175,10 +179,22 @@ export default function MarchePage() {
       {/* CTA */}
       <section className="py-16 bg-[#141313]">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="hero-title text-white mb-4">Vous vendez une machine ?</h2>
+          <h2 className="hero-title text-white mb-4 whitespace-nowrap">Vous vendez une machine ?</h2>
           <p className="text-[#8c8b8b] mb-8 text-lg">Publiez votre annonce et touchez des acheteurs dans toute l'Algérie.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="btn-primary">Publier une annonce</Link>
+            <Link href="/register" className="btn-primary" style={{ backgroundColor:'#e46a33' }}>Publier une annonce</Link>
+            <Link href="/catalogue" className="px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 transition-all font-semibold">Voir le catalogue</Link>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  )
+}
+ro-title text-white mb-4 whitespace-nowrap">Vous vendez une machine ?</h2>
+          <p className="text-[#8c8b8b] mb-8 text-lg">Publiez votre annonce et touchez des acheteurs dans toute l'Algérie.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/register" className="btn-primary" style={{ backgroundColor:'#e46a33' }}>Publier une annonce</Link>
             <Link href="/catalogue" className="px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 transition-all font-semibold">Voir le catalogue</Link>
           </div>
         </div>

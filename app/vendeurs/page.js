@@ -6,7 +6,7 @@ import FeedbackForm from '../../components/FeedbackForm'
 const avantages = [
   {
     titre: 'Visibilité nationale',
-    desc: 'Votre catalogue visible par des acheteurs dans les 58 wilayas d\'Algérie.',
+    desc: 'Votre catalogue visible par des acheteurs dans les 69 wilayas d\'Algérie.',
     color: '#e46a33',
     icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
   },
@@ -35,10 +35,10 @@ const avantages = [
     icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
   },
   {
-    titre: 'Support dédié',
-    desc: 'Un responsable compte vous accompagne de l\'inscription au premier lead.',
+    titre: '0% Commission',
+    desc: 'MachiNet ne prend aucune commission sur vos ventes. Publiez et vendez sans frais cachés.',
     color: '#ec4899',
-    icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" /></svg>,
+    icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
   },
 ]
 
@@ -69,16 +69,18 @@ export default function VendeursPage() {
     <div className="min-h-screen pt-20">
 
       {/* HERO */}
-      <section className="py-20 max-w-7xl mx-auto px-6">
+      <section className="py-20 relative" style={{ backgroundImage:"url('/images/heroconseil.png')", backgroundSize:'cover', backgroundPosition:'center' }}>
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 bg-[#f9f9f8] border border-[#e9e9e9] rounded-full px-4 py-2 mb-6">
-              <span className="text-[#e46a33] text-sm font-medium">Pour les Vendeurs</span>
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6">
+              <span className="text-white text-sm font-medium">Pour les Vendeurs</span>
             </div>
-            <h1 className="section-title text-5xl mb-6">
+            <h1 className="section-title text-5xl mb-6 text-white">
               Vendez vos machines à des acheteurs qualifiés dans toute l'Algérie
             </h1>
-            <p className="section-subtitle mb-8">
+            <p className="text-white/70 mb-8">
               Rejoignez la première plateforme B2B de machines industrielles en Algérie. Publiez votre catalogue et recevez des leads qualifiés chaque mois.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -95,7 +97,7 @@ export default function VendeursPage() {
             {[
               { v: '10 000+', l: 'Acheteurs actifs' },
               { v: '45', l: 'Leads/mois en moyenne' },
-              { v: '58', l: 'Wilayas couvertes' },
+              { v: '69', l: 'Wilayas couvertes' },
               { v: '3x', l: 'Plus de visibilité' },
             ].map((s, i) => (
               <div key={i} className="card p-6 text-center">
@@ -104,6 +106,7 @@ export default function VendeursPage() {
               </div>
             ))}
           </div>
+        </div>
         </div>
       </section>
 
@@ -131,10 +134,11 @@ export default function VendeursPage() {
       </section>
 
       {/* ÉTAPES */}
-      <section className="py-20 max-w-7xl mx-auto px-6">
+      <section className="py-20" style={{ backgroundColor:'#141313' }}>
+      <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="section-title mb-4">Commencez en 4 étapes</h2>
-          <p className="section-subtitle">Simple, rapide, efficace</p>
+          <h2 className="section-title mb-4 text-white">Commencez en 4 étapes</h2>
+          <p className="text-white/60">Simple, rapide, efficace</p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {etapes.map((e, i) => (
@@ -155,6 +159,7 @@ export default function VendeursPage() {
             Commencer maintenant →
           </Link>
         </div>
+      </div>
       </section>
 
       {/* TÉMOIGNAGES */}
@@ -216,10 +221,11 @@ export default function VendeursPage() {
       </section>
 
       {/* CTA FINAL */}
-      <section className="py-20 max-w-4xl mx-auto px-6 text-center">
-        <div className="card p-16">
-          <h2 className="section-title mb-4">Prêt à recevoir vos premiers leads ?</h2>
-          <p className="text-[#8c8b8b] text-lg mb-8">Rejoignez 500+ vendeurs qui développent leur business sur MachiNet.</p>
+      <section className="py-20 px-6 text-center relative" style={{ backgroundImage:"url('/images/heroconseil.png')", backgroundSize:'cover', backgroundPosition:'center' }}>
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <h2 className="section-title mb-4 text-white">Prêt à recevoir vos premiers leads ?</h2>
+          <p className="text-white/70 text-lg mb-8">Rejoignez 500+ vendeurs qui développent leur business sur MachiNet.</p>
           <Link href="/register?role=seller" className="btn-primary text-base px-12 py-4">
             Créer mon compte vendeur →
           </Link>

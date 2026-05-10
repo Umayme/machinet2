@@ -973,7 +973,13 @@ export default function SecretAdminPanel() {
                       <div><label className="text-[#8c8b8b] text-xs mb-1 block">Biographie</label><textarea rows={3} className="input-dark text-sm resize-none" value={teamForm.bio} onChange={e => setTeamForm(f => ({ ...f, bio: e.target.value }))} /></div>
                       <div className="grid sm:grid-cols-3 gap-4">
                         <div><label className="text-[#8c8b8b] text-xs mb-1 block">Wilaya</label><input className="input-dark text-sm" value={teamForm.wilaya} onChange={e => setTeamForm(f => ({ ...f, wilaya: e.target.value }))} /></div>
-                        <div><label className="text-[#8c8b8b] text-xs mb-1 block">Photo URL</label><input className="input-dark text-sm" placeholder="/uploads/..." value={teamForm.avatar} onChange={e => setTeamForm(f => ({ ...f, avatar: e.target.value }))} /></div>
+                        <div><label className="text-[#8c8b8b] text-xs mb-1 block">Photo</label><input type="file" accept="image/*" className="input-dark text-sm" onChange={async (e) => {
+                          const file = e.target.files[0]; if (!file) return;
+                          const fd = new FormData(); fd.append('file', file);
+                          const res = await fetch('/api/upload', { method:'POST', body: fd });
+                          const data = await res.json();
+                          if (data.url) setTeamForm(f => ({ ...f, avatar: data.url }));
+                        }} /></div>
                         <div><label className="text-[#8c8b8b] text-xs mb-1 block">Ordre</label><input type="number" className="input-dark text-sm" value={teamForm.ordre} onChange={e => setTeamForm(f => ({ ...f, ordre: parseInt(e.target.value) || 0 }))} /></div>
                       </div>
                       <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={teamForm.active} onChange={e => setTeamForm(f => ({ ...f, active: e.target.checked }))} className="w-4 h-4 accent-[#e46a33]" /><span className="text-[#434042] text-sm">Actif</span></label>

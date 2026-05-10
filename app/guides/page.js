@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 const catIcons = {
-  'BTP': '🏗️', 'IAA': '🌿', 'Agricole': '🚜', 'Import': '🚢', 'Finance': '💰', 'Conseil': '💡',
+  'BTP': '', 'IAA': '', 'Agricole': '', 'Import': '', 'Finance': '', 'Conseil': '',
 }
 const catBg = {
   'BTP': 'bg-orange-50 border-orange-200', 'IAA': 'bg-green-50 border-green-200',
@@ -15,16 +15,23 @@ const catText = {
   'Import': 'text-blue-600', 'Finance': 'text-yellow-600', 'Conseil': 'text-[#e46a33]',
 }
 
+const catArticleImages = {
+  'BTP': '/images/articlebtp.png',
+  'IAA': '/images/articleiaa.png',
+  'Agricole': '/images/articleagricole.png',
+  'Finance': '/images/articlefinance.png',
+  'Conseil': '/images/articleconseil.png',
+}
+
 const staticArticles = [
   { id: '1', titre: 'Comment choisir une pelle hydraulique pour le BTP algérien', categorie: 'BTP', temps: '8 min', createdAt: '2026-04-01', desc: 'Guide complet pour sélectionner la bonne pelle hydraulique selon votre chantier, budget et région.', tags: ['Pelle', 'BTP', 'Achat'] },
   { id: '2', titre: 'Neuf vs Occasion : que choisir pour une IAA ?', categorie: 'IAA', temps: '6 min', createdAt: '2026-04-01', desc: "Analyse comparative des avantages et inconvénients d'acheter neuf ou occasion pour vos équipements agroalimentaires.", tags: ['IAA', 'Budget', 'Conseil'] },
-  { id: '3', titre: 'Guide importation machines industrielles en Algérie 2026', categorie: 'Import', temps: '12 min', createdAt: '2026-04-01', desc: "Tout ce qu'il faut savoir sur les procédures douanières, les documents requis et les délais d'importation.", tags: ['Import', 'Douane', 'Légal'] },
   { id: '4', titre: 'Tracteurs agricoles : les meilleurs modèles disponibles en Algérie', categorie: 'Agricole', temps: '5 min', createdAt: '2026-04-01', desc: 'Comparatif des tracteurs les plus vendus en Algérie avec prix, disponibilité et service après-vente.', tags: ['Tracteur', 'Agricole', 'Comparatif'] },
   { id: '5', titre: 'Financement machines : les options disponibles pour les PME algériennes', categorie: 'Finance', temps: '7 min', createdAt: '2026-04-01', desc: "FGAR, leasing, crédit bancaire : toutes les solutions de financement pour l'acquisition de machines industrielles.", tags: ['Finance', 'PME', 'FGAR'] },
   { id: '6', titre: 'Location vs Achat : calculez le meilleur choix pour votre projet', categorie: 'Conseil', temps: '4 min', createdAt: '2026-04-01', desc: 'Méthodologie simple pour calculer le ROI et choisir entre louer ou acheter vos équipements.', tags: ['ROI', 'Location', 'Finance'] },
 ]
 
-const categories = ['Tous', 'BTP', 'IAA', 'Agricole', 'Import', 'Finance', 'Conseil']
+const categories = ['Tous', 'BTP', 'IAA', 'Agricole', 'Finance', 'Conseil']
 
 function formatDate(iso) {
   try { return new Date(iso).toLocaleDateString('fr-DZ', { month: 'short', year: 'numeric' }) }
@@ -32,9 +39,11 @@ function formatDate(iso) {
 }
 
 function ArticleImagePlaceholder({ categorie }) {
+  if (catArticleImages[categorie]) {
+    return <img src={catArticleImages[categorie]} alt={categorie} className="w-full h-48 object-cover" />
+  }
   return (
-    <div className={`w-full h-44 rounded-xl mb-4 flex flex-col items-center justify-center border-2 border-dashed ${catBg[categorie] || 'bg-[#f9f9f8] border-[#e9e9e9]'}`}>
-      <span className="text-4xl mb-2">{catIcons[categorie] || '📄'}</span>
+    <div className={`w-full h-48 flex flex-col items-center justify-center border-2 border-dashed ${catBg[categorie] || 'bg-[#f9f9f8] border-[#e9e9e9]'}`}>
       <span className="text-xs text-[#8c8b8b]">Photo à ajouter</span>
     </div>
   )
@@ -74,8 +83,9 @@ export default function GuidesPage() {
     <div className="min-h-screen pt-24 pb-20">
 
       {/* HERO BAND */}
-      <div className="bg-[#141313] py-16 mb-12">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+      <div className="py-16 mb-12 relative" style={{ backgroundImage: "url('/images/heroconseil.png')", backgroundSize:'cover', backgroundPosition:'center', position:'relative' }}>
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
           <span className="inline-block bg-[#e46a33]/20 text-[#e46a33] text-xs font-semibold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wide">Ressources & Guides</span>
           <h1 className="hero-title text-white mb-4">Conseils & Guides</h1>
           <p className="text-white/60 max-w-2xl mx-auto">
@@ -89,12 +99,9 @@ export default function GuidesPage() {
         {/* FEATURED ARTICLE */}
         <div className="rounded-2xl overflow-hidden mb-12 border border-[#e9e9e9] shadow-sm" style={{background:'linear-gradient(135deg,#fff5f0 0%,#fff 60%)'}}>
           <div className="flex flex-col md:flex-row">
-            {/* Image placeholder */}
-            <div className="md:w-72 h-52 md:h-auto bg-gradient-to-br from-[#e46a33]/10 to-[#e46a33]/30 flex items-center justify-center flex-shrink-0">
-              <div className="text-center">
-                <svg className="w-16 h-16 text-[#e46a33] mx-auto mb-2 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-                <p className="text-[#e46a33] text-xs font-medium">Photo à ajouter</p>
-              </div>
+            {/* Image */}
+            <div className="md:w-72 h-52 md:h-auto flex-shrink-0 overflow-hidden rounded-xl">
+              <img src="/images/guidecomplet.png" alt="Guide complet" className="w-full h-full object-cover rounded-xl" />
             </div>
             <div className="p-8 flex flex-col justify-center">
               <span className="badge-verified mb-3 inline-block">Article du mois</span>
@@ -125,7 +132,7 @@ export default function GuidesPage() {
             {allCats.map(c => (
               <button key={c} onClick={() => setSelectedCat(c)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border ${selectedCat === c ? 'bg-[#e46a33] text-white border-[#e46a33]' : 'text-[#8c8b8b] border-[#e9e9e9] hover:border-[#e46a33] hover:text-[#e46a33] bg-white'}`}>
-                {catIcons[c] && <span className="mr-1">{catIcons[c]}</span>}{c}
+                {c}
               </button>
             ))}
           </div>
@@ -142,7 +149,7 @@ export default function GuidesPage() {
               <div className="p-5">
                 <div className="flex items-center justify-between mb-3">
                   <span className={`px-2.5 py-1 rounded-lg text-xs font-semibold border ${catBg[article.categorie] || 'bg-[#f9f9f8] border-[#e9e9e9]'} ${catText[article.categorie] || 'text-[#e46a33]'}`}>
-                    {catIcons[article.categorie]} {article.categorie}
+                    {article.categorie}
                   </span>
                   <span className="text-[#8c8b8b] text-xs flex items-center gap-1">
                     <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>

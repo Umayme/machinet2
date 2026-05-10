@@ -24,7 +24,7 @@ const milestones = [
   { date: 'Sep 2024', event: 'Levée de fonds initiale. Recrutement de l\'équipe technique' },
   { date: 'Jan 2025', event: 'Lancement de la beta fermée avec 30 vendeurs partenaires' },
   { date: 'Juin 2025', event: '500 vendeurs inscrits, 3 200 machines référencées' },
-  { date: 'Avr 2026', event: 'Lancement public — 58 wilayas couvertes' },
+  { date: 'Avr 2026', event: 'Lancement public — 69 wilayas couvertes' },
 ]
 
 export default function AboutPage() {
@@ -55,7 +55,7 @@ export default function AboutPage() {
               MachiNet est né d'un constat simple : trouver une machine industrielle en Algérie prend des mois. Des appels téléphoniques, des déplacements, des prix opaques. Il fallait une plateforme moderne.
             </p>
             <p className="text-[#8c8b8b] leading-relaxed mb-8">
-              Nous connectons les acheteurs industriels avec des vendeurs vérifiés dans les 58 wilayas. Avec l'IA, la transparence des prix et un réseau de consultants experts, nous transformons le marché des machines en Algérie.
+              Nous connectons les acheteurs industriels avec des vendeurs vérifiés dans les 69 wilayas. Avec l'IA, la transparence des prix et un réseau de consultants experts, nous transformons le marché des machines en Algérie.
             </p>
             <Link href="/register" className="btn-primary">Rejoindre MachiNet →</Link>
           </div>
@@ -63,7 +63,7 @@ export default function AboutPage() {
             {[
               { v: '2026', l: 'Lancé en' },
               { v: '500+', l: 'Vendeurs actifs' },
-              { v: '58', l: 'Wilayas couvertes' },
+              { v: '69', l: 'Wilayas couvertes' },
               { v: '10 000+', l: 'Acheteurs inscrits' },
             ].map((s, i) => (
               <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
@@ -85,13 +85,12 @@ export default function AboutPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { titre: 'Transparence', desc: 'Des prix réels, des vendeurs vérifiés. Pas de faux profils, pas de prix cachés.', icon: '🔍', color: '#3b82f6' },
-              { titre: 'Algérie first', desc: 'Conçu pour le marché algérien, par des Algériens. Nous connaissons vos défis.', icon: '🇩🇿', color: '#10b981' },
-              { titre: 'Efficacité', desc: "Réduire le temps de sourcing de 3 mois à 3 jours. C'est notre mission.", icon: '⚡', color: '#f59e0b' },
-              { titre: 'Confiance', desc: 'Chaque vendeur est vérifié. Chaque transaction sécurisée. Votre tranquillité d\'esprit.', icon: '🏅', color: '#e46a33' },
+              { titre: 'Transparence', desc: 'Des prix réels, des vendeurs vérifiés. Pas de faux profils, pas de prix cachés.', icon: null, color: '#3b82f6' },
+              { titre: 'Algérie first', desc: 'Conçu pour le marché algérien, par des Algériens. Nous connaissons vos défis.', icon: null, color: '#10b981' },
+              { titre: 'Efficacité', desc: "Réduire le temps de sourcing de 3 mois à 3 jours. C'est notre mission.", icon: null, color: '#f59e0b' },
+              { titre: 'Confiance', desc: 'Chaque vendeur est vérifié. Chaque transaction sécurisée. Votre tranquillité d\'esprit.', icon: null, color: '#e46a33' },
             ].map((v, i) => (
               <div key={i} className="bg-white rounded-2xl p-6 border border-[#e9e9e9] text-center hover:shadow-md transition-all" style={{ borderTop: `3px solid ${v.color}` }}>
-                <div className="text-3xl mb-3">{v.icon}</div>
                 <h3 className="font-bold text-[#141313] mb-2">{v.titre}</h3>
                 <p className="text-[#8c8b8b] text-sm leading-relaxed">{v.desc}</p>
               </div>

@@ -124,13 +124,13 @@ export default function CouverturePage() {
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
             <span className="text-green-400 text-sm font-medium">Couverture nationale complète</span>
           </div>
-          <h1 className="hero-title text-white mb-4">MachiNet couvre les<br/><span style={{color:'#e46a33'}}>58 wilayas</span></h1>
+          <h1 className="hero-title text-white mb-4">MachiNet couvre les<br/><span style={{color:'#e46a33'}}>69 wilayas</span></h1>
           <p className="text-[#8c8b8b] text-lg max-w-xl mx-auto mb-10">
             De Tamanrasset à Annaba, des vendeurs et acheteurs partout en Algérie.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
             {[
-              { v: '58', l: 'Wilayas couvertes' },
+              { v: '69', l: 'Wilayas couvertes' },
               { v: totalVendeurs + '+', l: 'Vendeurs référencés' },
               { v: '100%', l: 'Territoire national' },
               { v: '3 200+', l: 'Machines disponibles' },
