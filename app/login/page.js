@@ -57,7 +57,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex">
       {/* Left — dark brand panel */}
-      <div className="hidden lg:flex lg:w-1/2 bg-[#141313] flex-col justify-between p-12">
+      <div className="hidden lg:flex lg:w-1/2 bg-[#141313] flex-col justify-center p-12">
         <div>
           <h2 className="text-4xl font-bold text-white font-['Barlow_Condensed'] mb-4 leading-tight">
             La plateforme B2B<br/>des machines<br/><span style={{color:'#e46a33'}}>industrielles</span><br/>algériennes
@@ -79,7 +79,7 @@ export default function LoginPage() {
             ))}
           </div>
         </div>
-        <p className="text-[#8c8b8b] text-xs">© 2026 MachiNet · Tlemcen, Algérie</p>
+        <p className="text-[#8c8b8b] text-xs mt-auto">© 2026 MachiNet · Tlemcen, Algérie</p>
       </div>
 
       {/* Right — form */}
