@@ -77,7 +77,7 @@ export default function VendeursPage() {
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-6">
               <span className="text-white text-sm font-medium">Pour les Vendeurs</span>
             </div>
-            <h1 className="section-title text-5xl mb-6 text-white">
+            <h1 className="section-title text-5xl mb-6" style={{color:"white"}}>
               Vendez vos machines à des acheteurs qualifiés dans toute l'Algérie
             </h1>
             <p className="text-white/70 mb-8">
@@ -224,7 +224,7 @@ export default function VendeursPage() {
       <section className="py-20 px-6 text-center relative" style={{ backgroundImage:"url('/images/heroconseil.png')", backgroundSize:'cover', backgroundPosition:'center' }}>
         <div className="absolute inset-0 bg-black/70" />
         <div className="relative z-10 max-w-4xl mx-auto">
-          <h2 className="section-title mb-4 text-white">Prêt à recevoir vos premiers leads ?</h2>
+          <h2 className="section-title mb-4" style={{color:"white"}}>Prêt à recevoir vos premiers leads ?</h2>
           <p className="text-white/70 text-lg mb-8">Rejoignez 500+ vendeurs qui développent leur business sur MachiNet.</p>
           <Link href="/register?role=seller" className="btn-primary text-base px-12 py-4">
             Créer mon compte vendeur →
