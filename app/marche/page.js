@@ -191,15 +191,3 @@ export default function MarchePage() {
     </div>
   )
 }
-ro-title text-white mb-4 whitespace-nowrap">Vous vendez une machine ?</h2>
-          <p className="text-[#8c8b8b] mb-8 text-lg">Publiez votre annonce et touchez des acheteurs dans toute l'Algérie.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="btn-primary" style={{ backgroundColor:'#e46a33' }}>Publier une annonce</Link>
-            <Link href="/catalogue" className="px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 transition-all font-semibold">Voir le catalogue</Link>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  )
-}

@@ -430,16 +430,3 @@ export default function ExpertsPage() {
     </div>
   )
 }
-full h-32 object-cover rounded-lg mb-4" />}
-              <h3 className="font-bold text-[#141313] text-sm mb-1">{ex.secteur}</h3>
-              <p className="text-[#8c8b8b] text-xs leading-relaxed">{ex.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {showServicesModal && <ServicesModal expert={selectedExpert} onClose={() => setShowServicesModal(false)} onRequest={handleRequest} />}
-      {showRequest && <RequestModal expert={requestExpert} onClose={() => setShowRequest(false)} />}
-    </div>
-  )
-}

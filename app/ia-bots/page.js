@@ -229,19 +229,3 @@ export default function IABotsPage() {
     </div>
   )
 }
-perts" className="btn-primary" style={{ backgroundColor:'#e46a33' }}>Consulter un expert →</Link>
-            <Link href="/ia-bots" className="px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 transition-all font-semibold">Essayer MachiBot gratuitement</Link>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  )
-}
-v>
-        </div>
-      </section>
-
-    </div>
-  )
-}
