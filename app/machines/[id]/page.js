@@ -175,15 +175,15 @@ export default function MachinePage() {
               <h2 className="font-bold text-[#141313] mb-4">Détails de l'annonce</h2>
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { label: 'Secteur', value: secteur, icon: '🏭' },
-                  { label: 'État', value: machine.condition || 'Vente neuf', icon: '✅' },
-                  { label: 'Wilaya', value: machine.wilaya || '—', icon: '📍' },
-                  { label: 'Disponibilité', value: machine.active ? 'Disponible' : 'Vendu', icon: '🟢' },
-                  { label: 'Vérifié', value: verifie ? 'Oui — MachiNet' : 'En attente', icon: verifie ? '🛡️' : '⏳' },
-                  { label: 'Annonce publiée', value: machine.createdAt ? new Date(machine.createdAt).toLocaleDateString('fr-DZ', { dateStyle: 'medium' }) : '—', icon: '📅' },
-                ].map(({ label, value, icon }) => (
+                  { label: 'Secteur', value: secteur },
+                  { label: 'État', value: machine.condition || 'Vente neuf' },
+                  { label: 'Wilaya', value: machine.wilaya || '—' },
+                  { label: 'Disponibilité', value: machine.active ? 'Disponible' : 'Vendu' },
+                  { label: 'Vérifié', value: verifie ? 'Oui — MachiNet' : 'En attente' },
+                  { label: 'Annonce publiée', value: machine.createdAt ? new Date(machine.createdAt).toLocaleDateString('fr-DZ', { dateStyle: 'medium' }) : '—' },
+                ].map(({ label, value }) => (
                   <div key={label} className="bg-[#f9f9f8] rounded-xl p-3 border border-[#e9e9e9]">
-                    <p className="text-[#8c8b8b] text-xs mb-1">{icon} {label}</p>
+                    <p className="text-[#8c8b8b] text-xs mb-1">{label}</p>
                     <p className="text-[#141313] text-sm font-semibold">{value}</p>
                   </div>
                 ))}
