@@ -52,7 +52,9 @@ export default function AcheteursPage() {
     <div className="min-h-screen">
 
       {/* HERO DARK BAND */}
-      <div className="bg-[#141313] pt-20 pb-16">
+      <div className="pt-20 pb-16 relative" style={{backgroundImage:"url('/images/heroconseil.png')",backgroundSize:"cover",backgroundPosition:"center"}}>
+        <div className="absolute inset-0 bg-black/80" />
+        <div className="relative z-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -81,9 +83,7 @@ export default function AcheteursPage() {
             </div>
 
             {/* IA CARD */}
-            <div className="rounded-2xl p-6 relative overflow-hidden" style={{backgroundImage:"url('/images/heroconseil.png')",backgroundSize:"cover",backgroundPosition:"center"}}>
-              <div className="absolute inset-0 bg-black/70 rounded-2xl" />
-              <div className="relative z-10">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-xl overflow-hidden">
                   <img src="/images/machibot.png" alt="MachiBot" className="w-full h-full object-cover" />
@@ -102,9 +102,9 @@ export default function AcheteursPage() {
                 <span>·</span>
                 <span>Réponse instantanée</span>
               </div>
-              </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
 
