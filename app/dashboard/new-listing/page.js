@@ -22,23 +22,25 @@ export default function NewListingPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const handlePhotoUpload = (e) => {
+  const handlePhotoUpload = async (e) => {
     const files = Array.from(e.target.files)
     if (!files.length) return
     setUploading(true)
-    const toRead = files.slice(0, 5 - photos.length)
-    let done = 0
-    const results = []
-    toRead.forEach((file, idx) => {
-      if (file.size > 5 * 1024 * 1024) { done++; if (done === toRead.length) { setPhotos(p => [...p, ...results]); setUploading(false) }; return }
-      const reader = new FileReader()
-      reader.onload = (ev) => {
-        results[idx] = ev.target.result
-        done++
-        if (done === toRead.length) { setPhotos(p => [...p, ...results.filter(Boolean)]); setUploading(false) }
-      }
-      reader.readAsDataURL(file)
-    })
+    const toUpload = files.slice(0, 5 - photos.length)
+    const urls = []
+    for (const file of toUpload) {
+      if (file.size > 5 * 1024 * 1024) continue
+      try {
+        const fd = new FormData()
+        fd.append('file', file)
+        fd.append('upload_preset', 'ozt0lxsu')
+        const res = await fetch('https://api.cloudinary.com/v1_1/dwkok9ccl/image/upload', { method: 'POST', body: fd })
+        const data = await res.json()
+        if (data.secure_url) urls.push(data.secure_url)
+      } catch {}
+    }
+    setPhotos(p => [...p, ...urls])
+    setUploading(false)
   }
 
   const handleSubmit = async (e) => {
@@ -185,11 +187,4 @@ export default function NewListingPage() {
           {error && <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-sm">{error}</div>}
 
           <button type="submit" disabled={loading || uploading} className="btn-primary w-full justify-center h-13 text-base disabled:opacity-50 rounded-xl py-4">
-            {loading ? 'Publication en cours...' : '✓ Publier mon annonce'}
-          </button>
-          <p className="text-center text-[#8c8b8b] text-xs">L'annonce sera vérifiée par notre équipe avant d'être publiée (sous 24h)</p>
-        </form>
-      </div>
-    </div>
-  )
-}
+            {loading ? 'Publication en cours...' : '✓ Publier mon anno
