@@ -55,7 +55,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex">
+    <div className="flex" style={{minHeight:"calc(100vh - 80px)",marginTop:"80px"}}>
       {/* Left — dark brand panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-[#141313] flex-col justify-center p-12">
         <div>
