@@ -44,10 +44,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex">
       {/* Left — dark brand panel */}
-      <div className="hidden lg:flex lg:w-2/5 bg-[#141313] flex-col justify-between p-12">
-        <div>
-          <span className="text-white font-bold text-xl font-['Barlow_Condensed'] tracking-wide">Machi<span style={{color:'#e46a33'}}>Net</span></span>
-        </div>
+      <div className="hidden lg:flex lg:w-2/5 bg-[#141313] flex-col justify-center p-12">
         <div>
           <h2 className="text-4xl font-bold text-white font-['Barlow_Condensed'] mb-4 leading-tight">
             Rejoignez le réseau<br/>des industriels<br/><span style={{color:'#e46a33'}}>algériens</span>
@@ -71,7 +68,7 @@ export default function RegisterPage() {
             ))}
           </div>
         </div>
-        <p className="text-[#8c8b8b] text-xs">© 2026 MachiNet · Imama, Tlemcen — Algérie</p>
+        <p className="text-[#8c8b8b] text-xs mt-auto">© 2026 MachiNet · Imama, Tlemcen — Algérie</p>
       </div>
 
       {/* Right — form */}
