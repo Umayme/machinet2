@@ -59,9 +59,6 @@ export default function LoginPage() {
       {/* Left — dark brand panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-[#141313] flex-col justify-between p-12">
         <div>
-          <span className="text-white font-bold text-xl font-['Barlow_Condensed'] tracking-wide">Machi<span style={{color:'#e46a33'}}>Net</span></span>
-        </div>
-        <div>
           <h2 className="text-4xl font-bold text-white font-['Barlow_Condensed'] mb-4 leading-tight">
             La plateforme B2B<br/>des machines<br/><span style={{color:'#e46a33'}}>industrielles</span><br/>algériennes
           </h2>
