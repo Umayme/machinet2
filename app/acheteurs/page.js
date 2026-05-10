@@ -81,10 +81,12 @@ export default function AcheteursPage() {
             </div>
 
             {/* IA CARD */}
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <div className="rounded-2xl p-6 relative overflow-hidden" style={{backgroundImage:"url('/images/heroconseil.png')",backgroundSize:"cover",backgroundPosition:"center"}}>
+              <div className="absolute inset-0 bg-black/70 rounded-2xl" />
+              <div className="relative z-10">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-[#e46a33]/20 border border-[#e46a33]/30 flex items-center justify-center">
-                  <span className="text-[#e46a33] font-black text-sm">AI</span>
+                <div className="w-10 h-10 rounded-xl overflow-hidden">
+                  <img src="/images/machibot.png" alt="MachiBot" className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-sm">Demande assistée par IA</h3>
@@ -99,6 +101,7 @@ export default function AcheteursPage() {
                 <span>Sans inscription</span>
                 <span>·</span>
                 <span>Réponse instantanée</span>
+              </div>
               </div>
             </div>
           </div>
