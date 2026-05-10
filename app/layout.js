@@ -1,6 +1,6 @@
 import './globals.css'
 import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+import ConditionalFooter from '../components/ConditionalFooter'
 
 export const metadata = {
   title: 'MachiNet',
@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
       <body className="bg-white text-[#141313] min-h-screen">
         <Navbar />
         <main>{children}</main>
-        <Footer />
+        <ConditionalFooter />
       </body>
     </html>
   )
